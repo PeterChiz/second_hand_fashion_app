@@ -1,8 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:get/get.dart';
+import 'package:second_hand_fashion_app/common/widgets/login_signup/form_driver.dart';
+import 'package:second_hand_fashion_app/common/widgets/login_signup/social_buttons.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/constants/text_strings.dart';
+
+import '../signup_form.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -15,6 +18,7 @@ class SignupScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ///Title
               Text(SHFTexts.signupTitle,
@@ -24,22 +28,15 @@ class SignupScreen extends StatelessWidget {
               ),
 
               ///form
-              Form(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            expands: false,
-                            decoration: const InputDecoration(labelText: SHFTexts.firstName, prefixIcon: Icon(Iconsax.user)),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
+              const SHFSignupForm(),
+              const SizedBox(height: SHFSizes.spaceBtwSections),
+
+              ///driver
+              SHFFormDivider(dividerText: SHFTexts.orSignUpWith.capitalize!),
+              const SizedBox(height: SHFSizes.spaceBtwSections),
+
+              ///social button
+              const SHFSocialButtons()
             ],
           ),
         ),
@@ -47,3 +44,4 @@ class SignupScreen extends StatelessWidget {
     );
   }
 }
+
