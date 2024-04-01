@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_dot_navigation.dart';
+import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_next_button.dart';
+import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_page.dart';
+import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_skip.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/text_strings.dart';
 import '../../controllers/onboarding_controller.dart';
-import '../widgets/onboarding_dot_navigation.dart';
-import '../widgets/onboarding_next_button.dart';
-import '../widgets/onboarding_page.dart';
-import '../widgets/onboarding_skip.dart';
 
+//giao diện lúc mới vào app
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
 
@@ -19,6 +20,7 @@ class OnBoardingScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
+          ///Horizontal Scrollable Pages
           PageView(
             controller: controller.pageController,
             onPageChanged: controller.updatePageIndicator,
@@ -40,11 +42,11 @@ class OnBoardingScreen extends StatelessWidget {
               ),
             ],
           ),
-          //
+          ///Skip button
           const OnBoardingSkip(),
-          //
+          ///Dot Navigation SmoothPageIndicator
           const OnBoardingDotNavigation(),
-          //
+          ///Circular
           const OnboardingNextButton(),
         ],
       ),

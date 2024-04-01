@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:second_hand_fashion_app/features/authentication/screens/widgets/signup/signup.dart';
 
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
+import '../../onboarding/widgets/signup/signup.dart';
 class SHFLoginForm extends StatelessWidget {
   const SHFLoginForm({
     super.key,

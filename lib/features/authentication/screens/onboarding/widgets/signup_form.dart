@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:second_hand_fashion_app/features/authentication/screens/widgets/terms_conditions_checkbox.dart';
-import '../../../../utils/constants/sizes.dart';
-import '../../../../utils/constants/text_strings.dart';
+import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/terms_conditions_checkbox.dart';
+
+import '../../../../../utils/constants/sizes.dart';
+import '../../../../../utils/constants/text_strings.dart';
+
 
 class SHFSignupForm extends StatelessWidget {
   const SHFSignupForm({
