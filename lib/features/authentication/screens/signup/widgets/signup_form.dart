@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/terms_conditions_checkbox.dart';
+import 'package:second_hand_fashion_app/features/authentication/screens/signup/verify_email.dart';
+import 'package:second_hand_fashion_app/features/authentication/screens/signup/widgets/terms_conditions_checkbox.dart';
 
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
-
 
 class SHFSignupForm extends StatelessWidget {
   const SHFSignupForm({
     super.key,
   });
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +50,10 @@ class SHFSignupForm extends StatelessWidget {
                 labelText: SHFTexts.userName,
                 prefixIcon: Icon(Iconsax.user_edit)),
           ),
+          const SizedBox(height: SHFSizes.spaceBtwInputFields),
 
           ///email
           TextFormField(
-            expands: false,
             decoration: const InputDecoration(
                 labelText: SHFTexts.email, prefixIcon: Icon(Iconsax.direct)),
           ),
@@ -61,7 +61,6 @@ class SHFSignupForm extends StatelessWidget {
 
           ///phone number
           TextFormField(
-            expands: false,
             decoration: const InputDecoration(
                 labelText: SHFTexts.phoneNo, prefixIcon: Icon(Iconsax.call)),
           ),
@@ -69,7 +68,7 @@ class SHFSignupForm extends StatelessWidget {
 
           ///password
           TextFormField(
-            expands: true,
+            obscureText: true,
             decoration: const InputDecoration(
               labelText: SHFTexts.password,
               prefixIcon: Icon(Iconsax.password_check),
@@ -80,12 +79,13 @@ class SHFSignupForm extends StatelessWidget {
 
           ///term & conditions checkbox
           const SHFTermAndConditionCheckBox(),
+          const SizedBox(height: SHFSizes.spaceBtwSections),
 
           ///sign up button
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () => Get.to(() => const VerifyEmailScreen()),
               child: const Text(SHFTexts.createAccount),
             ),
           )
@@ -94,4 +94,3 @@ class SHFSignupForm extends StatelessWidget {
     );
   }
 }
-

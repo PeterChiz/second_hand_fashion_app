@@ -21,17 +21,17 @@ class LoginScreen extends StatelessWidget {
           padding: SHFSpacingStyle.paddingWithAppBarHeight,
           child: Column(
             children: [
+              ///Logo, Title and Sub-Title
               const SHFLoginHeader(),
 
               ///form
               const SHFLoginForm(),
 
-              ///
+              ///Driver
               SHFFormDivider(dividerText: SHFTexts.orSignInWith.capitalize!),
-
               const SizedBox(height: SHFSizes.spaceBtwSections),
 
-              ///
+              ///Footer
               const SHFSocialButtons(),
 
             ],

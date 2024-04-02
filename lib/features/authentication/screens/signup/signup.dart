@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/login_signup/form_driver.dart';
 import 'package:second_hand_fashion_app/common/widgets/login_signup/social_buttons.dart';
+import 'package:second_hand_fashion_app/features/authentication/screens/signup/widgets/signup_form.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/constants/text_strings.dart';
 
-import '../signup_form.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -27,15 +27,15 @@ class SignupScreen extends StatelessWidget {
                 height: SHFSizes.spaceBtwSections,
               ),
 
-              ///form
+              ///Form
               const SHFSignupForm(),
               const SizedBox(height: SHFSizes.spaceBtwSections),
 
-              ///driver
+              ///Driver
               SHFFormDivider(dividerText: SHFTexts.orSignUpWith.capitalize!),
               const SizedBox(height: SHFSizes.spaceBtwSections),
 
-              ///social button
+              ///Social button
               const SHFSocialButtons()
             ],
           ),

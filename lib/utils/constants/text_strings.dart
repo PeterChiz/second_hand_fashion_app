@@ -54,6 +54,12 @@ class SHFTexts{
   static const String yourAccountCreatedTitle = "Your account successfully created!";
   static const String yourAccountCreatedSubTitle = "Welcome to Your Ultimate Shopping Destination: Your Account is Created, Unleash the Joy of Seamless Online Shopping!";
 
+  //Global Texts
   static const String and = "and";
+  static const String shfContinue = "Continue";
+  static const String submit = "Submit";
+  static const String skip = "Skip";
+  static const String appName = "Hòa Second Hand Fashion";
+  static const String done = "Done";
 
 }

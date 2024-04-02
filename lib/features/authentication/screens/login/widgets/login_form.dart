@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:second_hand_fashion_app/features/authentication/screens/password_configuration/forget_password.dart';
 
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
-import '../../onboarding/widgets/signup/signup.dart';
+import '../../signup/signup.dart';
 class SHFLoginForm extends StatelessWidget {
   const SHFLoginForm({
     super.key,
@@ -12,13 +13,14 @@ class SHFLoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Biễu mẫu đang nhập lớp riêng biệt chứ mọi thứ liên quan đến biểu mẫu đăng nhập và tiêu đề đăng nhập chứa văn bản
     return Form(
       child: Padding(
         padding: const EdgeInsets.symmetric(
             vertical: SHFSizes.spaceBtwSections),
         child: Column(
           children: [
-            ///
+            ///Email
             TextFormField(
               decoration: const InputDecoration(
                 prefixIcon: Icon(Iconsax.direct_right),
@@ -27,7 +29,7 @@ class SHFLoginForm extends StatelessWidget {
             ),
             const SizedBox(height: SHFSizes.spaceBtwInputFields),
 
-            ///
+            ///Password
             TextFormField(
               decoration: const InputDecoration(
                 prefixIcon: Icon(Iconsax.password_check),
@@ -37,10 +39,11 @@ class SHFLoginForm extends StatelessWidget {
             ),
             const SizedBox(height: SHFSizes.spaceBtwInputFields / 2),
 
-            ///
+            ///Remember Me & Forget Password
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                ///Remember me
                 Row(
                   children: [
                     Checkbox(value: true, onChanged: (value) {}),
@@ -48,9 +51,9 @@ class SHFLoginForm extends StatelessWidget {
                   ],
                 ),
 
-                ///
+                ///Forger Password
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () => Get.to(() => const ForgetPassword()),
                     child: const Text(SHFTexts.forgetPassword)),
               ],
             ),
