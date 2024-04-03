@@ -14,8 +14,10 @@ class SHFTexts{
   static const String onBoardingSubTitle3 = "Từ cửa hàng của chúng tôi đến nhà bạn - Giao Hàng nhanh chóng, an toàn!";
   // static const String onBoardingSubTitle3 = "From Our Doorstep to Yours - Swift, Secure and Contactless Delivery!";
 
+  //Home
   static const String homeAppbarTitle = "Good day for shopping";
   static const String homeAppbarSubTitle = "Hoa Second Hand Fashion";
+
 
   static const String firstName = "First Name";
   static const String lastName = "Last Name";
@@ -61,5 +63,9 @@ class SHFTexts{
   static const String skip = "Skip";
   static const String appName = "Hòa Second Hand Fashion";
   static const String done = "Done";
+
+  // static const String search = "Search in Store";
+  // static const String poCategory = "Popular Categories";
+
 
 }

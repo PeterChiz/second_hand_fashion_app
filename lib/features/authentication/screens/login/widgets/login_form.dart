@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/password_configuration/forget_password.dart';
+import 'package:second_hand_fashion_app/navigation_menu.dart';
 
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
@@ -63,7 +64,7 @@ class SHFLoginForm extends StatelessWidget {
             SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => Get.to(() => const NavigationMenu()),
                     child: const Text(SHFTexts.signIn))),
             const SizedBox(height: SHFSizes.spaceBtwItems),
 
