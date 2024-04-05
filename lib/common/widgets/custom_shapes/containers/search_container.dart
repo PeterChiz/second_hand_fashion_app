@@ -14,31 +14,32 @@ class SHFSearchContainer extends StatelessWidget {
     this.showBackground = true,
     this.showBorder = true,
     this.onTap,
-
+    this.padding =
+        const EdgeInsets.symmetric(horizontal: SHFSizes.defaultSpace),
   });
 
   final String text;
   final IconData? icon;
   final bool showBackground, showBorder;
   final VoidCallback? onTap;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
-
     final dark = SHFHelperFunctions.isDarkMode(context);
 
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: SHFSizes.defaultSpace),
+        padding: padding,
         child: Container(
           width: SHFDeviceUtils.getScreenWidth(context),
           padding: const EdgeInsets.all(SHFSizes.md),
           decoration: BoxDecoration(
             color: showBackground
                 ? dark
-                ? SHFColors.dark
-                : SHFColors.light
+                    ? SHFColors.dark
+                    : SHFColors.light
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(SHFSizes.cardRadiusLg),
             border: showBorder ? Border.all(color: SHFColors.grey) : null,
@@ -47,7 +48,7 @@ class SHFSearchContainer extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: SHFColors.darkGrey,
+                color: dark ? SHFColors.darkGrey : SHFColors.grey,
               ),
               const SizedBox(
                 width: SHFSizes.spaceBtwItems,

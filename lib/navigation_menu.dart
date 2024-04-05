@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/home/widgets/home.dart';
+import 'package:second_hand_fashion_app/features/shop/screens/home/home.dart';
+import 'package:second_hand_fashion_app/features/shop/screens/store/store.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
@@ -21,7 +22,7 @@ class NavigationMenu extends StatelessWidget {
           onDestinationSelected: (index) => controller.selectedIndex.value = index,
           backgroundColor: darkMode ? SHFColors.black : SHFColors.white,
           indicatorColor: darkMode ? SHFColors.white.withOpacity(0.1) : SHFColors.black.withOpacity(0.1),
-          
+
           destinations: const [
             NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
             NavigationDestination(icon: Icon(Iconsax.shop), label: 'Store'),
@@ -38,5 +39,6 @@ class NavigationMenu extends StatelessWidget {
 class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
 
-  final screens = [const HomeScreen(),Container(color: Colors.purple,),Container(color: Colors.orange,),Container(color: Colors.red,)];
+  final screens = [const HomeScreen(),const StoreScreen(),Container(color: Colors.orange,),Container(color: Colors.red,)];
 }
+

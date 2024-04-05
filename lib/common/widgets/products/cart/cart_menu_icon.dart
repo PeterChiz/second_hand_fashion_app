@@ -6,11 +6,11 @@ import '../../../../utils/constants/colors.dart';
 class SHFCartCounterIcon extends StatelessWidget {
   const SHFCartCounterIcon({
     super.key,
-    required this.iconColor,
+    this.iconColor,
     required this.onPressed,
   });
 
-  final Color iconColor;
+  final Color? iconColor;
   final VoidCallback onPressed;
 
   @override

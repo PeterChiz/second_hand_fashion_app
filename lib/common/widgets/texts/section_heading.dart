@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 
 class SHFSectionHeading extends StatelessWidget {
   const SHFSectionHeading({
-    super.key, this.textColor, this.showActionButton = false, required this.title, this.buttonTitle = 'View all', this.onPressed,
+    super.key,
+    this.textColor,
+    this.showActionButton = true,
+    required this.title,
+    this.buttonTitle = 'View all',
+    this.onPressed,
   });
 
   final Color? textColor;
@@ -13,16 +18,17 @@ class SHFSectionHeading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title,
-            style:
-            Theme.of(context).textTheme.headlineSmall!.apply(color: textColor),
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall!
+                .apply(color: textColor),
             maxLines: 1,
             overflow: TextOverflow.ellipsis),
-        if(showActionButton)
-          TextButton(
-              onPressed: onPressed,
-              child: Text(buttonTitle))
+        if (showActionButton)
+          TextButton(onPressed: onPressed, child: Text(buttonTitle))
       ],
     );
   }
