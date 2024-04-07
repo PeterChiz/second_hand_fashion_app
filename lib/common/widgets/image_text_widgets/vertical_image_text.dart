@@ -10,7 +10,7 @@ class SHFVerticalImageText extends StatelessWidget {
     required this.image,
     required this.title,
     this.textColor = SHFColors.white,
-    this.backgroundColor = SHFColors.white,
+    this.backgroundColor,
     this.onTap,
   });
 

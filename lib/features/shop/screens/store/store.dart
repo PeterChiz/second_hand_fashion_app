@@ -1,24 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:second_hand_fashion_app/common/widgets/appbar/appbar.dart';
-import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:second_hand_fashion_app/common/widgets/layouts/grid_layout.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/cart/cart_menu_icon.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
-import 'package:second_hand_fashion_app/utils/constants/enums.dart';
-import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
 import '../../../../common/widgets/appbar/tabbar.dart';
 import '../../../../common/widgets/brands/brand_cart.dart';
-import '../../../../common/widgets/brands/brand_show_case.dart';
-import '../../../../common/widgets/images/shf_circular_image.dart';
-import '../../../../common/widgets/texts/shf_brand_title_text_with_verified_icon.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
@@ -93,30 +85,40 @@ class StoreScreen extends StatelessWidget {
                 ),
 
                 ///Tabs
-                bottom: const SHFTabBar(tabs: [
-                  Tab(child: Text('Sports'),),
-                  Tab(child: Text('Furniture'),),
-                  Tab(child: Text('Electronic'),),
-                  Tab(child: Text('Clothes'),),
-                  Tab(child: Text('Cosmetics'),),
-                ],),
+                bottom: const SHFTabBar(
+                  tabs: [
+                    Tab(
+                      child: Text('Sports'),
+                    ),
+                    Tab(
+                      child: Text('Furniture'),
+                    ),
+                    Tab(
+                      child: Text('Electronic'),
+                    ),
+                    Tab(
+                      child: Text('Clothes'),
+                    ),
+                    Tab(
+                      child: Text('Cosmetics'),
+                    ),
+                  ],
+                ),
               ),
             ];
           },
 
           ///Body
-          body:  const TabBarView(children: [
-            SHFCategoryTab(),
-            SHFCategoryTab(),
-            SHFCategoryTab(),
-            SHFCategoryTab(),
-
-          ],),
+          body: const TabBarView(
+            children: [
+              SHFCategoryTab(),
+              SHFCategoryTab(),
+              SHFCategoryTab(),
+              SHFCategoryTab(),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
-
-

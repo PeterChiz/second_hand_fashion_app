@@ -8,7 +8,7 @@ class SHFAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SHFAppBar(
       {super.key,
       this.title,
-      this.showBackArrow = true,
+      this.showBackArrow = false,
       this.leadingIcon,
       this.actions,
       this.leadingOnPressed});

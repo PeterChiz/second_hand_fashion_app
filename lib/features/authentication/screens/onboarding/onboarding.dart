@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_dot_navigation.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_next_button.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_page.dart';

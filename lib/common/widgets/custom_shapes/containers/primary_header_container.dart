@@ -15,18 +15,15 @@ class SHFPrimaryHeaderContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SHFCurvedEdgeWidget(
       child: Container(
-        color: SHFColors.primary,
-        padding: const EdgeInsets.all(0),
-        child: SizedBox(
-          height: 400,
+          color: SHFColors.primary,
           child: Stack(
             children: [
-              Positioned(top: -150, right: -250, child: SHFCircularContainer(backgroundColor: SHFColors.textWhite.withOpacity(0.1))),
-              Positioned(top: 100, right: -300, child: SHFCircularContainer(backgroundColor: SHFColors.textWhite.withOpacity(0.1))),
+              ///Background Custom Shape
+              Positioned(top: -150,right: -250,child: SHFCircularContainer(backgroundColor: SHFColors.textWhite.withOpacity(0.1),)),
+              Positioned(top: 100,right: -300,child: SHFCircularContainer(backgroundColor: SHFColors.textWhite.withOpacity(0.1),)),
               child,
             ],
-          ),
-        ),
+          )
       ),
     );
   }

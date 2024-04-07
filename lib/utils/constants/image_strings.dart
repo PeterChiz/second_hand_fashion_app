@@ -37,6 +37,10 @@ class SHFImages{
   static const String promoBanner2 = "assets/images/banners/banner_2.jpg";
   static const String promoBanner3 = "assets/images/banners/banner_3.jpg";
 
+  //User
+  static const String user = "assets/images/user/user.png";
+
+
   //Products
   static const String productImage1 = "assets/images/products/acer_laptop_1.png";
   static const String productImage2 = "assets/images/products/acer_laptop_2.png";

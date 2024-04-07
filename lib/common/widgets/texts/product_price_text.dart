@@ -1,8 +1,6 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../../utils/constants/sizes.dart';
 
 class SHFProductPriceText extends StatelessWidget {
   const SHFProductPriceText(

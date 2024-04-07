@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:second_hand_fashion_app/common/styles/shadows.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
@@ -83,7 +80,7 @@ class SHFProductCardVertical extends StatelessWidget {
 
             ///Details
             const Padding(
-              padding: const EdgeInsets.only(left: SHFSizes.sm),
+              padding: EdgeInsets.only(left: SHFSizes.sm),
               child: Column(
                 children: [
                    SHFProductTitleText(
