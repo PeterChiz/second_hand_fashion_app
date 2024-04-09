@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/device/device_utility.dart';
+import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
 class SHFAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SHFAppBar(
@@ -21,6 +23,7 @@ class SHFAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = SHFHelperFunctions.isDarkMode(context);
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: SHFSizes.md),
         child: AppBar(
@@ -28,7 +31,7 @@ class SHFAppBar extends StatelessWidget implements PreferredSizeWidget {
           leading: showBackArrow
               ? IconButton(
                   onPressed: () => Get.back(),
-                  icon: const Icon(Iconsax.arrow_left))
+                  icon: Icon(Iconsax.arrow_left, color: dark ? SHFColors.white : SHFColors.dark,))
               : leadingIcon != null
                   ? IconButton(
                       onPressed: leadingOnPressed, icon: Icon(leadingIcon))

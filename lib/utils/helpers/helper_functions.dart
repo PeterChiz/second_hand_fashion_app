@@ -26,6 +26,8 @@ class SHFHelperFunctions{
       return Colors.brown;
     } else if (value == 'Teal'){
       return Colors.teal;
+    } else if (value == 'Yellow'){
+      return Colors.yellow;
     } else if (value == 'indigo'){
       return Colors.indigo;
     } else {

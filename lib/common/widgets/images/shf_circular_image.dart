@@ -31,7 +31,7 @@ class SHFCircularImage extends StatelessWidget {
       height: height,
       padding:  EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        //If image background color is null then switch it to light and dark mode color design.
+        //Nếu màu nền của hình ảnh là null thì chuyển nó sang thiết kế màu chế độ sáng và chế độ tối.
         color: backgroundColor ?? (SHFHelperFunctions.isDarkMode(context)
             ? SHFColors.black
             : SHFColors.white),

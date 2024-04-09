@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:second_hand_fashion_app/common/widgets/appbar/appbar.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/primary_header_container.dart';
 import 'package:second_hand_fashion_app/common/widgets/list_tiles/setting_menu_tile.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
+import 'package:second_hand_fashion_app/features/pertonalization/screens/profile/profile.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 
@@ -33,7 +35,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
 
                   ///User Profile Card
-                  const SHFUserProfileTile(),
+                  SHFUserProfileTile(onPressed: () => Get.to(() => const ProfileScreen()),),
                   const SizedBox(
                     height: SHFSizes.spaceBtwSections,
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 
 class SHFChipTheme{
   SHFChipTheme._();
@@ -6,16 +7,16 @@ class SHFChipTheme{
   static ChipThemeData lightChipTheme = ChipThemeData(
     disabledColor: Colors.grey.withOpacity(0.4),
     labelStyle: const TextStyle(color: Colors.black),
-    selectedColor: Colors.blue,
+    selectedColor: SHFColors.primary,
     padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
-    checkmarkColor: Colors.white,
+    checkmarkColor: SHFColors.white,
   );
 
-  static ChipThemeData darkChipTheme = ChipThemeData(
-    disabledColor: Colors.grey.withOpacity(0.4),
-    labelStyle: const TextStyle(color: Colors.black),
-    selectedColor: Colors.blue,
-    padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
-    checkmarkColor: Colors.white,
+  static ChipThemeData darkChipTheme = const ChipThemeData(
+    disabledColor: SHFColors.darkerGrey,
+    labelStyle: TextStyle(color: Colors.white),
+    selectedColor: SHFColors.primary,
+    padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
+    checkmarkColor: SHFColors.white,
   );
 }

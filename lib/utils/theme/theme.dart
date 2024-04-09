@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'custom_themes/appbar_theme.dart';
 import 'custom_themes/bottom_sheet_theme.dart';
 import 'custom_themes/checkbox_theme.dart';
@@ -29,10 +30,11 @@ class SHFAppTheme{
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     fontFamily: 'Poppins',
+    disabledColor: SHFColors.grey,
     brightness: Brightness.dark,
     primaryColor: Colors.blue,
-    textTheme: SHFTextTheme.lightTextTheme,
-    chipTheme: SHFChipTheme.lightChipTheme,
+    textTheme: SHFTextTheme.darkTextTheme,
+    chipTheme: SHFChipTheme.darkChipTheme,
     scaffoldBackgroundColor: Colors.black,
     appBarTheme: SHFAppBarTheme.darkAppBarTheme,
     checkboxTheme: SHFCheckboxTheme.darkCheckboxTheme,

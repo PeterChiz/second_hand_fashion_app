@@ -7,8 +7,10 @@ import '../images/shf_circular_image.dart';
 
 class SHFUserProfileTile extends StatelessWidget {
   const SHFUserProfileTile({
-    super.key,
+    super.key, required this.onPressed,
   });
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class SHFUserProfileTile extends StatelessWidget {
       ),
       title: Text('Bùi Thiện Chí', style: Theme.of(context).textTheme.headlineMedium!.apply(color: SHFColors.white),),
       subtitle: Text('chi.bt.62cntt@ntu.edu.vn', style: Theme.of(context).textTheme.bodyMedium!.apply(color: SHFColors.white),),
-      trailing: IconButton(onPressed: (){},icon: const Icon(Iconsax.edit, color: SHFColors.white,),
+      trailing: IconButton(onPressed: onPressed,icon: const Icon(Iconsax.edit, color: SHFColors.white,),
       ),
     );
   }
