@@ -5,6 +5,7 @@ import 'package:second_hand_fashion_app/common/widgets/appbar/appbar.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/primary_header_container.dart';
 import 'package:second_hand_fashion_app/common/widgets/list_tiles/setting_menu_tile.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
+import 'package:second_hand_fashion_app/features/pertonalization/screens/address/address.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/screens/profile/profile.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
@@ -57,10 +58,11 @@ class SettingsScreen extends StatelessWidget {
                     height: SHFSizes.spaceBtwItems,
                   ),
 
-                   const SHFSettingMenuTile(
+                    SHFSettingMenuTile(
                     icon: Iconsax.safe_home,
                     title: 'My Address',
                     subTitle: 'Set shopping delivery address',
+                     onTap: () => Get.to(() => const UserAddressScreen()),
                   ),
                    const SHFSettingMenuTile(
                     icon: Iconsax.shopping_cart,

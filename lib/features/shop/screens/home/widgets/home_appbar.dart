@@ -21,7 +21,7 @@ class SHFHomeAppBar extends StatelessWidget {
         ],
       ),
       actions: [
-        SHFCartCounterIcon(onPressed: () {},iconColor: SHFColors.white),
+        SHFCartCounterIcon(onPressed: () {},iconColor: SHFColors.white, ),
       ],
     );
   }

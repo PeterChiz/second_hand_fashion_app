@@ -1,65 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:second_hand_fashion_app/utils/constants/colors.dart';
+import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 
 class SHFTextFormFieldTheme{
   SHFTextFormFieldTheme._();
 
   static InputDecorationTheme lightInputDecorationTheme = InputDecorationTheme(
     errorMaxLines: 3,
-    prefixIconColor: Colors.grey,
-    suffixIconColor: Colors.grey,
-    labelStyle: const TextStyle().copyWith(fontSize: 14, color: Colors.black),
-    hintStyle: const TextStyle().copyWith(fontSize: 14, color: Colors.black),
+    prefixIconColor: SHFColors.darkGrey,
+    suffixIconColor: SHFColors.darkGrey,
+    labelStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeMd, color: SHFColors.black),
+    hintStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeSm, color: Colors.black),
     errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal),
-    floatingLabelStyle: const TextStyle().copyWith(color: Colors.black.withOpacity(0.8)),
+    floatingLabelStyle: const TextStyle().copyWith(color: SHFColors.black.withOpacity(0.8)),
     border: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(width: 1, color: Colors.grey),
+      borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
+      borderSide: const BorderSide(width: 1, color: SHFColors.grey),
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(width: 1, color: Colors.grey),
+      borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
+      borderSide: const BorderSide(width: 1, color: SHFColors.grey),
     ),
     focusedBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(width: 1, color: Colors.black12),
+      borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
+      borderSide: const BorderSide(width: 1, color: SHFColors.dark),
     ),
     errorBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(width: 1, color: Colors.red),
+      borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
+      borderSide: const BorderSide(width: 1, color: SHFColors.warning)
     ),
     focusedErrorBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(width: 2, color: Colors.orange),
+      borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
+      borderSide: const BorderSide(width: 2, color: SHFColors.warning),
     ),
   );
 
   static InputDecorationTheme darkInputDecorationTheme = InputDecorationTheme(
     errorMaxLines: 2,
-    prefixIconColor: Colors.grey,
-    suffixIconColor: Colors.grey,
-    labelStyle: const TextStyle().copyWith(fontSize: 14, color: Colors.white),
-    hintStyle: const TextStyle().copyWith(fontSize: 14, color: Colors.white),
-    errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal),
-    floatingLabelStyle: const TextStyle().copyWith(color: Colors.white.withOpacity(0.8)),
+    prefixIconColor: SHFColors.darkGrey,
+    suffixIconColor: SHFColors.darkGrey,
+
+    labelStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeMd, color: SHFColors.white),
+    hintStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeSm, color: SHFColors.white),
+    floatingLabelStyle: const TextStyle().copyWith(color: SHFColors.white.withOpacity(0.8)),
     border: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(width: 1, color: Colors.grey),
+      borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
+      borderSide: const BorderSide(width: 1, color: SHFColors.darkGrey),
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(width: 1, color: Colors.grey),
+      borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
+      borderSide: const BorderSide(width: 1, color: SHFColors.darkGrey),
     ),
     focusedBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(width: 1, color: Colors.white),
+      borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
+      borderSide: const BorderSide(width: 1, color: SHFColors.white),
     ),
     errorBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(width: 1, color: Colors.red),
+      borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
+      borderSide: const BorderSide(width: 1, color: SHFColors.warning),
     ),
     focusedErrorBorder: const OutlineInputBorder().copyWith(
-      borderRadius: BorderRadius.circular(14),
-      borderSide: const BorderSide(width: 2, color: Colors.orange),
+      borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
+      borderSide: const BorderSide(width: 2, color: SHFColors.warning),
     ),
   );
 }
