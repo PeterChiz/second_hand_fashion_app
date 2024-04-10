@@ -45,7 +45,7 @@ class CheckoutScreen extends StatelessWidget {
               ),
 
               ///Coupon TextField
-              SHFCouponCode(),
+              const SHFCouponCode(),
               const SizedBox(
                 height: SHFSizes.spaceBtwSections,
               ),
