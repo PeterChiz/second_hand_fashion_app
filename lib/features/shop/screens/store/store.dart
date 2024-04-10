@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/appbar/appbar.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/search_container.dart';
 import 'package:second_hand_fashion_app/common/widgets/layouts/grid_layout.dart';
@@ -11,6 +12,7 @@ import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
 import '../../../../common/widgets/appbar/tabbar.dart';
 import '../../../../common/widgets/brands/brand_cart.dart';
+import '../brand/all_brands.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({super.key});
@@ -66,7 +68,7 @@ class StoreScreen extends StatelessWidget {
                       SHFSectionHeading(
                           title: 'Featured Brand',
                           showActionButton: true,
-                          onPressed: () {}),
+                          onPressed: () => Get.to(() => const ALlBrandsScreen())),
                       const SizedBox(
                         height: SHFSizes.spaceBtwItems / 1.5,
                       ),

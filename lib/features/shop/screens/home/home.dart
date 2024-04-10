@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/product_cards/product_card_vertical.dart';
+import 'package:second_hand_fashion_app/features/shop/screens/all_products/all_products.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/home/widgets/promo_slider.dart';
 import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
@@ -77,7 +79,7 @@ class HomeScreen extends StatelessWidget {
                   ),
 
                   ///Heading
-                  SHFSectionHeading(title: 'Popular Products', onPressed: (){},),
+                  SHFSectionHeading(title: 'Popular Products', onPressed: () => Get.to(() => const AllProducts()),),
                   const SizedBox(
                     height: SHFSizes.spaceBtwSections,
                   ),

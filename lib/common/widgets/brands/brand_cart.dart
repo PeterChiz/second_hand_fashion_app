@@ -11,18 +11,20 @@ import '../texts/shf_brand_title_text_with_verified_icon.dart';
 
 class SHFBrandCard extends StatelessWidget {
   const SHFBrandCard({
-    super.key, required this.showBorder,
+    super.key, required this.showBorder, this.onTap,
   });
   final bool showBorder;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
+      ///Container Design
       child: SHFRoundedContainer(
-        padding: const EdgeInsets.all(SHFSizes.sm),
         showBorder: showBorder,
         backgroundColor: Colors.transparent,
+        padding: const EdgeInsets.all(SHFSizes.sm),
         child: Row(
           children: [
 
@@ -44,6 +46,8 @@ class SHFBrandCard extends StatelessWidget {
             ),
 
             ///Text
+            // [Expanded] & Colum [MainAxisSize.min] rất quan trọng
+            // dùng để giữ phần tử ở giữa theo chiều dọc và cũng để giữ văn bản bên trong các ranh giới
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
