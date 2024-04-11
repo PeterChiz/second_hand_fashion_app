@@ -35,9 +35,10 @@ dependencies:
   carousel_slider: ^4.2.1
   #có thể làm cho văn bản mở rộng hoặc hiển thị ít hơn
   readmore: ^3.0.0
-
-
   flutter_rating_bar: ^4.0.1
+
+  #Firebase
+  firebase_core: ^2.29.0
 
 
 #--------------PACKAGES END-----------------#

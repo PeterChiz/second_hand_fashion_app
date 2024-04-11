@@ -1,15 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:second_hand_fashion_app/common/widgets/appbar/appbar.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/product_reviews/widgets/progress_indicator_and_rating.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_reviews/widgets/rating_progress_indicator.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_reviews/widgets/user_review_card.dart';
-import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
-import 'package:second_hand_fashion_app/utils/device/device_utility.dart';
 
 import '../../../../common/widgets/products/ratings/rating_indicator.dart';
 

@@ -1,25 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
-import 'package:second_hand_fashion_app/common/widgets/appbar/appbar.dart';
-import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:second_hand_fashion_app/common/widgets/custom_shapes/curved_edges/curved_edges_widget.dart';
-import 'package:second_hand_fashion_app/common/widgets/icons/shf_circular_icon.dart';
-import 'package:second_hand_fashion_app/common/widgets/images/shf_rounded_image.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/button_add_to_cart_widget.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/product_attributes.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/product_detail_image_slider.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/product_meta_data.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/rating_share_widget.dart';
-import 'package:second_hand_fashion_app/utils/constants/colors.dart';
-import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
-import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
-import 'package:second_hand_fashion_app/utils/theme/custom_themes/bottom_sheet_theme.dart';
-import 'package:second_hand_fashion_app/utils/theme/theme.dart';
 
 import '../../../../utils/constants/sizes.dart';
 import '../product_reviews/product_reviews.dart';
@@ -30,30 +18,30 @@ class ProductDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      bottomNavigationBar: SHFBottomAddToCart(),
+      bottomNavigationBar: const SHFBottomAddToCart(),
       body: SingleChildScrollView(
         child: Column(
           children: [
             ///1. Product Image Slider
-            SHFProductImageSlider(),
+            const SHFProductImageSlider(),
 
             ///2. Product Details
             Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                   right: SHFSizes.defaultSpace,
                   left: SHFSizes.defaultSpace,
                   bottom: SHFSizes.defaultSpace),
               child: Column(
                 children: [
                   ///Rating & Share Button
-                  SHFRatingAndShare(),
+                  const SHFRatingAndShare(),
                   ///Price, Title, Stack &  Brand
-                  SHFProductMetaData(),
+                  const SHFProductMetaData(),
                   ///Attributes
-                  ProductAttributes(),
-                  SizedBox(height: SHFSizes.spaceBtwSections,),
+                  const ProductAttributes(),
+                  const SizedBox(height: SHFSizes.spaceBtwSections,),
                   ///Checkout Button
-                  SizedBox(width: double.infinity,child: ElevatedButton(onPressed: (){}, child: Text('Checkout'))),
+                  SizedBox(width: double.infinity,child: ElevatedButton(onPressed: (){}, child: const Text('Checkout'))),
                   const SizedBox(height: SHFSizes.spaceBtwSections,),
                   ///Description
                   const SHFSectionHeading(title: 'Description',showActionButton: false,),

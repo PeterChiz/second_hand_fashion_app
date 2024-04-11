@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 

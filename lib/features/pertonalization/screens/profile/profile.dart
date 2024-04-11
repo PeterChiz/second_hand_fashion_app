@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:second_hand_fashion_app/common/widgets/appbar/appbar.dart';
 import 'package:second_hand_fashion_app/common/widgets/images/shf_circular_image.dart';

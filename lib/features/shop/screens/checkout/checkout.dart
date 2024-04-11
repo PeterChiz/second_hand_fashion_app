@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:second_hand_fashion_app/common/widgets/products/cart/cart_item.dart';
 import 'package:second_hand_fashion_app/common/widgets/success_screen/success_screen.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/checkout/widgets/billing_address_section.dart';
