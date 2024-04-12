@@ -6,7 +6,7 @@ import 'package:second_hand_fashion_app/features/authentication/screens/onboardi
 import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_skip.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/text_strings.dart';
-import '../../controllers/onboarding_controller.dart';
+import '../../controllers/onboarding/onboarding_controller.dart';
 
 //giao diện lúc mới vào app
 class OnBoardingScreen extends StatelessWidget {

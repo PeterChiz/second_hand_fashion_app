@@ -8,6 +8,8 @@ import 'app.dart';
 import 'data/repositories/authentication_repository.dart';
 import 'firebase_options.dart';
 
+
+///Entry point of Flutter App
 Future<void> main() async {
 
   ///Widgets Building
