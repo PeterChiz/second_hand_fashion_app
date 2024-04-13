@@ -16,9 +16,11 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: SHFAppTheme.lightTheme,
       darkTheme: SHFAppTheme.darkTheme,
-      initialBinding: GeneralBinding(),
+      // initialBinding: GeneralBinding(),
       /// Hiển thị CircularProgressIndicator trong khi đợi xử lý, đặt trên nền màu chủ đạo của ứng dụng
-      home: const Scaffold(backgroundColor: SHFColors.primary, body: Center(child: CircularProgressIndicator(color: Colors.white,),),),
+      // home: const Scaffold(backgroundColor: SHFColors.primary, body: Center(child: CircularProgressIndicator(color: Colors.white,),),),
+      // home: const OnBoardingScreen(),
+
     );
   }
 }
