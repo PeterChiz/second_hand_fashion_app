@@ -12,10 +12,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      themeMode: ThemeMode.system,
-      theme: SHFAppTheme.lightTheme,
-      darkTheme: SHFAppTheme.darkTheme,
+    return MaterialApp(
+      // themeMode: ThemeMode.system,
+      // theme: SHFAppTheme.lightTheme,
+      // darkTheme: SHFAppTheme.darkTheme,
       // initialBinding: GeneralBinding(),
       /// Hiển thị CircularProgressIndicator trong khi đợi xử lý, đặt trên nền màu chủ đạo của ứng dụng
       // home: const Scaffold(backgroundColor: SHFColors.primary, body: Center(child: CircularProgressIndicator(color: Colors.white,),),),
