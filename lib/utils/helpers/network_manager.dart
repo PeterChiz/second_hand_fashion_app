@@ -17,7 +17,7 @@ class NetworkManager extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    //_connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
 
   ///Cập nhật trạng thái kết nối dựa trên những thay đổi về kết nối và hiển thị cửa sổ bật lên có liên quan khi không có kết nối internet

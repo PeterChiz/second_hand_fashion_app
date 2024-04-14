@@ -4,7 +4,6 @@ import 'package:second_hand_fashion_app/bindings/general_bindings.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/theme/theme.dart';
 
-import 'features/authentication/screens/onboarding/onboarding.dart';
 
 /// Sử dụng Class này để thiết lập themes cho ứng dụng và chọn theme dựa trên cài đặt hệ thống
 class App extends StatelessWidget {
@@ -12,15 +11,14 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // themeMode: ThemeMode.system,
-      // theme: SHFAppTheme.lightTheme,
-      // darkTheme: SHFAppTheme.darkTheme,
-      // initialBinding: GeneralBinding(),
+    return GetMaterialApp(
+      themeMode: ThemeMode.system,
+      theme: SHFAppTheme.lightTheme,
+      darkTheme: SHFAppTheme.darkTheme,
+      initialBinding: GeneralBinding(),
       /// Hiển thị CircularProgressIndicator trong khi đợi xử lý, đặt trên nền màu chủ đạo của ứng dụng
-      // home: const Scaffold(backgroundColor: SHFColors.primary, body: Center(child: CircularProgressIndicator(color: Colors.white,),),),
+      home: const Scaffold(backgroundColor: SHFColors.primary, body: Center(child: CircularProgressIndicator(color: Colors.white,),),),
       // home: const OnBoardingScreen(),
-
     );
   }
 }

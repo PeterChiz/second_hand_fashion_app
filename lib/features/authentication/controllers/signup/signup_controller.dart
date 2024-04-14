@@ -2,7 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
-import 'package:second_hand_fashion_app/data/repositories/authentication_repository.dart';
 import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/helpers/network_manager.dart';
 import 'package:second_hand_fashion_app/utils/popups/full_screen_loader.dart';
