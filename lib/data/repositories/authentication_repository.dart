@@ -1,9 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/login/login.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/onboarding.dart';
+import 'package:second_hand_fashion_app/features/authentication/screens/signup/verify_email.dart';
+import 'package:second_hand_fashion_app/utils/exceptions/firebase_auth_exceptions.dart';
+import 'package:second_hand_fashion_app/utils/exceptions/firebase_exception.dart';
+import 'package:second_hand_fashion_app/utils/exceptions/format_exceptions.dart';
+import 'package:second_hand_fashion_app/utils/exceptions/platform_exceptions.dart';
+import 'package:second_hand_fashion_app/utils/popups/full_screen_loader.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -36,15 +43,39 @@ class AuthenticationRepository extends GetxController {
 
   ///[EmailAuthentication] - SignIn
   ///[EmailAuthentication] - Register
-  // Future<UserCredential> registerWithEmailAndPassword(String email, String password) async{
-  //   try{
-  //     return await _auth.createUserWithEmailAndPassword(email: email, password: password);
-  //   } on FirebaseAuthException catch (e) {
-  //     throw SHFFi
-  //   }
-  // }
+  Future<UserCredential> registerWithEmailAndPassword(String email, String password) async{
+    try{
+      return await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      throw SHFFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw SHFFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const SHFFormatException();
+    } on PlatformException catch (e) {
+      throw SHFPlatformException(e.code).message;
+    } catch (e){
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
   ///[ReAuthentication] - ReAuthentication User
   ///[EmailVerification] Mail Verification
+  Future<void> sendEmailVerification() async{
+    try{
+      await _auth.currentUser?.sendEmailVerification();
+    }on FirebaseAuthException catch (e) {
+      throw SHFFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw SHFFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const SHFFormatException();
+    } on PlatformException catch (e) {
+      throw SHFPlatformException(e.code).message;
+    } catch (e){
+      throw 'Something went wrong. Please try again';
+    }
+  }
   ///[EmailAuthentication] - Forget Password
 
 //----------------Federated identity & social sign-in-------------------//
