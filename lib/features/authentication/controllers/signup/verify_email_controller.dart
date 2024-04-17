@@ -31,7 +31,7 @@ class VerifyEmailController extends GetxController {
     }
   }
 
-  ///Timer to automatically redirect on Email Verification
+  ///Hẹn giờ tự động chuyển hướng trên Xác minh Email
   setTimerForAutoRedirect() {
     Timer.periodic(const Duration(seconds: 1), (timer) async {
       await FirebaseAuth.instance.currentUser?.reload();
@@ -48,7 +48,7 @@ class VerifyEmailController extends GetxController {
     });
   }
 
-  ///Manually Check if Email Verified
+  ///Kiểm tra thủ công nếu email đã được xác minh
   checkEmailVerificationStatus() async{
     final currentUser = FirebaseAuth.instance.currentUser;
     if(currentUser != null && currentUser.emailVerified){

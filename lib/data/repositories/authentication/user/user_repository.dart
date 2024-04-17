@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/models/user_model.dart';
 
-import '../../../utils/exceptions/firebase_auth_exceptions.dart';
-import '../../../utils/exceptions/firebase_exception.dart';
-import '../../../utils/exceptions/format_exceptions.dart';
-import '../../../utils/exceptions/platform_exceptions.dart';
+import '../../../../utils/exceptions/firebase_auth_exceptions.dart';
+import '../../../../utils/exceptions/firebase_exception.dart';
+import '../../../../utils/exceptions/format_exceptions.dart';
+import '../../../../utils/exceptions/platform_exceptions.dart';
+
+
 
 ///Repository class for user-related operation
 class UserRepository extends GetxController {

@@ -12,14 +12,14 @@ class SHFValidator{
 
   static String? validateEmail(String? value){
     if(value == null || value.isEmpty){
-      return 'Email is required.';
+      return 'Email bắt buộc.';
     }
 
     //Biểu thức chính quy để kiểm tra định dạng email
     final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
     if(!emailRegExp.hasMatch(value)){
-      return 'Invalid email address.';
+      return 'Địa chỉ email không hợp lệ.';
     }
 
     return null;
@@ -27,27 +27,27 @@ class SHFValidator{
 
   static String? validatePassword(String? value){
     if (value == null || value.isEmpty){
-      return 'Password is required.';
+      return 'Mật khẩu bắt buộc.';
     }
 
     //Kiểm tra độ dài mật khẩu tối thiểu
     if (value.length < 6){
-      return 'Password must be at least 6 characters long.';
+      return 'Mật khẩu phải có độ dài ít nhất 6 ký tự.';
     }
 
     //Kiểm tra chữ hoa
     if(!value.contains(RegExp(r'[A-Z]'))){
-      return 'Password must contain at least one uppercase letter.';
+      return 'Mật khẩu phải chứa ít nhất một chữ cái viết hoa.';
     }
 
     //Kiểm tra chữ số
     if(!value.contains(RegExp(r'[0-9]'))){
-      return 'Password must contain at least one number.';
+      return 'Mật khẩu phải chứa ít nhất một chữ số.';
     }
 
     //Kiểm tra ký tự đặc biệt
     if(!value.contains(RegExp(r'[!@#$%^&*(),.?": {}|<>]'))){
-      return 'Password must contain at least one special character.';
+      return 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt.';
     }
 
     return null;
@@ -55,15 +55,14 @@ class SHFValidator{
 
   static String? validatePhoneNumber(String? value){
     if(value == null || value.isEmpty){
-      return 'Phone number is required.';
+      return 'Số điện thoại là bắt buộc.';
     }
 
-    //Biểu thức chính quy để xác thực số điện thoại (định dạng số điện thoại gồm 10 chữ số)
-    final phoneRegExp1 = RegExp(r'^\d{10}$');
-    final phoneRegExp2 = RegExp(r'^\d{11}$');
+    //Biểu thức chính quy để xác thực số điện thoại (định dạng số điện thoại gồm 10 hoặc 11 chữ số)
+    final phoneRegExp1 = RegExp(r'^\d{9}$');
 
-    if(phoneRegExp1.hasMatch(value) || phoneRegExp2.hasMatch(value)){
-      return 'Định dạng số điện thoại không hợp lệ (yêu cầu 10 chữ số hoặc 11 chữ số).';
+    if(phoneRegExp1.hasMatch(value)){
+      return 'Định dạng số điện thoại không hợp lệ (yêu cầu 10 chữ số).';
     }
 
     return null;

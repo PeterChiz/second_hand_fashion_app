@@ -31,7 +31,8 @@ class SHFImages{
   static const String searchAnimation = "assets/images/animations/72785-searching.json";
   static const String emptyAnimation = "assets/images/animations/72785-searching.json";
   static const String securityAnimation = "assets/images/animations/67263-security-icon-transparent.json";
-  static const String successfullyRegisterAnimation = "assets/images/animations/72462-check-register.json";
+  // static const String successfullyRegisterAnimation = "assets/images/animations/72462-check-register.json";
+  static const String successfullyRegisterAnimation = "assets/images/animations/104368-thank-you.json";
   static const String thankYouAnimation = "assets/images/animations/104368-thank-you.json";
   static const String paymentSuccessFullAnimation = "assets/images/animations/120978-payment-successful.json";
   static const String loadingJuggleAnimation = "assets/images/animations/141397-loading-juggle.json";

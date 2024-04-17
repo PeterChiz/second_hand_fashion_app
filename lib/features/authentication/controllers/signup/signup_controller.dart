@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
 import 'package:second_hand_fashion_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:second_hand_fashion_app/features/authentication/controllers/signup/verify_email_controller.dart';
-import 'package:second_hand_fashion_app/data/repositories/user/user_repository.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/signup/verify_email.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/models/user_model.dart';
 import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/helpers/network_manager.dart';
 import 'package:second_hand_fashion_app/utils/popups/full_screen_loader.dart';
+
+import '../../../../data/repositories/authentication/user/user_repository.dart';
 
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();
@@ -34,12 +35,18 @@ class SignupController extends GetxController {
 
       //Kiểm tra kết nối Internet
       final isConnected = await NetworkManager.instance.isConnected();
-      if (!isConnected) return;
+      if (!isConnected) {
+        //Remove Loader
+        SHFFullScreenLoader.stopLoading();
+        return;
+      }
 
       //Form xác thực
-      if (!signupFormKey.currentState!.validate()) return;
-
-
+      if (!signupFormKey.currentState!.validate()) {
+        //Remove Loader
+        SHFFullScreenLoader.stopLoading();
+        return;
+      }
 
       //Privacy Policy Check
       if (!privacyPolicy.value) {
