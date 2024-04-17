@@ -23,12 +23,12 @@ class SHFBrandShowcase extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: SHFSizes.spaceBtwItems),
       child: Column(
         children: [
-          ///Brand with product Count
+          ///Brand voi so luong product
           const SHFBrandCard(showBorder: false),
           const SizedBox(height: SHFSizes.spaceBtwItems,),
 
 
-          ///Brand top 3 Product Images
+          ///3 anh top brand
           Row(
               children: images.map((image) => brandTopProductImageWidget(image, context)).toList()
           )

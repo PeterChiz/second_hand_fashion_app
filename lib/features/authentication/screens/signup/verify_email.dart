@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:second_hand_fashion_app/common/widgets/success_screen/success_screen.dart';
+import 'package:second_hand_fashion_app/data/repositories/authentication/authentication_repository.dart';
+import 'package:second_hand_fashion_app/features/authentication/controllers/signup/verify_email_controller.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/login/login.dart';
 import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
@@ -15,7 +16,7 @@ class VerifyEmailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(const VerifyEmailScreen());
+    final controller = Get.put(VerifyEmailController());
     return Scaffold(
       /// The close icon in the app bar is used to log out the user and redirect them to the login screen.
       /// This approach is taken to handle scenarios where the user enters the registration process,
@@ -25,7 +26,7 @@ class VerifyEmailScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-              onPressed: () => Get.offAll(() => const LoginScreen()),
+              onPressed: () => AuthenticationRepository.instance.logout(),
               icon: const Icon(CupertinoIcons.clear))
         ],
       ),
@@ -52,7 +53,7 @@ class VerifyEmailScreen extends StatelessWidget {
                 height: SHFSizes.spaceBtwItems,
               ),
               Text(
-                email ??  '',
+                email ?? '',
                 style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.center,
               ),
@@ -72,12 +73,8 @@ class VerifyEmailScreen extends StatelessWidget {
               SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                      onPressed: () => Get.to(() => SuccessScreen(
-                            image: SHFImages.staticSuccessIllustration,
-                            title: SHFTexts.yourAccountCreatedTitle,
-                            subTitle: SHFTexts.yourAccountCreatedSubTitle,
-                            onPressed: () => Get.to(() => const LoginScreen()),
-                          )),
+                      onPressed: () =>
+                          controller.checkEmailVerificationStatus(),
                       child: const Text(SHFTexts.shfContinue))),
               const SizedBox(
                 height: SHFSizes.spaceBtwItems,
@@ -85,7 +82,7 @@ class VerifyEmailScreen extends StatelessWidget {
               SizedBox(
                   width: double.infinity,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () => controller.sendEmailVerification(),
                       child: const Text(SHFTexts.resendEmail))),
             ],
           ),

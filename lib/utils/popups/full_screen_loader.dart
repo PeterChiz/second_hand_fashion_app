@@ -5,20 +5,21 @@ import 'package:second_hand_fashion_app/common/widgets/loaders/animation_loader.
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
-///A utility class foe managing a full-screen loading dialog
+///Lop utility dung de quan ly hop thoai tai toan man hinh
 class SHFFullScreenLoader{
-  ///Open a full-screen loading dialog with a given text and animation
-  ///This method doesn't return anything
+  ///Mo hop thoai tai man hinh voi van ban va hoat anh nhat dinh
+  ///Method nay khong tra ve
   ///
-  /// Parameters:
-  /// text: The text to br displayed in the loading dialog
-  /// animation: the lottie animation to br shown
+  /// Thong so:
+  /// text: Van ban se duoc hien thi trong hop thoai tai
+  /// animation: hoat anh se duoc show
 
   static void openLoadingDialog(String text, String animation){
     showDialog(
-        context: Get.overlayContext!,
-        barrierDismissible: false,
+        context: Get.overlayContext!, //Su dung Get.overlayContext cho overlay dialogs
+        barrierDismissible: false, //Khong the loai bo hop thoai bang cach nhan vao ben trong hop thoai
         builder: (_) => PopScope(
+          canPop: false, //vo hieu hoa popping bang nut quay lai
             child: Container(
               color: SHFHelperFunctions.isDarkMode(Get.context!) ? SHFColors.dark : SHFColors.white,
               width: double.infinity,
@@ -33,7 +34,7 @@ class SHFFullScreenLoader{
     );
   }
   ///Stop the currently open loading dialog
-  ///This method doesn't return anything
+  ///Method nay khong tra ve bat cu gi
 
   static stopLoading(){
     Navigator.of(Get.overlayContext!).pop(); //Close the dialog using the Navigator

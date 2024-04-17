@@ -1,7 +1,4 @@
-import 'package:get/get.dart';
-import 'package:second_hand_fashion_app/common/widgets/list_tiles/user_profile_tile.dart';
 import 'package:second_hand_fashion_app/utils/formatters/formatter.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 ///Model class representing user data
 class UserModel {

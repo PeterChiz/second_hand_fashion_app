@@ -25,9 +25,20 @@ class SHFSignupForm extends StatelessWidget {
             children: [
               Expanded(
                 child: TextFormField(
+                  controller: controller.lastName,
+                  validator: (value) =>
+                      SHFValidator.validationEmptyText('Họ và tên lót', value),
+                  expands: false,
+                  decoration: const InputDecoration(
+                      labelText: SHFTexts.lastName,
+                      prefixIcon: Icon(Iconsax.user)),
+                ),
+              ),
+              Expanded(
+                child: TextFormField(
                   controller: controller.firstName,
                   validator: (value) =>
-                      SHFValidator.validationEmptyText('First name', value),
+                      SHFValidator.validationEmptyText('Tên', value),
                   expands: false,
                   decoration: const InputDecoration(
                       labelText: SHFTexts.firstName,
@@ -37,17 +48,6 @@ class SHFSignupForm extends StatelessWidget {
               const SizedBox(
                 width: SHFSizes.spaceBtwInputFields,
               ),
-              Expanded(
-                child: TextFormField(
-                  controller: controller.lastName,
-                  validator: (value) =>
-                      SHFValidator.validationEmptyText('Last name', value),
-                  expands: false,
-                  decoration: const InputDecoration(
-                      labelText: SHFTexts.lastName,
-                      prefixIcon: Icon(Iconsax.user)),
-                ),
-              ),
             ],
           ),
           const SizedBox(height: SHFSizes.spaceBtwInputFields),
@@ -55,7 +55,7 @@ class SHFSignupForm extends StatelessWidget {
           /// username
           TextFormField(
             validator: (value) =>
-                SHFValidator.validationEmptyText('username', value),
+                SHFValidator.validationEmptyText('Tên tài khoản', value),
             controller: controller.userName,
             expands: false,
             decoration: const InputDecoration(

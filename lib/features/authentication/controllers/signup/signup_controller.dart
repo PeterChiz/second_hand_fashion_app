@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
-import 'package:second_hand_fashion_app/data/repositories/authentication_repository.dart';
+import 'package:second_hand_fashion_app/data/repositories/authentication/authentication_repository.dart';
+import 'package:second_hand_fashion_app/features/authentication/controllers/signup/verify_email_controller.dart';
 import 'package:second_hand_fashion_app/data/repositories/user/user_repository.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/signup/verify_email.dart';
-import 'package:second_hand_fashion_app/features/authentication/screens/signup/widgets/signup_form.dart';
-import 'package:second_hand_fashion_app/features/authentication/screens/signup/widgets/terms_conditions_checkbox.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/models/user_model.dart';
 import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/helpers/network_manager.dart';
@@ -31,28 +30,30 @@ class SignupController extends GetxController {
     try {
       //Start Loading
       SHFFullScreenLoader.openLoadingDialog(
-          'We are processing your information...', SHFImages.docerAnimation);
+          'Đang xử lý thông tin của bạn', SHFImages.docerAnimation);
 
-      //Check Internet Connectivity
+      //Kiểm tra kết nối Internet
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) return;
 
-      //Form Validation
+      //Form xác thực
       if (!signupFormKey.currentState!.validate()) return;
+
+
 
       //Privacy Policy Check
       if (!privacyPolicy.value) {
         SHFLoaders.warningSnackBar(
-            title: 'Accept Privacy Policy',
+            title: 'Chấp nhận Chính sách quyền riêng tư',
             message:
-                'In order to create account, you must have to read and accept the Privacy Policy & Terms of Use');
+                'Để tạo tài khoản, bạn phải đọc và chấp nhận Chính sách quyền riêng tư & Điều khoản sử dụng');
         return;
       }
-      //Register user in the Firebase Authentication & Save user data in the Firebase
+      //Đăng ký người dùng trong Xác thực Firebase & Lưu dữ liệu người dùng trong Firebase
       final userCredential = await AuthenticationRepository.instance
           .registerWithEmailAndPassword(
               email.text.trim(), password.text.trim());
-      //Save Authentication user data in the Firebase Firestore
+      //Lưu dữ liệu người dùng Xác thực trong Firebase Firestore
       final newUser = UserModel(
           id: userCredential.user!.uid,
           firstName: firstName.text.trim(),
@@ -68,15 +69,15 @@ class SignupController extends GetxController {
       //Remove Loader
       SHFFullScreenLoader.stopLoading();
 
-      //Show Success Message
-      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'Your account has been created! Verify email to continue.');
+      //Hiển thị thông báo thành công
+      SHFLoaders.successSnackBar(title: 'Chúc mừng', message: 'Tài khoản của bạn đã được tạo! Xác minh email để tiếp tục.');
       //Move to Verify Email Screen
-      Get.to(() => const VerifyEmailScreen());
+      Get.to(() => VerifyEmailScreen(email: email.text.trim(),));
     } catch (e) {
       //Remove Loader
       SHFFullScreenLoader.stopLoading();
 
-      //Show some Generic Error to the user
+      //Hiển thị lỗi cho người dùng
       SHFLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
     }
   }

@@ -15,7 +15,7 @@ class SHFValidator{
       return 'Email is required.';
     }
 
-    //Biểu thức chính quy để xác thực email
+    //Biểu thức chính quy để kiểm tra định dạng email
     final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
     if(!emailRegExp.hasMatch(value)){
@@ -59,10 +59,11 @@ class SHFValidator{
     }
 
     //Biểu thức chính quy để xác thực số điện thoại (định dạng số điện thoại gồm 10 chữ số)
-    final phoneRegExp = RegExp(r'^\d{10}$');
+    final phoneRegExp1 = RegExp(r'^\d{10}$');
+    final phoneRegExp2 = RegExp(r'^\d{11}$');
 
-    if(phoneRegExp.hasMatch(value)){
-      return 'Invalid phone number format (10 digits required).';
+    if(phoneRegExp1.hasMatch(value) || phoneRegExp2.hasMatch(value)){
+      return 'Định dạng số điện thoại không hợp lệ (yêu cầu 10 chữ số hoặc 11 chữ số).';
     }
 
     return null;

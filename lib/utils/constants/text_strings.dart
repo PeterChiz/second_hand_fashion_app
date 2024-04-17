@@ -19,13 +19,18 @@ class SHFTexts{
   static const String homeAppbarSubTitle = "Hoa Second Hand Fashion";
 
 
-  static const String firstName = "First Name";
-  static const String lastName = "Last Name";
+  // static const String firstName = "First Name";
+  static const String firstName = "Tên";
+  static const String lastName = "Họ và tên lót";
+  // static const String lastName = "Last Name";
   static const String email = "E-Mail";
-  static const String password = "Password";
+  static const String password = "Mật khẩu";
+  // static const String password = "Password";
   static const String newPassword = "New Password";
-  static const String userName = "Username";
-  static const String phoneNo = "Phone Number";
+  // static const String userName = "Username";
+  static const String userName = "Tên tài khoản";
+  // static const String phoneNo = "Phone Number";
+  static const String phoneNo = "Số điện thoại";
   static const String rememberMe = "Remember Me";
   static const String forgetPassword = "Forget Password";
   static const String signIn = "Đăng nhập";
@@ -45,7 +50,8 @@ class SHFTexts{
   // static const String loginTitle = "Welcome back";
   static const String loginSubTitle = "Cùng khám phá thế giới thời trang với đủ mọi thể loại";
   // static const String loginSubTitle = "Discover Limitless Choices and Unmatched Convenience";
-  static const String signupTitle = "Let's create account";
+  // static const String signupTitle = "Let's create account";
+  static const String signupTitle = "Bắt đầu tạo tài khoản nào";
   static const String forgetPasswordTitle = "Forget Password";
   static const String forgetPasswordSubTitle = "Don't worry sometimes people can forget too, enter tour email and we will send you a password reset link.";
   static const String changeYourPasswordTitle = "Password Reset Email Sent";

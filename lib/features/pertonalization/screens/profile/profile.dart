@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
     return  Scaffold(
       appBar: const SHFAppBar(
         showBackArrow: true,
-        title: Text('Profile'),
+        title: Text('Hồ sơ'),
       ),
       ///Body
       body: SingleChildScrollView(
@@ -30,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SHFCircularImage(image: SHFImages.user, width: 80, height: 80,),
-                    TextButton(onPressed: (){}, child: const Text('Change Profile Picture')),
+                    TextButton(onPressed: (){}, child: const Text('Thay đổi ảnh đại diện')),
                   ],
                 ),
               ),
@@ -39,25 +39,25 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: SHFSizes.spaceBtwItems /2,),
               const Divider(),
               const SizedBox(height: SHFSizes.spaceBtwItems,),
-              const SHFSectionHeading(title: 'Profile Infomation', showActionButton: false,),
+              const SHFSectionHeading(title: 'Thông tin hồ sơ', showActionButton: false,),
               const SizedBox(height: SHFSizes.spaceBtwItems,),
 
-              SHFProfileMenu(onPressed: () {  },title: 'Name',value: 'Bùi Thiện Chí',),
-              SHFProfileMenu(onPressed: () {  },title: 'UserName',value: 'chiz',),
+              SHFProfileMenu(onPressed: () {  },title: 'Tên KH',value: 'Bùi Thiện Chí',),
+              SHFProfileMenu(onPressed: () {  },title: 'Tên TK',value: 'chiz',),
               
               const SizedBox(height: SHFSizes.spaceBtwItems,),
               const Divider(),
               const SizedBox(height: SHFSizes.spaceBtwItems,),
               
               ///Heading Personal Info
-              const SHFSectionHeading(title: 'Personal Information', showActionButton: false,),
+              const SHFSectionHeading(title: 'Thông tin cá nhân ', showActionButton: false,),
               const SizedBox(height: SHFSizes.spaceBtwItems,),
 
-              SHFProfileMenu(onPressed: () {  },title: 'User ID',value: '12321', icon: Iconsax.copy,),
+              SHFProfileMenu(onPressed: () {  },title: 'Mã ID',value: '12321', icon: Iconsax.copy,),
               SHFProfileMenu(onPressed: () {  },title: 'E-mail',value: 'chi.bt.62cntt@ntu.edu.vn',),
-              SHFProfileMenu(onPressed: () {  },title: 'Phone Number',value: '0773872129',),
-              SHFProfileMenu(onPressed: () {  },title: 'Sex',value: 'Male',),
-              SHFProfileMenu(onPressed: () {  },title: 'Date of Birth',value: '10, Oct, 1994',),
+              SHFProfileMenu(onPressed: () {  },title: 'Số điện thoại',value: '0773872129',),
+              SHFProfileMenu(onPressed: () {  },title: 'Giới tính',value: 'Male',),
+              SHFProfileMenu(onPressed: () {  },title: 'Năm sinh',value: '10, Oct, 1994',),
 
               const Divider(),
               const SizedBox(height: SHFSizes.spaceBtwItems,),

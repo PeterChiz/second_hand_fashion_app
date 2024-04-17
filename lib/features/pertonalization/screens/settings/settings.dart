@@ -12,6 +12,7 @@ import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 
 import '../../../../common/widgets/list_tiles/user_profile_tile.dart';
+import '../../../authentication/screens/login/login.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -28,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   SHFAppBar(
                     title: Text(
-                      'Account',
+                      'Tài khoản',
                       style: Theme.of(context)
                           .textTheme
                           .headlineMedium!
@@ -52,7 +53,7 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   ///Account Setting
                    const SHFSectionHeading(
-                    title: 'Account Setting',
+                    title: 'Thiết lập tài khoản',
                     showActionButton: false,
                   ),
                    const SizedBox(
@@ -61,40 +62,40 @@ class SettingsScreen extends StatelessWidget {
 
                     SHFSettingMenuTile(
                     icon: Iconsax.safe_home,
-                    title: 'My Address',
-                    subTitle: 'Set shopping delivery address',
+                    title: 'Địa chỉ',
+                    subTitle: 'Địa chỉ nhận hàng',
                      onTap: () => Get.to(() => const UserAddressScreen()),
                   ),
                    const SHFSettingMenuTile(
                     icon: Iconsax.shopping_cart,
-                    title: 'My Cart',
-                    subTitle: 'Add, remove products and move to checkout',
+                    title: 'Giỏ hàng của tôi',
+                    subTitle: 'Thêm, xóa sản phẩm và chuyển sang thanh toán',
                   ),
                   SHFSettingMenuTile(
                     icon: Iconsax.bag_tick,
-                    title: 'My Order',
-                    subTitle: 'In-progress and Completed Orders',
+                    title: 'Đơn hàng của tôi',
+                    subTitle: 'Đơn hàng đang thực hiện và đã hoàn thành',
                      onTap: () => Get.to(() => const OrderScreen()),
                   ),
                    const SHFSettingMenuTile(
                     icon: Iconsax.bank,
-                    title: 'Bank Account',
-                    subTitle: 'Withdraw balance to registered bank account',
+                    title: 'Tài khoản ngân hàng',
+                    subTitle: 'Rút số dư về tài khoản ngân hàng đã đăng ký',
                   ),
                    const SHFSettingMenuTile(
                     icon: Iconsax.discount_shape,
-                    title: 'My Coupons',
-                    subTitle: 'List of all the discount coupons',
+                    title: 'Phiếu giảm giá của tôi',
+                    subTitle: 'Danh sách tất cả các phiếu giảm giá',
                   ),
                    const SHFSettingMenuTile(
                     icon: Iconsax.notification,
-                    title: 'Notification',
-                    subTitle: 'Set any kind of notification message',
+                    title: 'Thông báo',
+                    subTitle: 'Đặt bất kỳ loại tin nhắn thông báo nào',
                   ),
                    const SHFSettingMenuTile(
                     icon: Iconsax.security_card,
-                    title: 'Account Primary',
-                    subTitle: 'Manage data usage and connected accounts',
+                    title: 'Tài khoản chính',
+                    subTitle: 'Quản lý việc sử dụng dữ liệu và tài khoản được kết nối',
                   ),
 
                   ///AppSetting
@@ -102,7 +103,7 @@ class SettingsScreen extends StatelessWidget {
                     height: SHFSizes.spaceBtwSections,
                   ),
                    const SHFSectionHeading(
-                    title: 'Account Setting',
+                    title: 'Thiết lập tài khoản',
                     showActionButton: false,
                   ),
                    const SizedBox(
@@ -111,24 +112,24 @@ class SettingsScreen extends StatelessWidget {
                    const SHFSettingMenuTile(
                       icon: Iconsax.document_upload,
                       title: 'Load Data',
-                      subTitle: 'Up load data to your Cloud Firebase'),
+                      subTitle: 'Tải dữ liệu lên Cloud Firebase của bạn'),
                   SHFSettingMenuTile(
                     icon: Iconsax.document_upload,
-                    title: 'Geolocation',
-                    subTitle: 'Set recommendation based on location',
+                    title: 'Định vị',
+                    subTitle: 'Định vị vị trí của bạn',
                     trailing: Switch(value: true, onChanged: (value) {}),
                   ),
                   SHFSettingMenuTile(
                     icon: Iconsax.location,
-                    title: 'Safe Mode',
-                    subTitle: 'Search result is safe for all ages',
+                    title: 'Chế độ an toàn',
+                    subTitle: 'Kết quả tìm kiếm an toàn cho mọi lứa tuổi',
                     trailing: Switch(value: false, onChanged: (value) {}),
                   ),
 
                   SHFSettingMenuTile(
                     icon: Iconsax.image,
-                    title: 'HD Image Quality',
-                    subTitle: 'Set image quality to be seen',
+                    title: 'Chất lượng hình ảnh HD',
+                    subTitle: 'Đặt chất lượng hình ảnh để xem',
                     trailing: Switch(value: false, onChanged: (value) {}),
                   ),
                   ///Logout Button
@@ -137,7 +138,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   SizedBox(
                     width: double.infinity,
-                    child: OutlinedButton(onPressed: (){}, child: const Text('Logout'),),
+                    child: OutlinedButton(onPressed: () => Get.to(() => const LoginScreen()), child: const Text('ĐĂNG XUẤT'),),
                   ),
                   const SizedBox(height: SHFSizes.spaceBtwSections * 2.5,),
                 ],
