@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
 import 'package:second_hand_fashion_app/data/repositories/authentication/authentication_repository.dart';
+import 'package:second_hand_fashion_app/features/pertonalization/controllers/user_controller.dart';
 
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/helpers/network_manager.dart';
@@ -16,13 +17,14 @@ class LoginController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  final userController = Get.put(UserController());
 
   @override
-  void onInit() {
-    email.text = localStorage.read('REMEMBER_ME_EMAIL');
-    password.text = localStorage.read('REMEMBER_ME_PASSWORD');
-    super.onInit();
-  }
+  // void onInit() {
+  //   email.text = localStorage.read('REMEMBER_ME_EMAIL');
+  //   password.text = localStorage.read('REMEMBER_ME_PASSWORD');
+  //   super.onInit();
+  // }
 
   ///Email & Password SignIn
   Future<void> emailAndPasswordSignIn() async {
@@ -60,6 +62,38 @@ class LoginController extends GetxController {
       //Chuyen huong nguoi dung
       AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
+      SHFFullScreenLoader.stopLoading();
+      SHFLoaders.errorSnackBar(title: 'Oh snap', message: e.toString());
+    }
+  }
+
+  ///Google SignIn Authentication
+  Future<void> googleSignIn() async{
+    try{
+      //Start loading
+      SHFFullScreenLoader.openLoadingDialog('Đang đăng nhập', SHFImages.docerAnimation);
+
+      //Check ket noi internet
+      final isConnectted = await NetworkManager.instance.isConnected();
+      if(!isConnectted){
+        SHFFullScreenLoader.stopLoading();
+        return;
+      }
+
+      //Google Authentication
+      final userCredentials = await AuthenticationRepository.instance.signInWithGoogle();
+
+      //Save User Record
+      await userController.saveUserRecord(userCredentials);
+
+      //Remove Loader
+      SHFFullScreenLoader.stopLoading();
+
+      //Redirect
+      AuthenticationRepository.instance.screenRedirect();
+
+    } catch(e){
+      //Remove Loader
       SHFFullScreenLoader.stopLoading();
       SHFLoaders.errorSnackBar(title: 'Oh snap', message: e.toString());
     }

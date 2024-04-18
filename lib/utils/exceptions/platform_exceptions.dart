@@ -20,7 +20,6 @@ class SHFPlatformException implements Exception {
         return 'The sign-in provider is disabled for your Firebase project.';
       case 'session-cookie-expired':
         return 'The Firebase session cookie has expired. Please sign in again.';
-
       case 'uid-already-exists':
         return 'The provided user ID is already in use by another user.';
       case 'sign_in_failed':
@@ -31,9 +30,13 @@ class SHFPlatformException implements Exception {
         return 'Internal error. Please try again later.';
       case 'invalid-verification-code':
         return 'Invalid verification code. Please enter a valid code.';
+      case 'invalid-verification-id':
+        return 'Invalid verification ID. Please request a new verification code.';
+      case 'quota-exceeded':
+        return 'Quota exceeded. Please try again later.';
+
       default:
-        throw const FormatException(
-            'An unexpected Firebase error occurred. Please try again.');
+        return 'An unexpected platform error occurred. Please try again.';
     }
   }
 }

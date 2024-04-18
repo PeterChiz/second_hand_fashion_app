@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/login/login.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/signup/verify_email.dart';
@@ -19,14 +20,14 @@ class AuthenticationRepository extends GetxController {
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
 
-  ///Called from main.dart on app launch
-  @override
-  void onReady() {
-    //Loại bỏ màn hình chờ gốc
-    FlutterNativeSplash.remove();
-    //Chuyển hướng đến màn hình thích hợp
-    screenRedirect();
-  }
+  ///Được gọi từ main.dart khi khởi chạy ứng dụng
+    @override
+    void onReady() {
+      //Loại bỏ màn hình chờ gốc
+      FlutterNativeSplash.remove();
+      //Chuyển hướng đến màn hình thích hợp
+      screenRedirect();
+    }
 
   ///Function xác định màn hình liên quan và chuyển hướng phù hợp
   void screenRedirect() async {
@@ -74,6 +75,7 @@ class AuthenticationRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
   ///[EmailAuthentication] - Register
   Future<UserCredential> registerWithEmailAndPassword(
       String email, String password) async {
@@ -112,10 +114,53 @@ class AuthenticationRepository extends GetxController {
   }
 
   ///[EmailAuthentication] - Forget Password
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw SHFFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw SHFFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const SHFFormatException();
+    } on PlatformException catch (e) {
+      throw SHFPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
 
 //----------------Federated identity & social sign-in-------------------//
 
   ///[GoogleAuthentication] - Google
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      //Kich hoat luong xac thuc
+      final GoogleSignInAccount? userAccount = await GoogleSignIn().signIn();
+
+      //Lay chi tiet xac thuc tu ban dau
+      final GoogleSignInAuthentication? googleAuth =
+          await userAccount?.authentication;
+
+      //tao thong tin xac thuc moi
+      final credentials = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
+
+      //sau khi dang nhap, return UserCredential
+      return await _auth.signInWithCredential(credentials);
+    } on FirebaseAuthException catch (e) {
+      throw SHFFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw SHFFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const SHFFormatException();
+    } on PlatformException catch (e) {
+      throw SHFPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
   ///[FacebookAuthentication] - Facebook
 
 //----------------./end Federated identity & social sign-in-------------------//
@@ -137,5 +182,6 @@ class AuthenticationRepository extends GetxController {
       throw 'Something went wrong. Please try again';
     }
   }
+
   ///DELETE USER - Remove user Auth and Firestore Account
 }
