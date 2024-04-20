@@ -1,21 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:second_hand_fashion_app/utils/formatters/formatter.dart';
 
 ///Model class representing user data
 class UserModel {
-  //Keep those values final which you do not want to update
+  //Giữ những giá trị cuối cùng mà bạn không muốn cập nhật
   final String id;
-  String firstName;
   String lastName;
+  String firstName;
   final String userName;
   final String email;
   String phoneNumber;
   String profilePicture;
 
-  ///Constructor for UserModel
+  ///Hàm tạo cho UserModel
   UserModel({
     required this.id,
-    required this.firstName,
     required this.lastName,
+    required this.firstName,
     required this.userName,
     required this.email,
     required this.phoneNumber,
@@ -35,8 +36,8 @@ class UserModel {
   ///Static function to generate a username from the full name
   static String generateUsername(fullName) {
     List<String> nameParts = fullName.split(" ");
-    String firstName = nameParts[0].toLowerCase();
     String lastName = nameParts.length > 1 ? nameParts[1].toLowerCase() : "";
+    String firstName = nameParts[0].toLowerCase();
 
     String camelCaseUsername = "$lastName$firstName";
     String usernameWithPrefix = "ctw_$camelCaseUsername"; //add ctw_ Prefix
@@ -46,18 +47,18 @@ class UserModel {
   ///Static function to create an empty user model
   static UserModel empty() => UserModel(
       id: '',
-      firstName: '',
       lastName: '',
+      firstName: '',
       userName: '',
       email: '',
       phoneNumber: '',
       profilePicture: '');
 
-  ///Convert model to JSON structure for storing data in Firebase
+  ///Chuyển đổi mô hình sang cấu trúc JSON để lưu trữ dữ liệu trong Firebase
   Map<String, dynamic> toJson() {
     return {
-      'FirstName': firstName,
       'LastName': lastName,
+      'FirstName': firstName,
       'UserName': userName,
       'Email': email,
       'PhoneNumber': phoneNumber,
@@ -65,18 +66,20 @@ class UserModel {
     };
   }
 
-  ///Factory method to create a UserModel from a Firebase document snapshot
-  // factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
-  //   if (document.data() != null) {
-  //     final data = document.data();
-  //     return UserModel(
-  //         id: document.id,
-  //         firstName: data?['FirstName'] ?? '',
-  //         lastName: data?['LastName'] ?? '',
-  //         userName: data?['UserName'] ?? '',
-  //         email: data?['Email'] ?? '',
-  //         phoneNumber: data?['PhoneNumber'] ?? '',
-  //         profilePicture: data?['ProfilePicture'] ?? '');
-  //   }
-  // }
+  ///Factory method để tạo UserModel từ Firebase document snapshot
+  factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+    if (document.data() != null) {
+      final data = document.data()!;
+      return UserModel(
+          id: document.id,
+          lastName: data['LastName'] ?? '',
+          firstName: data['FirstName'] ?? '',
+          userName: data['UserName'] ?? '',
+          email: data['Email'] ?? '',
+          phoneNumber: data['PhoneNumber'] ?? '',
+          profilePicture: data['ProfilePicture'] ?? '');
+    }else{
+      return UserModel.empty();
+    }
+  }
 }

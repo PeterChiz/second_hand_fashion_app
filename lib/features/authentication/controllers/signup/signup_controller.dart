@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
 import 'package:second_hand_fashion_app/data/repositories/authentication/authentication_repository.dart';
-import 'package:second_hand_fashion_app/features/authentication/controllers/signup/verify_email_controller.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/signup/verify_email.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/models/user_model.dart';
 import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
@@ -57,14 +56,12 @@ class SignupController extends GetxController {
         return;
       }
       //Đăng ký người dùng trong Xác thực Firebase & Lưu dữ liệu người dùng trong Firebase
-      final userCredential = await AuthenticationRepository.instance
-          .registerWithEmailAndPassword(
-              email.text.trim(), password.text.trim());
+      final userCredential = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());
       //Lưu dữ liệu người dùng Xác thực trong Firebase Firestore
       final newUser = UserModel(
           id: userCredential.user!.uid,
-          firstName: firstName.text.trim(),
           lastName: lastName.text.trim(),
+          firstName: firstName.text.trim(),
           userName: userName.text.trim(),
           email: email.text.trim(),
           phoneNumber: phoneNumber.text.trim(),

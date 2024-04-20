@@ -15,7 +15,7 @@ class SHFTexts{
   // static const String onBoardingSubTitle3 = "From Our Doorstep to Yours - Swift, Secure and Contactless Delivery!";
 
   //Home
-  static const String homeAppbarTitle = "Good day for shopping";
+  static const String homeAppbarTitle = "Chúc bạn mua sắm vui vẻ <3";
   static const String homeAppbarSubTitle = "Hoa Second Hand Fashion";
 
 
@@ -82,5 +82,6 @@ class SHFTexts{
   // static const String search = "Search in Store";
   // static const String poCategory = "Popular Categories";
 
-
+  // static const String warningDeleteAccount = 'Are you sure you want to delete your account permanently? This is not reversible and all of your data will be removed permanently';
+  static const String warningDeleteAccount = 'Bạn có chắc chắn muốn xóa tài khoản của mình vĩnh viễn không? Điều này không thể đảo ngược và tất cả dữ liệu của bạn sẽ bị xóa vĩnh viễn';
 }
