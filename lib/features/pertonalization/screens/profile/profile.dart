@@ -6,6 +6,7 @@ import 'package:second_hand_fashion_app/common/widgets/images/shf_circular_image
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/screens/profile/widgets/change_name.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/screens/profile/widgets/profile_menu.dart';
+import 'package:second_hand_fashion_app/features/shop/screens/home/widgets/shimmer.dart';
 import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 
@@ -17,16 +18,16 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = UserController.instance;
-    return  Scaffold(
+    return Scaffold(
       appBar: const SHFAppBar(
         showBackArrow: true,
         title: Text('Hồ sơ'),
       ),
+
       ///Body
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(SHFSizes.defaultSpace
-          ),
+          padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
             children: [
               ///Profile Picture
@@ -34,45 +35,111 @@ class ProfileScreen extends StatelessWidget {
                 width: double.infinity,
                 child: Column(
                   children: [
-                    const SHFCircularImage(image: SHFImages.user, width: 80, height: 80,),
-                    TextButton(onPressed: (){}, child: const Text('Thay đổi ảnh đại diện')),
+                    Obx(() {
+                      final networkImage = controller.user.value.profilePicture;
+                      final image =
+                          networkImage.isNotEmpty ? networkImage : SHFImages.user;
+
+                      return controller.imageUploading.value
+                          ? const SHFShimmerEffect(
+                              width: 80,
+                              height: 80,
+                              radius: 80,
+                            )
+                          : SHFCircularImage(
+                              image: image,
+                              width: 80,
+                              height: 80,
+                              isNetworkImage: networkImage.isNotEmpty);
+                    }),
+                    TextButton(
+                        onPressed: () => controller.uploadUserProfilePicture(),
+                        child: const Text('Thay đổi ảnh đại diện')),
                   ],
                 ),
               ),
 
               ///Detail
-              const SizedBox(height: SHFSizes.spaceBtwItems /2,),
+              const SizedBox(
+                height: SHFSizes.spaceBtwItems / 2,
+              ),
               const Divider(),
-              const SizedBox(height: SHFSizes.spaceBtwItems,),
+              const SizedBox(
+                height: SHFSizes.spaceBtwItems,
+              ),
 
               ///Heading Profile Info
-              const SHFSectionHeading(title: 'Thông tin hồ sơ', showActionButton: false,),
-              const SizedBox(height: SHFSizes.spaceBtwItems,),
+              const SHFSectionHeading(
+                title: 'Thông tin hồ sơ',
+                showActionButton: false,
+              ),
+              const SizedBox(
+                height: SHFSizes.spaceBtwItems,
+              ),
 
-              SHFProfileMenu(onPressed: () => Get.to(() =>const ChangeName()),title: 'Tên KH',value: controller.user.value.fullName),
-              SHFProfileMenu(onPressed: () {  },title: 'Tên TK',value: controller.user.value.userName),
-              
-              const SizedBox(height: SHFSizes.spaceBtwItems,),
+              SHFProfileMenu(
+                  onPressed: () => Get.to(() => const ChangeName()),
+                  title: 'Tên KH',
+                  value: controller.user.value.fullName),
+              SHFProfileMenu(
+                  onPressed: () {},
+                  title: 'Tên TK',
+                  value: controller.user.value.userName),
+
+              const SizedBox(
+                height: SHFSizes.spaceBtwItems,
+              ),
               const Divider(),
-              const SizedBox(height: SHFSizes.spaceBtwItems,),
-              
+              const SizedBox(
+                height: SHFSizes.spaceBtwItems,
+              ),
+
               ///Heading Personal Info
-              const SHFSectionHeading(title: 'Thông tin cá nhân ', showActionButton: false,),
-              const SizedBox(height: SHFSizes.spaceBtwItems,),
+              const SHFSectionHeading(
+                title: 'Thông tin cá nhân ',
+                showActionButton: false,
+              ),
+              const SizedBox(
+                height: SHFSizes.spaceBtwItems,
+              ),
 
-              SHFProfileMenu(onPressed: () {  },title: 'Mã ID',value: controller.user.value.id, icon: Iconsax.copy,),
-              SHFProfileMenu(onPressed: () {  },title: 'E-mail',value: controller.user.value.email),
-              SHFProfileMenu(onPressed: () {  },title: 'Số điện thoại',value: controller.user.value.phoneNumber),
-              SHFProfileMenu(onPressed: () {  },title: 'Giới tính',value: 'Male',),
-              SHFProfileMenu(onPressed: () {  },title: 'Năm sinh',value: '20, Oct, 2002',),
+              SHFProfileMenu(
+                onPressed: () {},
+                title: 'Mã ID',
+                value: controller.user.value.id,
+                icon: Iconsax.copy,
+              ),
+              SHFProfileMenu(
+                  onPressed: () {},
+                  title: 'E-mail',
+                  value: controller.user.value.email),
+              SHFProfileMenu(
+                  onPressed: () {},
+                  title: 'Số điện thoại',
+                  value: controller.user.value.phoneNumber),
+              SHFProfileMenu(
+                onPressed: () {},
+                title: 'Giới tính',
+                value: 'Male',
+              ),
+              SHFProfileMenu(
+                onPressed: () {},
+                title: 'Năm sinh',
+                value: '20, Oct, 2002',
+              ),
 
               const Divider(),
-              const SizedBox(height: SHFSizes.spaceBtwItems,),
-              
+              const SizedBox(
+                height: SHFSizes.spaceBtwItems,
+              ),
+
               Center(
                 child: TextButton(
                   onPressed: () => controller.deleteAccountWarningPopup(),
-                  child: const Text('Close Account', style: TextStyle(color: Colors.red),),
+                  child: const Text(
+                    'Close Account',
+                    style: TextStyle(color: Colors.red),
+                  ),
                 ),
               ),
             ],
@@ -82,4 +149,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-

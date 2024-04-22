@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
 import 'package:second_hand_fashion_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:second_hand_fashion_app/data/repositories/authentication/user/user_repository.dart';
@@ -18,10 +19,11 @@ class UserController extends GetxController {
 
   final profileLoading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
-
+  final imageUploading = false.obs;
   final hidePassword = false.obs;
   final verifyEmail = TextEditingController();
   final verifyPassword = TextEditingController();
+
   // final verifyRepository = Get.put(UserRepository());
   final userRepository = Get.put(UserRepository());
   GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
@@ -48,23 +50,32 @@ class UserController extends GetxController {
   ///Lưu bản ghi người dùng từ bất kỳ nguồn đăng ký nào
   Future<void> saveUserRecord(UserCredential? userCredential) async {
     try {
-      if (userCredential != null) {
-        final nameParts = UserModel.nameParts(userCredential.user!.displayName ?? '');
-        final username = UserModel.generateUsername(userCredential.user!.displayName ?? '');
+      //Trước tiên, hãy cập nhật người dùng Rx, sau đó kiểm tra xem dữ
+      // liệu người dùng đã được lưu trữ chưa. nếu không lưu trữ dữ liệu mới
+      await fetchUserRecord();
 
-        //Map data
-        final user = UserModel(
-          id: userCredential.user!.uid,
-          firstName: nameParts[0],
-          lastName: nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
-          userName: username,
-          email: userCredential.user!.email ?? '',
-          phoneNumber: userCredential.user!.phoneNumber ?? '',
-          profilePicture: userCredential.user!.photoURL ?? '',
-        );
+      if (user.value.id.isEmpty) {
+        if (userCredential != null) {
+          //chuyển đổi tên thành họ và tên
+          final nameParts =
+              UserModel.nameParts(userCredential.user!.displayName ?? '');
+          final username = UserModel.generateUsername(
+              userCredential.user!.displayName ?? '');
 
-        //Save user data
-        await userRepository.saveUserRecord(user);
+          //Map data
+          final user = UserModel(
+            id: userCredential.user!.uid,
+            firstName: nameParts[0],
+            lastName:
+                nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
+            userName: username,
+            email: userCredential.user!.email ?? '',
+            phoneNumber: userCredential.user!.phoneNumber ?? '',
+            profilePicture: userCredential.user!.photoURL ?? '',
+          );
+          //Save user data
+          await userRepository.saveUserRecord(user);
+        }
       }
     } catch (e) {
       SHFLoaders.warningSnackBar(
@@ -122,7 +133,6 @@ class UserController extends GetxController {
     }
   }
 
-
   ///Xác thực lại trước khi xóa
   Future<void> reAuthenticateEmailAndPasswordUser() async {
     try {
@@ -143,13 +153,38 @@ class UserController extends GetxController {
 
       await AuthenticationRepository.instance
           .reAuthenticateWithEmailAndPassword(
-          verifyEmail.text.trim(), verifyPassword.text.trim());
+              verifyEmail.text.trim(), verifyPassword.text.trim());
       await AuthenticationRepository.instance.deleteAccount();
       SHFFullScreenLoader.stopLoading();
       Get.offAll(() => const LoginScreen());
     } catch (e) {
       SHFFullScreenLoader.stopLoading();
       SHFLoaders.warningSnackBar(title: 'Oh snap', message: e.toString());
+    }
+  }
+
+  ///upload profile image
+  uploadUserProfilePicture() async{
+    try{
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 70, maxHeight: 512,maxWidth: 512);
+      if(image != null){
+        imageUploading.value = true;
+        //upload image
+        final imageUrl =  await userRepository.uploadImage('Users/Images/Profile', image);
+
+        //Update user Image Record
+        Map<String, dynamic> json = {'ProfilePicture': imageUrl};
+        await userRepository.updateSingleField(json);
+
+        user.value.profilePicture = imageUrl;
+        user.refresh();
+
+        SHFLoaders.successSnackBar(title: 'Chúc mừng', message: 'Ảnh đại diện của bạn đã được cập nhật thành công');
+      }
+    }catch(e){
+      SHFLoaders.errorSnackBar(title: 'Oh snap', message: 'Có gì đó bị lỗi $e');
+    }finally{
+      imageUploading.value = false;
     }
   }
 }
