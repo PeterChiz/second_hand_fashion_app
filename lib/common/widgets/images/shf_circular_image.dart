@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/home/widgets/shimmer.dart';
+import 'package:second_hand_fashion_app/common/widgets/shimmers/shimmer.dart';
 
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';

@@ -5,6 +5,7 @@ import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/
 import 'package:second_hand_fashion_app/common/widgets/layouts/grid_layout.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/cart/cart_menu_icon.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
+import 'package:second_hand_fashion_app/features/shop/controllers/category_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
@@ -19,13 +20,17 @@ class StoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categories = CategoryController.instance.featuredCategories;
     return DefaultTabController(
-      length: 5,
+      length: categories.length,
       child: Scaffold(
         appBar: SHFAppBar(
           title: Text(
             'Store',
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: Theme
+                .of(context)
+                .textTheme
+                .headlineMedium,
           ),
           actions: [
             SHFCartCounterIcon(
@@ -50,6 +55,7 @@ class StoreScreen extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
+
                       ///Search bar
                       const SizedBox(
                         height: SHFSizes.spaceBtwItems,
@@ -68,7 +74,8 @@ class StoreScreen extends StatelessWidget {
                       SHFSectionHeading(
                           title: 'Featured Brand',
                           showActionButton: true,
-                          onPressed: () => Get.to(() => const ALlBrandsScreen())),
+                          onPressed: () =>
+                              Get.to(() => const ALlBrandsScreen())),
                       const SizedBox(
                         height: SHFSizes.spaceBtwItems / 1.5,
                       ),
@@ -87,37 +94,18 @@ class StoreScreen extends StatelessWidget {
                 ),
 
                 ///Tabs
-                bottom: const SHFTabBar(
-                  tabs: [
-                    Tab(
-                      child: Text('Sports'),
-                    ),
-                    Tab(
-                      child: Text('Furniture'),
-                    ),
-                    Tab(
-                      child: Text('Electronic'),
-                    ),
-                    Tab(
-                      child: Text('Clothes'),
-                    ),
-                    Tab(
-                      child: Text('Cosmetics'),
-                    ),
-                  ],
+                bottom: SHFTabBar(
+                    tabs: categories.map((category) =>
+                        Tab(child: Text(category.name),)).toList()
                 ),
               ),
             ];
           },
 
           ///Body
-          body: const TabBarView(
-            children: [
-              SHFCategoryTab(),
-              SHFCategoryTab(),
-              SHFCategoryTab(),
-              SHFCategoryTab(),
-            ],
+          body: TabBarView(
+              children: categories.map((category) =>
+                  SHFCategoryTab(category: category,)).toList()
           ),
         ),
       ),

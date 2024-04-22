@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
                   ),
 
                   ///Searchbar
-                  SHFSearchContainer(text: 'Search in Store'),
+                  SHFSearchContainer(text: 'Tìm kiếm mặt hàng'),
                   SizedBox(
                     height: SHFSizes.spaceBtwSections,
                   ),
@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         ///Heading
                         SHFSectionHeading(
-                          title: 'Popular Categories',
+                          title: 'Danh mục phổ biến',
                           showActionButton: false,
                           textColor: Colors.white,
                         ),

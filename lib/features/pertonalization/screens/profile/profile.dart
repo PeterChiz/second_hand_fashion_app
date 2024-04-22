@@ -6,7 +6,7 @@ import 'package:second_hand_fashion_app/common/widgets/images/shf_circular_image
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/screens/profile/widgets/change_name.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/screens/profile/widgets/profile_menu.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/home/widgets/shimmer.dart';
+import 'package:second_hand_fashion_app/common/widgets/shimmers/shimmer.dart';
 import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 
@@ -37,8 +37,7 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     Obx(() {
                       final networkImage = controller.user.value.profilePicture;
-                      final image =
-                          networkImage.isNotEmpty ? networkImage : SHFImages.user;
+                      final image = networkImage.isNotEmpty ? networkImage : SHFImages.user;
 
                       return controller.imageUploading.value
                           ? const SHFShimmerEffect(

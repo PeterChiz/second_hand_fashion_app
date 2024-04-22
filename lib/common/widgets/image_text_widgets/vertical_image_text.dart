@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:second_hand_fashion_app/common/widgets/images/shf_circular_image.dart';
 
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
@@ -12,11 +13,13 @@ class SHFVerticalImageText extends StatelessWidget {
     this.textColor = SHFColors.white,
     this.backgroundColor,
     this.onTap,
+    this.isNetworkImage = true,
   });
 
   final String image, title;
   final Color textColor;
   final Color? backgroundColor;
+  final bool isNetworkImage;
   final void Function()? onTap;
 
   @override
@@ -28,23 +31,16 @@ class SHFVerticalImageText extends StatelessWidget {
         padding: const EdgeInsets.only(right: SHFSizes.spaceBtwItems),
         child: Column(
           children: [
+
             ///Circular Icon
-            Container(
-              width: 56,
-              height: 56,
-              padding: const EdgeInsets.all(SHFSizes.sm),
-              decoration: BoxDecoration(
-                color: backgroundColor ??
-                    (dark ? SHFColors.black : SHFColors.white),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Center(
-                child: Image(
-                    image: AssetImage(image),
-                    fit: BoxFit.cover,
-                    color: dark ? SHFColors.light : SHFColors.dark),
-              ),
-            ),
+            SHFCircularImage(
+              image: image,
+              fit: BoxFit.fitWidth,
+              padding: SHFSizes.sm * 1.4,
+              isNetworkImage: isNetworkImage,
+              backgroundColor: backgroundColor,
+              overlayColor: SHFHelperFunctions.isDarkMode(context) ? SHFColors
+                  .light : SHFColors.dark,),
 
             ///Text
             const SizedBox(
@@ -54,7 +50,8 @@ class SHFVerticalImageText extends StatelessWidget {
               width: 55,
               child: Text(
                 title,
-                style: Theme.of(context)
+                style: Theme
+                    .of(context)
                     .textTheme
                     .labelMedium!
                     .apply(color: textColor),
