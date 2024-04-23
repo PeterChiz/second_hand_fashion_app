@@ -14,7 +14,7 @@ class CategoryRepository extends GetxController {
   ///Variables
   final _db = FirebaseFirestore.instance;
 
-  ///Get all categories
+  ///Nhận tất cả các danh mục
   Future<List<CategoryModel>> getAllCategories() async {
     try {
       final snapshot = await _db.collection('Categories').get();
@@ -27,18 +27,18 @@ class CategoryRepository extends GetxController {
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Đã xảy ra lỗi. Vui lòng thử lại';
     }
   }
 
-  ///Get sub categories
-  ///Upload categories to the cloud firebase
+  ///Nhận danh mục phụ
+  ///Tải danh mục lên cloud firebase
   Future<void> uploadDummyData(List<CategoryModel> categories) async{
     try{
       //Tải lên tất cả các Danh mục cùng với Hình ảnh của chúng
       final storage = Get.put(SHFFirebaseStorageService());
 
-      //Loop through each category
+      //Lặp lại qua từng danh mục
       for(var category in categories){
         //Nhận liên kết ImageData từ nội dung cục bộ
         final file = await storage.getImageDataFromAssets(category.image);
@@ -51,7 +51,7 @@ class CategoryRepository extends GetxController {
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Đã xảy ra lỗi. Vui lòng thử lại';
     }
   }
 }
