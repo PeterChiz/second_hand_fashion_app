@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/product_cards/product_card_vertical.dart';
+import 'package:second_hand_fashion_app/common/widgets/shimmers/vertical_product_shimmer.dart';
+import 'package:second_hand_fashion_app/features/shop/controllers/poduct_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/all_products/all_products.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/home/widgets/promo_slider.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
@@ -16,6 +18,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ProductController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -56,8 +59,9 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                   SizedBox(height: SHFSizes.spaceBtwSections,),
-
+                  SizedBox(
+                    height: SHFSizes.spaceBtwSections,
+                  ),
                 ],
               ),
             ),
@@ -74,13 +78,26 @@ class HomeScreen extends StatelessWidget {
                   ),
 
                   ///Heading
-                  SHFSectionHeading(title: 'Popular Products', onPressed: () => Get.to(() => const AllProducts()),),
+                  SHFSectionHeading(
+                    title: 'Popular Products',
+                    onPressed: () => Get.to(() => const AllProducts()),
+                  ),
                   const SizedBox(
                     height: SHFSizes.spaceBtwSections,
                   ),
 
                   ///Popular Product
-                  SHFGridLayout(itemCount: 2, itemBuilder: (_,index) => const SHFProductCardVertical(),)
+                  Obx(() {
+                    if(controller.isLoading.value) return const SHFVerticalProductShimmer();
+
+                    if(controller.featuredProducts.isEmpty){
+                      return Center(child: Text('Không tìm thấy dữ liệu', style: Theme.of(context).textTheme.bodyMedium,));
+                    }
+                    return SHFGridLayout(
+                      itemCount: controller.featuredProducts.length,
+                      itemBuilder: (_, index) =>  SHFProductCardVertical(product: controller.featuredProducts[index],),
+                    );
+                  })
                 ],
               ),
             )
@@ -90,4 +107,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-

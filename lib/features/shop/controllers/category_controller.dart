@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
-import 'package:second_hand_fashion_app/data/categories/category_repository.dart';
 import 'package:second_hand_fashion_app/features/shop/models/category_model.dart';
+
+import '../../../data/repositories/categories/category_repository.dart';
 
 class CategoryController extends GetxController {
   static CategoryController get instance => Get.find();

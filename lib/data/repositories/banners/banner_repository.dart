@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/features/shop/models/banner_model.dart';
 import 'package:second_hand_fashion_app/utils/exceptions/format_exceptions.dart';
 
-import '../../utils/exceptions/firebase_exception.dart';
-import '../../utils/exceptions/platform_exceptions.dart';
+import '../../../utils/exceptions/firebase_exception.dart';
+import '../../../utils/exceptions/platform_exceptions.dart';
+
+
 
 class BannerRepository extends GetxController{
   static BannerRepository get instance => Get.find();

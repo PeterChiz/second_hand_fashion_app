@@ -127,4 +127,8 @@ class SHFImages{
   static const String productImage36 = "assets/images/products/leather_jacket_2.png";
   static const String productImage37 = "assets/images/products/leather_jacket_3.png";
   static const String productImage38 = "assets/images/products/leather_jacket_4.png";
+
+  //Products
+  static const String nikeLogo = "assets/images/products/nike-shoes.png";
+
 }

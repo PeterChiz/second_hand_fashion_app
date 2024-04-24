@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/data/services/cloud_storage/firebase_storage_service.dart';
 import 'package:second_hand_fashion_app/features/shop/models/category_model.dart';
 
-import '../../utils/exceptions/firebase_exception.dart';
-import '../../utils/exceptions/format_exceptions.dart';
-import '../../utils/exceptions/platform_exceptions.dart';
+import '../../../utils/exceptions/firebase_exception.dart';
+import '../../../utils/exceptions/platform_exceptions.dart';
+
+
 
 class CategoryRepository extends GetxController {
   static CategoryRepository get instance => Get.find();

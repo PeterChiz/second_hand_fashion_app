@@ -1,10 +1,10 @@
 import 'dart:ffi';
 
 import 'package:get/get.dart';
-import 'package:second_hand_fashion_app/data/banners/banner_repository.dart';
 import 'package:second_hand_fashion_app/features/shop/models/banner_model.dart';
 
 import '../../../common/widgets/loaders/loader.dart';
+import '../../../data/repositories/banners/banner_repository.dart';
 
 class BannerController extends GetxController{
 
