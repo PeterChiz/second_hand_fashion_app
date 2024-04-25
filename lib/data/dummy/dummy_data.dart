@@ -45,7 +45,7 @@ class SHFDummyData {
   ///
   ///
 
-  ///List of all Categories
+  ///Danh sách tất cả các danh mục
   static final List<CategoryModel> categories = [
     CategoryModel(
         id: '1', name: SHFImages.sportIcon, image: 'Sports', isFeatured: true),
@@ -138,7 +138,7 @@ class SHFDummyData {
         isFeatured: true),
   ];
 
-  ///List of all products
+  ///Danh sách tất cả các sản phẩm
   static final List<ProductModel> products = [
     ProductModel(
         id: '001',

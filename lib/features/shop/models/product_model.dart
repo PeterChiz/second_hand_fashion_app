@@ -40,7 +40,7 @@ class ProductModel {
       this.productAttributes,
       this.productVariations});
 
-  ///Create empty func for clean code
+  ///Tao empty function cho ma
   static ProductModel empty() => ProductModel(
       id: '', title: '', stock: 0, price: 0, thumbnail: '', productType: '');
 
@@ -51,7 +51,7 @@ class ProductModel {
       'Title': title,
       'Stock': stock,
       'Price': price,
-      'Image': images,
+      'Images': images,
       'Thumbnail': thumbnail,
       'SalePrice': salePrice,
       'IsFeatured': isFeatured,
@@ -68,7 +68,7 @@ class ProductModel {
     };
   }
 
-  ///Map Json Oriented document snapshot from Firebase to Model
+  ///Map Json Oriented document snapshot tu Firebase sang Model
   factory ProductModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     if(document.data() == null) return ProductModel.empty();
     final data = document.data()!;
@@ -95,7 +95,7 @@ class ProductModel {
     );
   }
 
-  ///Map Json-oriented document snapshot form Firebase to Model
+  ///
   factory ProductModel.fromQuerySnapshot(
       QueryDocumentSnapshot<Object?> document) {
     final data = document.data() as Map<String, dynamic>;
@@ -108,7 +108,7 @@ class ProductModel {
       thumbnail: data['Thumbnail'] ?? '',
       description: data['Description'] ?? '',
       brand: BrandModel.fromJson(data['Brand']),
-      images: data['Image'] != null ? List<String>.from(data['Images']) : [],
+      images: data['Images'] != null ? List<String>.from(data['Images']) : [],
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
       sku: data['SKU'],
       categoryId: data['CategoryId'] ?? '',

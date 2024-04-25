@@ -1,9 +1,11 @@
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/product_price_text.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/product_title_text.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
+import 'package:second_hand_fashion_app/features/shop/controllers/product/variation_controller.dart';
+import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
@@ -11,123 +13,143 @@ import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 import '../../../../../common/widgets/chips/choice_chip.dart';
 
 class ProductAttributes extends StatelessWidget {
-  const ProductAttributes({super.key});
+  const ProductAttributes({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
     final dark = SHFHelperFunctions.isDarkMode(context);
-    return Column(
-      children: [
-        ///Selected Attribute Pricing & Description
-        SHFRoundedContainer(
-          padding: const EdgeInsets.all(SHFSizes.md),
-          backgroundColor: dark ? SHFColors.darkGrey : SHFColors.grey,
-          child: Column(
-            children: [
-              ///Title, Price, Status
-              Row(
+    final controller = Get.put(VariationController());
+
+    return Obx(
+      () => Column(
+        children: [
+          ///Selected Attribute Pricing & Description
+          ///Display variation price and stock when some variation is selected
+          if (controller.selectedVariation.value.id.isNotEmpty)
+            SHFRoundedContainer(
+              padding: const EdgeInsets.all(SHFSizes.md),
+              backgroundColor: dark ? SHFColors.darkGrey : SHFColors.grey,
+              child: Column(
                 children: [
-                  const SHFSectionHeading(
-                    title: 'Validation',
-                    showActionButton: false,
-                  ),
-                  const SizedBox(
-                    width: SHFSizes.spaceBtwItems,
-                  ),
-                  Column(
+                  ///Title, Price, Status
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          const SHFProductTitleText(
-                            title: 'Price: ',
-                            smallSize: true,
-                          ),
-
-                          ///Actual Price
-                          Text(
-                            '\$25',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .apply(decoration: TextDecoration.lineThrough),
-                          ),
-                          const SizedBox(
-                            width: SHFSizes.spaceBtwItems,
-                          ),
-
-                          ///Sale Price
-                          const SHFProductPriceText(price: '20'),
-                        ],
+                      const SHFSectionHeading(
+                        title: 'Validation',
+                        showActionButton: false,
                       ),
-
-                      ///Stack
-                      Row(
+                      const SizedBox(
+                        width: SHFSizes.spaceBtwItems,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SHFProductTitleText(
-                            title: 'Stock: ',
-                            smallSize: true,
+                          Row(
+                            children: [
+                              const SHFProductTitleText(
+                                title: 'Price: ',
+                                smallSize: true,
+                              ),
+
+                              ///Actual Price
+                              if (controller.selectedVariation.value.salePrice >
+                                  0)
+                                Text(
+                                  '\$${controller.selectedVariation.value.price}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall!
+                                      .apply(
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                ),
+                              const SizedBox(
+                                width: SHFSizes.spaceBtwItems,
+                              ),
+
+                              ///Sale Price
+                              SHFProductPriceText(
+                                  price: controller.getVariationPrice()),
+                            ],
                           ),
-                          Text(
-                            'In Stock',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
+
+                          ///Stack
+                          Row(
+                            children: [
+                              const SHFProductTitleText(
+                                title: 'Tình trạng: ',
+                                smallSize: true,
+                              ),
+                              Text(
+                                controller.variationStockStatus.value,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ],
+                          )
                         ],
                       )
                     ],
-                  )
+                  ),
+
+                  ///Variation Description
+                   SHFProductTitleText(
+                    title: controller.selectedVariation.value.description ?? '',
+                    smallSize: true,
+                    maxLines: 4,
+                  ),
                 ],
               ),
-
-              ///Variation Description
-              const SHFProductTitleText(
-                title:
-                    'This is the description of the Product and it can go up to max 4 lines. ',
-                smallSize: true,
-                maxLines: 4,
-              ),
-            ],
+            ),
+          const SizedBox(
+            height: SHFSizes.spaceBtwItems,
           ),
-        ),
-        const SizedBox(
-          height: SHFSizes.spaceBtwItems,
-        ),
 
-        ///Attributes
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SHFSectionHeading(title: 'Colors'),
-            const SizedBox(height: SHFSizes.spaceBtwItems / 2),
-            Wrap(
-              spacing: 8,
-              children: [
-                SHFChoiceChip(text: 'Green', selected: false, onSelected: (value){}, ),
-                SHFChoiceChip(text: 'Yellow', selected: false, onSelected: (value){} ),
-                SHFChoiceChip(text: 'Red', selected: true, onSelected: (value){}),
-                //....                 SHFChoiceChip(text: 'Red', selected: true, onSelected: (value){}),
-              ],
-            )
-          ],
-        ),
-
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SHFSectionHeading(title: 'Size'),
-            const SizedBox(height: SHFSizes.spaceBtwItems / 2),
-            Wrap(
-              spacing: 8,
-              children: [
-                SHFChoiceChip(text: 'EU 34', selected: true ,onSelected: (value){}),
-                SHFChoiceChip(text: 'EU 36', selected: false,onSelected: (value){} ),
-                SHFChoiceChip(text: 'EU 38', selected: false,onSelected: (value){}),
-                //more                 SHFChoiceChip(text: 'EU 36', selected: false,onSelected: (value){} ),
-              ],
-            )
-          ],
-        ),
-      ],
+          ///Attributes
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: product.productAttributes!
+                .map((attribute) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SHFSectionHeading(
+                            title: attribute.name ?? '',
+                            showActionButton: false),
+                        const SizedBox(height: SHFSizes.spaceBtwItems / 2),
+                        Obx(
+                          () => Wrap(
+                              spacing: 8,
+                              children: attribute.values!.map((attributeValue) {
+                                final isSelected = controller
+                                        .selectedAttributes[attribute.name] ==
+                                    attributeValue;
+                                final available = controller
+                                    .getAttributesAvailabilityInVariation(
+                                        product.productVariations!,
+                                        attribute.name!)
+                                    .contains(attributeValue);
+                                return SHFChoiceChip(
+                                    text: attributeValue,
+                                    selected: isSelected,
+                                    onSelected: available
+                                        ? (selected) {
+                                            if (selected && available) {
+                                              controller.onAttributeSelected(
+                                                  product,
+                                                  attribute.name ?? '',
+                                                  attributeValue);
+                                            }
+                                          }
+                                        : null);
+                              }).toList()),
+                        )
+                      ],
+                    ))
+                .toList(),
+          ),
+        ],
+      ),
     );
   }
 }
-

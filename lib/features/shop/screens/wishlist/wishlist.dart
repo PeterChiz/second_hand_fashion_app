@@ -17,7 +17,7 @@ class FavouriteScreen extends StatelessWidget {
     return Scaffold(
       appBar: SHFAppBar(
         title: Text(
-          'Wishlist',
+          'Danh sách yêu thích',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         actions: [

@@ -6,7 +6,7 @@ import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/
 import 'package:second_hand_fashion_app/common/widgets/images/shf_rounded_image.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/product_price_text.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/product_title_text.dart';
-import 'package:second_hand_fashion_app/features/shop/controllers/poduct_controller.dart';
+import 'package:second_hand_fashion_app/features/shop/controllers/product/poduct_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/product_detail.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
@@ -28,7 +28,7 @@ class SHFProductCardVertical extends StatelessWidget {
     final dark = SHFHelperFunctions.isDarkMode(context);
     final salePercentage = controller.calculateDiscountPercentage(product.price, product.salePrice);
 
-    ///Container with side paddings, color, edges. radius and shadow.
+    ///Container với side paddings, color, edges, radius and shadow.
     return GestureDetector(
       onTap: () => Get.to(() => ProductDetailScreen(product: product,)),
       child: Container(

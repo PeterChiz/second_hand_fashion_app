@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:second_hand_fashion_app/common/widgets/shimmers/vertical_product_shimmer.dart';
-import 'package:second_hand_fashion_app/features/shop/controllers/poduct_controller.dart';
+import 'package:second_hand_fashion_app/features/shop/controllers/product/poduct_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/all_products/all_products.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/home/widgets/promo_slider.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';

@@ -9,7 +9,7 @@ import 'package:second_hand_fashion_app/features/shop/screens/product_details/wi
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/product_detail_image_slider.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/product_meta_data.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/rating_share_widget.dart';
-import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
+import 'package:second_hand_fashion_app/utils/constants/enums.dart';
 
 import '../../../../utils/constants/sizes.dart';
 import '../product_reviews/product_reviews.dart';
@@ -21,14 +21,13 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = SHFHelperFunctions.isDarkMode(context);
     return  Scaffold(
       bottomNavigationBar: const SHFBottomAddToCart(),
       body: SingleChildScrollView(
         child: Column(
           children: [
             ///1. Product Image Slider
-            const SHFProductImageSlider(),
+             SHFProductImageSlider(product: product,),
 
             ///2. Product Details
             Padding(
@@ -41,24 +40,24 @@ class ProductDetailScreen extends StatelessWidget {
                   ///Rating & Share Button
                   const SHFRatingAndShare(),
                   ///Price, Title, Stack &  Brand
-                  const SHFProductMetaData(),
+                  SHFProductMetaData(product: product,),
                   ///Attributes
-                  const ProductAttributes(),
-                  const SizedBox(height: SHFSizes.spaceBtwSections,),
+                  if(product.productType == ProductType.variable.toString())  ProductAttributes(product: product,),
+                  if(product.productType == ProductType.variable.toString()) const SizedBox(height: SHFSizes.spaceBtwSections,),
                   ///Checkout Button
                   SizedBox(width: double.infinity,child: ElevatedButton(onPressed: (){}, child: const Text('Checkout'))),
                   const SizedBox(height: SHFSizes.spaceBtwSections,),
                   ///Description
                   const SHFSectionHeading(title: 'Description',showActionButton: false,),
                   const SizedBox(height: SHFSizes.spaceBtwItems),
-                  const ReadMoreText(
-                    'Laptop Asus ROG Strix SCAR III G731G_N-WH100T (Core i7-9750H/ 16GB (8GB x2) DDR4 2666MHz/ 1TB SSD PCIE G3X4/ RTX 2070 8GB/ 17.3 FHD IPS, 240Hz/3ms/ Win10) - Hàng Chính Hãng với màu xám súng, thanh thoát là nơi hợp nhất giữa hiệu quả và sự cải tiến. Thiết kế mang tính chiến lược của mẫu máy laptop gaming này có nguồn cảm hứng đến từ sự cộng tác với Nhóm BMW Designworks và giúp kiến tạo nên lợi thế làm mát với Vùng lưu thông khí 3D. Mặt trong với họa tiết cacbon tinh tế nổi bật với hệ thống ánh sáng Aura Sync tỏa rộng khắp trên dải đèn mới bao quanh máy, bàn phím và logo ROG. Dù bạn đang chuẩn bị cho một cuộc đấu hay tham gia vào một trò chơi nhanh thì cỗ máy vỏ kim loại này đều được tinh chỉnh tuyệt vời và sẵn sàng hành động.',
+                  ReadMoreText(
+                    product.description ?? '',
                     trimLines: 2,
                     trimMode: TrimMode.Line,
                     trimCollapsedText: 'Show more',
                     trimExpandedText: 'Less',
-                    moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-                    lessStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                    moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                    lessStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                   ),
                   ///Reviews
                   const Divider(),

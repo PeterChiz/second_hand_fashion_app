@@ -49,7 +49,7 @@ class SHFCircularImage extends StatelessWidget {
                   fit: fit,
                   color: overlayColor,
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      const SHFShimmerEffect(width: 55, height: 55),
+                      const SHFShimmerEffect(width: 55, height: 55, radius: 55,),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 )
               : Image(
