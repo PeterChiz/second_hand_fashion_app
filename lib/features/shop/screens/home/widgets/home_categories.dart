@@ -5,7 +5,6 @@ import 'package:second_hand_fashion_app/features/shop/controllers/category_contr
 
 import '../../../../../common/widgets/image_text_widgets/vertical_image_text.dart';
 import '../../../../../common/widgets/sub_categories/sub_categories.dart';
-import '../../../../../utils/constants/image_strings.dart';
 
 class SHFHomeCategories extends StatelessWidget {
   const SHFHomeCategories({

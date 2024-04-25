@@ -1,4 +1,3 @@
-import 'package:second_hand_fashion_app/features/shop/models/banner_model.dart';
 
 class BrandModel{
   String id;
