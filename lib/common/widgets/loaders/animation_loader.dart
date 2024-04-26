@@ -5,13 +5,13 @@ import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 
 ///A widget for displaying an animated loading indicator with optional text and action button
 class SHFAnimationLoaderWidget extends StatelessWidget {
-  ///Default constructor for the SHFAnimationLoaderWidget
+  ///Hàm tạo mặc định cho SHFAnimationLoaderWidget
   ///
-  /// Parameters:
-  /// text: The text to be displayed below the animation
-  /// animation: The path to the Lottie animation file
-  /// showAction: Whether to show an action button
-  /// onActionPressed: Callback function to be executed when the action is pressed
+  /// Thông số:
+  /// text: Văn bản sẽ hiển thị bên dưới ảnh động
+  /// animation: Đường dẫn tới file ảnh động Lottie
+  /// showAction: Có hiển thị nút hành động hay không
+  /// onActionPressed: Hàm gọi lại được thực thi khi hành động được nhấn
   const SHFAnimationLoaderWidget({super.key,
     required this.text,
     required this.animation,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:second_hand_fashion_app/features/shop/models/brand_model.dart';
 
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/enums.dart';
-import '../../../utils/constants/image_strings.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../custom_shapes/containers/rounded_container.dart';
@@ -11,8 +11,9 @@ import '../texts/shf_brand_title_text_with_verified_icon.dart';
 
 class SHFBrandCard extends StatelessWidget {
   const SHFBrandCard({
-    super.key, required this.showBorder, this.onTap,
+    super.key, required this.showBorder, this.onTap, required this.brand,
   });
+  final BrandModel brand;
   final bool showBorder;
   final void Function()? onTap;
 
@@ -32,8 +33,8 @@ class SHFBrandCard extends StatelessWidget {
             Flexible(
 
               child: SHFCircularImage(
-                isNetworkImage: false,
-                image: SHFImages.clothIcon,
+                isNetworkImage: true,
+                image: brand.image,
                 backgroundColor: Colors.transparent,
                 overlayColor:
                 SHFHelperFunctions.isDarkMode(context)
@@ -54,12 +55,12 @@ class SHFBrandCard extends StatelessWidget {
                 crossAxisAlignment:
                 CrossAxisAlignment.start,
                 children: [
-                  const SHFBrandTitleWithVerifiedIcon(
-                    title: 'Nike',
+                  SHFBrandTitleWithVerifiedIcon(
+                    title: brand.name,
                     brandTextSize: TextSizes.large,
                   ),
                   Text(
-                    '256 product',
+                    '${brand.productsCount ?? 0} chiếc',
                     overflow: TextOverflow.ellipsis,
                     style: Theme
                         .of(context)

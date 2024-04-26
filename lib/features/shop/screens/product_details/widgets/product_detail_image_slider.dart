@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:second_hand_fashion_app/common/widgets/products/favourite_icon/favorites_icon.dart';
 import 'package:second_hand_fashion_app/features/shop/controllers/product/images_controller.dart';
 
 import '../../../../../common/widgets/appbar/appbar.dart';
 import '../../../../../common/widgets/custom_shapes/curved_edges/curved_edges_widget.dart';
-import '../../../../../common/widgets/icons/shf_circular_icon.dart';
 import '../../../../../common/widgets/images/shf_rounded_image.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -81,13 +80,10 @@ class SHFProductImageSlider extends StatelessWidget {
             ),
 
             ///Appbar Icons
-            const SHFAppBar(
+             SHFAppBar(
               showBackArrow: true,
               actions: [
-                SHFCircularIcon(
-                  icon: Iconsax.heart5,
-                  color: Colors.red,
-                ),
+                SHFFavoritesIcon(productId: product.id,)
               ],
             )
           ],

@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
+import 'package:second_hand_fashion_app/data/repositories/product/product_repository.dart';
 import 'package:second_hand_fashion_app/features/shop/models/category_model.dart';
+import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 
 import '../../../data/repositories/categories/category_repository.dart';
 
@@ -40,5 +42,28 @@ class CategoryController extends GetxController {
   }
 
   ///Tải dữ liệu danh mục đã chọn
+  Future<List<CategoryModel>> getSubCategories(String categoryId) async{
+    try{
+      final subCategories = await _categoryRepository.getSubCategories(categoryId);
+      return subCategories;
+    }catch(e){
+      SHFLoaders.errorSnackBar(title: 'Oh snap', message: e.toString());
+      return [];
+    }
+  }
+
+  
+
+
   ///Đặt danh mục trên các sản phẩm Danh mục phụ
+  Future<List<ProductModel>> getCategoryProducts({required String categoryId, int limit = 4}) async {
+    try{
+      //Fetch limited (4) products against each subCategory
+      final products = await ProductRepository.instance.getProductsForCategory(categoryId: categoryId,limit: limit);
+      return products;
+    }catch(e){
+      SHFLoaders.errorSnackBar(title: 'Oh snap', message: e.toString());
+      return [];
+    }
+  }
 }

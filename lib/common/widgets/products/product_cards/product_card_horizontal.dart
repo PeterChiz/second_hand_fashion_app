@@ -2,22 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:second_hand_fashion_app/common/widgets/images/shf_rounded_image.dart';
+import 'package:second_hand_fashion_app/common/widgets/products/favourite_icon/favorites_icon.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/product_price_text.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/product_title_text.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/shf_brand_title_text_with_verified_icon.dart';
-import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
+import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
+import '../../../../features/shop/controllers/product/poduct_controller.dart';
 import '../../../../utils/constants/colors.dart';
+import '../../../../utils/constants/enums.dart';
 import '../../../../utils/constants/sizes.dart';
-import '../../icons/shf_circular_icon.dart';
 
 class SHFProductCardHorizontal extends StatelessWidget {
-  const SHFProductCardHorizontal({super.key});
+  const SHFProductCardHorizontal({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
+    final controller = ProductController.instance;
     final dark = SHFHelperFunctions.isDarkMode(context);
+    final salePercentage = controller.calculateDiscountPercentage(product.price, product.salePrice);
+
+
     return Container(
       width: 310,
       padding: const EdgeInsets.all(1),
@@ -36,16 +44,18 @@ class SHFProductCardHorizontal extends StatelessWidget {
             child:  Stack(
               children: [
                 ///Thumbnail Image
-                const SizedBox(
+                 SizedBox(
                     width: 120,
                     height: 120,
                     child: SHFRoundedImage(
-                      imageURL: SHFImages.productImage1,
+                      imageURL: product.thumbnail,
                       applyImageRadius: true,
+                      isNetworkImage: true,
                     ),
                 ),
 
                 ///Sale Tag
+                if(salePercentage != null)
                 Positioned(
                   top: 12,
                   child: SHFRoundedContainer(
@@ -54,7 +64,7 @@ class SHFProductCardHorizontal extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: SHFSizes.sm, vertical: SHFSizes.xs),
                       child: Text(
-                        '25%',
+                        '$salePercentage%',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -63,13 +73,11 @@ class SHFProductCardHorizontal extends StatelessWidget {
                 ),
 
                 ///Favourite Icon Button
-                const Positioned(
+                   Positioned(
                     top: 0,
                     right: 0,
-                    child: SHFCircularIcon(
-                      icon: Iconsax.heart5,
-                      color: Colors.red,
-                    ))
+                    child: SHFFavoritesIcon(productId: product.id),
+                )
               ],
             ),
           ),
@@ -80,25 +88,43 @@ class SHFProductCardHorizontal extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(top: SHFSizes.sm, left: SHFSizes.sm),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Column(
+                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SHFProductTitleText(title: 'Laptop Asus No1 Computer', smallSize: true,),
-                      SizedBox(height: SHFSizes.spaceBtwItems/2),
-                      SHFBrandTitleWithVerifiedIcon(title: 'Asus'),
+                      SHFProductTitleText(title: product.title, smallSize: true,),
+                      const SizedBox(height: SHFSizes.spaceBtwItems/2),
+                      SHFBrandTitleWithVerifiedIcon(title: product.brand!.name),
                     ],
                   ),
 
                   const Spacer(),
 
+                  ///Price Row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ///Pricing
-                      const Flexible(child: SHFProductPriceText(price: '256.0 - 30000.0')),
+                      ///Price
+                      Flexible(
+                        child: Column(
+                          children: [
+                            if (product.productType ==
+                                ProductType.single.toString() &&
+                                product.salePrice > 0)
+                              const Padding(
+                                  padding: EdgeInsets.only(left: SHFSizes.sm)),
 
-                      ///Add to cart
+                            ///Price, Show sale price as main price if sale exist
+                            Padding(
+                              padding: const EdgeInsets.only(left: SHFSizes.sm),
+                              child: SHFProductPriceText(
+                                  price: controller.getProductPrice(product)),
+                            ),
+                          ],
+                        ),
+                      ),
+
                       ///Add to Cart Button
                       Container(
                         decoration: const BoxDecoration(

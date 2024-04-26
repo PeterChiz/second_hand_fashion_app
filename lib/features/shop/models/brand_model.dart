@@ -1,4 +1,6 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class BrandModel{
   String id;
   String name;
@@ -32,7 +34,26 @@ class BrandModel{
         name: data['Name'] ?? '',
         image: data['Image'] ?? '',
         isFeatured: data['IsFeatured'] ?? false,
-        productsCount: data['ProductsCount'] ?? 0,
+        productsCount: int.parse((data['ProductsCount'] ?? 0).toString()),
     );
+  }
+
+  ///
+  factory BrandModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>>  document){
+    if(document.data() != null){
+      final data = document.data()!;
+
+      //anh xa json vao model
+      return BrandModel(
+        id: document.id,
+        name: data['Name'] ?? '',
+        image: data['Image'] ?? '',
+        isFeatured: data['IsFeatured'] ?? false,
+        productsCount: data['ProductsCount'] ?? '',
+      );
+    }else{
+      return BrandModel.empty();
+    }
+
   }
 }

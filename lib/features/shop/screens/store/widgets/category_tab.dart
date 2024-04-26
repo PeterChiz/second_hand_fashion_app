@@ -1,12 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/layouts/grid_layout.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/product_cards/product_card_vertical.dart';
+import 'package:second_hand_fashion_app/common/widgets/shimmers/vertical_product_shimmer.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
+import 'package:second_hand_fashion_app/features/shop/controllers/category_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/models/category_model.dart';
-import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
+import 'package:second_hand_fashion_app/features/shop/screens/all_products/all_products.dart';
+import 'package:second_hand_fashion_app/features/shop/screens/store/widgets/category_brands.dart';
+import 'package:second_hand_fashion_app/utils/helpers/cloud_helper_functions.dart';
 
-import '../../../../../common/widgets/brands/brand_show_case.dart';
-import '../../../../../utils/constants/image_strings.dart';
 import '../../../../../utils/constants/sizes.dart';
 
 class SHFCategoryTab extends StatelessWidget {
@@ -17,6 +21,7 @@ class SHFCategoryTab extends StatelessWidget {
   final CategoryModel category;
   @override
   Widget build(BuildContext context) {
+    final controller = CategoryController.instance;
     return  ListView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -26,25 +31,37 @@ class SHFCategoryTab extends StatelessWidget {
           child: Column(
             children: [
               ///Brands
-              const SHFBrandShowcase(
-                images: [
-                  SHFImages.productImage26,
-                  SHFImages.productImage21,
-                  SHFImages.productImage25,
-                ],
-              ),
-              const SHFBrandShowcase(
-                images: [
-                  SHFImages.productImage3,
-                  SHFImages.productImage2,
-                  SHFImages.productImage1,
-                ],
-              ),
-              ///Products
-              SHFSectionHeading(title: 'Bạn có thể thích', onPressed: (){},),
+              CategoryBrands(category: category),
               const SizedBox(height: SHFSizes.spaceBtwItems,),
+              ///Products
+              FutureBuilder(
+                future: controller.getCategoryProducts(categoryId: category.id),
+                builder: (context, snapshot) {
+                  ///Helper function: Handle loader, No record, or Error Message
+                  final response = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: const SHFVerticalProductShimmer());
 
-              SHFGridLayout(itemCount: 4, itemBuilder: (_,index) =>  SHFProductCardVertical(product: ProductModel.empty(),)),
+                  if(response != null) return response;
+
+                  ///Record Found
+                  final products = snapshot.data!;
+
+
+                  return Column(
+                    children: [
+                      SHFSectionHeading(title: 'Bạn có thể thích',
+                        onPressed: () => Get.to(AllProducts(
+                            title: category.name,
+                          futureMethod: controller.getCategoryProducts(categoryId: category.id, limit: -1),
+                        ),
+                        ),
+                      ),
+                      const SizedBox(height: SHFSizes.spaceBtwItems,),
+                      SHFGridLayout(itemCount: products.length, itemBuilder: (_,index) =>  SHFProductCardVertical(product: products[index])),
+                    ],
+                  );
+                }
+              ),
+
             ],
           ),
         ),
