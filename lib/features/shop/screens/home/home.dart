@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/product_cards/product_card_vertical.dart';
@@ -79,8 +80,11 @@ class HomeScreen extends StatelessWidget {
 
                   ///Heading
                   SHFSectionHeading(
-                    title: 'Popular Products',
-                    onPressed: () => Get.to(() => const AllProducts()),
+                    title: 'Sản phẩm phổ biến',
+                    onPressed: () => Get.to(() => AllProducts(
+                          title: 'Sản phẩm phổ biến',
+                      futureMethod: controller.fetchAllFeaturedProducts(),
+                        )),
                   ),
                   const SizedBox(
                     height: SHFSizes.spaceBtwSections,
@@ -88,14 +92,20 @@ class HomeScreen extends StatelessWidget {
 
                   ///Popular Product
                   Obx(() {
-                    if(controller.isLoading.value) return const SHFVerticalProductShimmer();
+                    if (controller.isLoading.value) return const SHFVerticalProductShimmer();
 
-                    if(controller.featuredProducts.isEmpty){
-                      return Center(child: Text('Không tìm thấy dữ liệu', style: Theme.of(context).textTheme.bodyMedium,));
+                    if (controller.featuredProducts.isEmpty) {
+                      return Center(
+                          child: Text(
+                        'Không tìm thấy dữ liệu',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ));
                     }
                     return SHFGridLayout(
                       itemCount: controller.featuredProducts.length,
-                      itemBuilder: (_, index) =>  SHFProductCardVertical(product: controller.featuredProducts[index],),
+                      itemBuilder: (_, index) => SHFProductCardVertical(
+                        product: controller.featuredProducts[index],
+                      ),
                     );
                   })
                 ],

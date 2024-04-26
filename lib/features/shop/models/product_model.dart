@@ -75,13 +75,13 @@ class ProductModel {
     return ProductModel(
       id: document.id,
       title: data['Title'],
-      stock: data['Stock'] ?? '',
+      stock: data['Stock'] ?? 0,
       price: double.parse((data['Price'] ?? 0.0).toString()),
       isFeatured: data['IsFeatured'] ?? false,
       thumbnail: data['Thumbnail'] ?? '',
       description: data['Description'] ?? '',
       brand: BrandModel.fromJson(data['Brand']),
-      images: data['Image'] != null ? List<String>.from(data['Images']) : [],
+      images: data['Images'] != null ? List<String>.from(data['Images']) : [],
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
       sku: data['SKU'],
       categoryId: data['CategoryId'] ?? '',
@@ -101,8 +101,8 @@ class ProductModel {
     final data = document.data() as Map<String, dynamic>;
     return ProductModel(
       id: document.id,
-      title: data['Title'],
-      stock: data['Stock'] ?? '',
+      title: data['Title'] ?? '',
+      stock: data['Stock'] ?? 0,
       price: double.parse((data['Price'] ?? 0.0).toString()),
       isFeatured: data['IsFeatured'] ?? false,
       thumbnail: data['Thumbnail'] ?? '',
@@ -110,7 +110,7 @@ class ProductModel {
       brand: BrandModel.fromJson(data['Brand']),
       images: data['Images'] != null ? List<String>.from(data['Images']) : [],
       salePrice: double.parse((data['SalePrice'] ?? 0.0).toString()),
-      sku: data['SKU'],
+      sku: data['SKU'] ?? '',
       categoryId: data['CategoryId'] ?? '',
       productAttributes: (data['ProductAttributes'] as List<dynamic>)
           .map((e) => ProductAttributeModel.fromJson(e))

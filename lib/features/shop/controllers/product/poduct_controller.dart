@@ -35,6 +35,17 @@ class ProductController extends GetxController{
     }
   }
 
+  Future<List<ProductModel>> fetchAllFeaturedProducts() async{
+    try{
+      //Fetch Products
+      final products = await productRepository.getFeaturedProducts();
+      return products;
+    }catch(e){
+      SHFLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      return [];
+    }
+  }
+
   ///Nhận giá sản phẩm hoặc khoảng giá cho các biến thể
   String getProductPrice(ProductModel product){
     double smallestPrice = double.infinity;

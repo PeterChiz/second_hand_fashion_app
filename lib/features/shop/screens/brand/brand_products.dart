@@ -21,7 +21,7 @@ class BrandProducts extends StatelessWidget {
             SHFBrandCard(showBorder: true),
             SizedBox(height: SHFSizes.spaceBtwSections,),
 
-            SHFSortableProducts(),
+            SHFSortableProducts(products: [],),
           ],
         ),
       ),
