@@ -142,24 +142,6 @@ class SHFProductCardVertical extends StatelessWidget {
                 ),
 
                 ///Add to Cart Button
-                Container(
-                  decoration: const BoxDecoration(
-                    color: SHFColors.dark,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(SHFSizes.cardRadiusMd),
-                      bottomRight: Radius.circular(SHFSizes.productImageRadius),
-                    ),
-                  ),
-                  child: const SizedBox(
-                      width: SHFSizes.iconLg * 1.2,
-                      height: SHFSizes.iconLg * 1.2,
-                      child: Center(
-                        child: Icon(
-                          Iconsax.add,
-                          color: SHFColors.white,
-                        ),
-                      )),
-                )
               ],
             )
           ],

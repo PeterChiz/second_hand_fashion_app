@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:second_hand_fashion_app/features/shop/controllers/product/cart_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/controllers/product/images_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_variation_model.dart';
@@ -14,7 +15,7 @@ class VariationController extends GetxController {
   ///Select Attribute and Variation
   void onAttributeSelected(
       ProductModel product, attributeName, attributeValue) {
-    //When attribute is selected we will first add that attribute to the selectedAttributes
+    //Khi thuộc tính được chọn, đầu tiên thêm thuộc tính đó vào Thuộc tính đã chọn
     final selectedAttributes =
         Map<String, dynamic>.from(this.selectedAttributes);
     selectedAttributes[attributeName] = attributeValue;
@@ -29,6 +30,12 @@ class VariationController extends GetxController {
     if (selectedVariation.image.isNotEmpty) {
       ImagesController.instance.selectedProductImage.value =
           selectedVariation.image;
+    }
+
+    //show selected variation quantity already in the cart
+    if(selectedVariation.id.isNotEmpty){
+      final cartController = CartController.instance;
+      cartController.productQuantityInCart.value = cartController.getVariationQuantityInCart(product.id, selectedVariation.id);
     }
 
     //Assign Selected Variation
@@ -80,5 +87,9 @@ class VariationController extends GetxController {
   }
 
   ///Reset selected attributes when switching products
-  void resetSelectedAttributes() {}
+  void resetSelectedAttributes() {
+    selectedAttributes.clear();
+    variationStockStatus.value = '';
+    selectedVariation.value = ProductVariationModel.empty();
+  }
 }

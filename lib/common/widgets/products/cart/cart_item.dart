@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:second_hand_fashion_app/features/shop/models/cart_item_model.dart';
 
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/image_strings.dart';
@@ -11,7 +13,10 @@ import '../../texts/shf_brand_title_text_with_verified_icon.dart';
 class SHFCartItem extends StatelessWidget {
   const SHFCartItem({
     super.key,
+    required this.cartItem,
   });
+
+  final CartItemModel cartItem;
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +24,15 @@ class SHFCartItem extends StatelessWidget {
       children: [
         ///Image
         SHFRoundedImage(
-          imageURL: SHFImages.productImage1,
-          width: 60,
-          height: 60,
-          padding: const EdgeInsets.all(SHFSizes.sm),
-          backgroundColor:
-          SHFHelperFunctions.isDarkMode(context)
-              ? SHFColors.darkerGrey
-              : SHFColors.light,
-        ),
-        const SizedBox(
-          width: SHFSizes.spaceBtwItems,
-        ),
+            imageURL: cartItem.image ?? '',
+            width: 60,
+            height: 60,
+            isNetworkImage: true,
+            padding: const EdgeInsets.all(SHFSizes.sm),
+            backgroundColor: SHFHelperFunctions.isDarkMode(context)
+                ? SHFColors.darkerGrey
+                : SHFColors.light),
+        const SizedBox(width: SHFSizes.spaceBtwItems),
 
         ///Title, Price & Size
         Expanded(
@@ -38,21 +40,32 @@ class SHFCartItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SHFBrandTitleWithVerifiedIcon(title: 'Asus'),
-              const Flexible(
-                child: SHFProductTitleText(
-                  title: 'DELL PRECISION 7770 I7 12850HX RAM 32GB SSD 512GB RTX A3000 12GB 17 INCH ĐỒ HỌA GIÁ RẺ',
-                  maxLines: 1,
-                ),
-              ),
+              SHFBrandTitleWithVerifiedIcon(title: cartItem.brandName ?? ''),
+              Flexible(
+                  child: SHFProductTitleText(
+                title: cartItem.title,
+                maxLines: 1,
+              )),
 
               ///Attributes
-              Text.rich(TextSpan(children: [
-                TextSpan(text: 'Color', style: Theme.of(context).textTheme.bodySmall),
-                TextSpan(text: 'Black', style: Theme.of(context).textTheme.labelLarge),
-                TextSpan(text: 'Size', style: Theme.of(context).textTheme.bodySmall),
-                TextSpan(text: '8GB', style: Theme.of(context).textTheme.titleLarge),
-              ]))
+              Text.rich(
+                TextSpan(
+                    children: (cartItem.selectedVariation ?? {})
+                        .entries
+                        .map((e) => TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: ' ${e.key} ',
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall),
+                                TextSpan(
+                                    text: ' ${e.value} ',
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge)
+                              ],
+                            ))
+                        .toList()),
+              ),
             ],
           ),
         )

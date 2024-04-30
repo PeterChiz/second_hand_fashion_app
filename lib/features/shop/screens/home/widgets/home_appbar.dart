@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/controllers/user_controller.dart';
 import 'package:second_hand_fashion_app/common/widgets/shimmers/shimmer.dart';
+import 'package:second_hand_fashion_app/utils/helpers/cloud_helper_functions.dart';
 
 import '../../../../../common/widgets/appbar/appbar.dart';
 import '../../../../../common/widgets/products/cart/cart_menu_icon.dart';
@@ -20,20 +21,33 @@ class SHFHomeAppBar extends StatelessWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(SHFTexts.homeAppbarTitle, style: Theme.of(context).textTheme.labelMedium!.apply(color: SHFColors.grey)),
-          Obx(() {
-            if(controller.profileLoading.value){
-              //Hiển thị trình tải ánh sáng lung linh trong khi hồ sơ người dùng đang được tải
-              return const SHFShimmerEffect(width: 80, height: 15);
-            }else{
-              return Text(controller.user.value.fullName, style: Theme.of(context).textTheme.headlineSmall!.apply(color: SHFColors.white));
-            }
-          },
+          Text(SHFTexts.homeAppbarTitle,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelMedium!
+                  .apply(color: SHFColors.grey)),
+          Obx(
+            () {
+              if (controller.profileLoading.value) {
+                //Hiển thị trình tải ánh sáng lung linh trong khi hồ sơ người dùng đang được tải
+                return const SHFShimmerEffect(width: 80, height: 15);
+              } else {
+                return Text(controller.user.value.fullName,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!
+                        .apply(color: SHFColors.white));
+              }
+            },
           )
         ],
       ),
       actions: [
-        SHFCartCounterIcon(onPressed: () {},iconColor: SHFColors.white, ),
+        SHFCartCounterIcon(
+          iconColor: SHFColors.white,
+          counterBgColor: SHFColors.black,
+          counterTextColor: SHFColors.white,
+        ),
       ],
     );
   }

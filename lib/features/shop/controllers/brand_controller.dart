@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
-import 'package:second_hand_fashion_app/data/repositories/brand_repository.dart';
+import 'package:second_hand_fashion_app/data/repositories/brands/brand_repository.dart';
 import 'package:second_hand_fashion_app/data/repositories/product/product_repository.dart';
 import 'package:second_hand_fashion_app/features/shop/models/brand_model.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';

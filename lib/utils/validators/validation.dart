@@ -4,7 +4,7 @@ class SHFValidator{
   ///Empty Text Validation
   static String? validationEmptyText(String? fieldName, String? value){
     if(value == null || value.isEmpty){
-      return '$fieldName is required.';
+      return 'Vui lòng nhập $fieldName';
     }
 
     return null;
@@ -12,7 +12,7 @@ class SHFValidator{
 
   static String? validateEmail(String? value){
     if(value == null || value.isEmpty){
-      return 'Email bắt buộc.';
+      return 'Vui lòng nhập Email';
     }
 
     //Biểu thức chính quy để kiểm tra định dạng email
@@ -27,7 +27,7 @@ class SHFValidator{
 
   static String? validatePassword(String? value){
     if (value == null || value.isEmpty){
-      return 'Mật khẩu bắt buộc.';
+      return 'Vui lòng nhập mật khẩu';
     }
 
     //Kiểm tra độ dài mật khẩu tối thiểu
@@ -55,7 +55,7 @@ class SHFValidator{
 
   static String? validatePhoneNumber(String? value){
     if(value == null || value.isEmpty){
-      return 'Số điện thoại là bắt buộc.';
+      return 'Vui lòng nhập số điện thoại.';
     }
 
     //Biểu thức chính quy để xác thực số điện thoại (định dạng số điện thoại gồm 10 hoặc 11 chữ số)

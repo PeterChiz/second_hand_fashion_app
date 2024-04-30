@@ -14,6 +14,7 @@ import 'package:second_hand_fashion_app/utils/exceptions/firebase_auth_exception
 import 'package:second_hand_fashion_app/utils/exceptions/firebase_exception.dart';
 import 'package:second_hand_fashion_app/utils/exceptions/format_exceptions.dart';
 import 'package:second_hand_fashion_app/utils/exceptions/platform_exceptions.dart';
+import 'package:second_hand_fashion_app/utils/local_storage/storage_utility.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -40,6 +41,9 @@ class AuthenticationRepository extends GetxController {
     if (user != null) {
       //neu nguoi dung da dang nhap
       if (user.emailVerified) {
+        //khoi tao bo nho cu the cho user
+        await SHFLocalStorage.init(user.uid);
+
         //neu email cua nguoi dung duoc xac minh => dieu huong den menu NavigationMenu
         Get.offAll(() => const NavigationMenu());
       } else {

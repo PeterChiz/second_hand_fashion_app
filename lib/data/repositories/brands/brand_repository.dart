@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/features/shop/models/brand_model.dart';
 
-import '../../utils/exceptions/firebase_exception.dart';
-import '../../utils/exceptions/format_exceptions.dart';
-import '../../utils/exceptions/platform_exceptions.dart';
+import '../../../utils/exceptions/firebase_exception.dart';
+import '../../../utils/exceptions/format_exceptions.dart';
+import '../../../utils/exceptions/platform_exceptions.dart';
 
 class BrandRepository extends GetxController{
   static BrandRepository get instance => Get.find();

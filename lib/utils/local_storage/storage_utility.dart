@@ -4,7 +4,7 @@ class SHFLocalStorage{
 
   late final GetStorage _storage;
 
-  //Singleton instance
+  //
   static SHFLocalStorage? _instance;
 
   SHFLocalStorage._internal();
@@ -20,7 +20,7 @@ class SHFLocalStorage{
     _instance!._storage = GetStorage(bucketName);
   }
 
-  //Generic method to save data
+  //phuong phap chung de luu du lieu
   Future<void> saveData<SHF>(String key, SHF value) async{
     await _storage.write(key, value);
   }
