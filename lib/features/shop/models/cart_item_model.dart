@@ -8,14 +8,16 @@ class CartItemModel {
   String? brandName;
   Map<String, String>? selectedVariation;
 
-  CartItemModel({required this.productId,
+  CartItemModel({
+    required this.productId,
     this.title = '',
     this.price = 0.0,
     this.image,
     required this.quantity,
     this.variationId = '',
     this.brandName,
-    this.selectedVariation});
+    this.selectedVariation,
+  });
 
   ///Empty cart
   static CartItemModel empty() => CartItemModel(productId: '', quantity: 0);
@@ -35,15 +37,18 @@ class CartItemModel {
   }
 
   ///
-  factory CartItemModel.fromJson(Map<String, dynamic> json){
-    return CartItemModel(productId: json['productId'],
-        title: json['title'],
-        price: json['price']?.toDouble(),
-        image: json['image'],
-        quantity: json['quantity'],
+  factory CartItemModel.fromJson(Map<String, dynamic> json) {
+    return CartItemModel(
+      productId: json['productId'],
+      title: json['title'],
+      price: json['price']?.toDouble(),
+      image: json['image'],
+      quantity: json['quantity'],
       variationId: json['variationId'],
       brandName: json['brandName'],
-      selectedVariation: json['selectedVariation'] != null ? Map<String, String>.from(json['selectedVariation']) : null,
+      selectedVariation: json['selectedVariation'] != null
+          ? Map<String, String>.from(json['selectedVariation'])
+          : null,
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -50,10 +49,7 @@ class ProductCardAddToCartButton extends StatelessWidget {
                           .textTheme
                           .bodyLarge!
                           .apply(color: SHFColors.white))
-                  : const Icon(
-                      Iconsax.add,
-                      color: SHFColors.white,
-                    ),
+                  : const Icon(Iconsax.add, color: SHFColors.white),
             ),
           ),
         );

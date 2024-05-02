@@ -34,7 +34,7 @@ class CategoryController extends GetxController {
       // Lọc các danh mục nổi bật
       featuredCategories.assignAll(allCategories.where((category) => category.isFeatured && category.parentId.isEmpty).take(8).toList());
     } catch (e) {
-      SHFLoaders.errorSnackBar(title: 'Oh snap', message: e.toString());
+      SHFLoaders.errorSnackBar(title: 'Có lỗi', message: e.toString());
     } finally {
       //Remove Loader
       isLoading.value = false;
@@ -47,13 +47,10 @@ class CategoryController extends GetxController {
       final subCategories = await _categoryRepository.getSubCategories(categoryId);
       return subCategories;
     }catch(e){
-      SHFLoaders.errorSnackBar(title: 'Oh snap', message: e.toString());
+      SHFLoaders.errorSnackBar(title: 'Có lỗi', message: e.toString());
       return [];
     }
   }
-
-  
-
 
   ///Đặt danh mục trên các sản phẩm Danh mục phụ
   Future<List<ProductModel>> getCategoryProducts({required String categoryId, int limit = 4}) async {
@@ -62,7 +59,7 @@ class CategoryController extends GetxController {
       final products = await ProductRepository.instance.getProductsForCategory(categoryId: categoryId,limit: limit);
       return products;
     }catch(e){
-      SHFLoaders.errorSnackBar(title: 'Oh snap', message: e.toString());
+      SHFLoaders.errorSnackBar(title: 'Có lỗi', message: e.toString());
       return [];
     }
   }

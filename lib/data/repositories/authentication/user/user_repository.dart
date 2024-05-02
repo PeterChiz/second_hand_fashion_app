@@ -35,7 +35,7 @@ class UserRepository extends GetxController {
   ///Function lấy thông tin người dùng dựa trên ID người dùng.
   Future<UserModel> fetchUserDetails() async {
     try {
-      final documentSnapshot = await _db.collection("Users").doc(AuthenticationRepository.instance.authUser?.uid).get();
+      final documentSnapshot = await _db.collection("Users").doc(AuthenticationRepository.instance.authUser.uid).get();
       if (documentSnapshot.exists) {
         return UserModel.fromSnapshot(documentSnapshot);
       } else {
@@ -70,7 +70,7 @@ class UserRepository extends GetxController {
   /// Cập nhật bất kỳ trường nào trong Users Collection
   Future<void> updateSingleField(Map<String, dynamic> json) async {
     try {
-      await _db.collection('Users').doc(AuthenticationRepository.instance.authUser?.uid).update(json);
+      await _db.collection('Users').doc(AuthenticationRepository.instance.authUser.uid).update(json);
     }  on FirebaseException catch (e) {
       throw SHFFirebaseException(e.code).message;
     } on FormatException catch (_) {

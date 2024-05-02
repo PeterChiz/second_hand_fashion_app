@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/controllers/user_controller.dart';
 import 'package:second_hand_fashion_app/common/widgets/shimmers/shimmer.dart';
-import 'package:second_hand_fashion_app/utils/helpers/cloud_helper_functions.dart';
 
 import '../../../../../common/widgets/appbar/appbar.dart';
 import '../../../../../common/widgets/products/cart/cart_menu_icon.dart';
@@ -42,7 +41,7 @@ class SHFHomeAppBar extends StatelessWidget {
           )
         ],
       ),
-      actions: [
+      actions: const [
         SHFCartCounterIcon(
           iconColor: SHFColors.white,
           counterBgColor: SHFColors.black,

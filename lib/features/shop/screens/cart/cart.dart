@@ -18,10 +18,8 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       appBar: SHFAppBar(
         showBackArrow: true,
-        title: Text(
-          'Giỏ hàng',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
+        title:
+            Text('Giỏ hàng', style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: Obx(() {
         //Nothing found widget
@@ -48,13 +46,15 @@ class CartScreen extends StatelessWidget {
       }),
 
       ///Checkout Button
-      bottomNavigationBar: controller.cartItems.isEmpty ? const SizedBox() :
-      Padding(
-        padding: const EdgeInsets.all(SHFSizes.defaultSpace),
-        child: ElevatedButton(
-            onPressed: () => Get.to(() => const CheckoutScreen()),
-            child:  Obx(()=> Text('Thanh toán \$${controller.totalCartPrice.value}'))),
-      ),
+      bottomNavigationBar: controller.cartItems.isEmpty
+          ? const SizedBox()
+          : Padding(
+              padding: const EdgeInsets.all(SHFSizes.defaultSpace),
+              child: ElevatedButton(
+                  onPressed: () => Get.to(() => const CheckoutScreen()),
+                  child: Obx(() =>
+                      Text('Thanh toán \$${controller.totalCartPrice.value}'))),
+            ),
     );
   }
 }

@@ -60,6 +60,12 @@ class CategoryRepository extends GetxController {
         //Nhận liên kết ImageData từ nội dung cục bộ
         final file = await storage.getImageDataFromAssets(category.image);
 
+        //Upload image va Get URL cua no
+        final url = await storage.uploadImageData('Categories', file, category.name);
+
+        //Assign URL to category.image attribute
+        category.image = url;
+
         //Gán URL cho danh mục trong Firestore
         await _db.collection('Categories').doc(category.id).set(category.toJson());
       }

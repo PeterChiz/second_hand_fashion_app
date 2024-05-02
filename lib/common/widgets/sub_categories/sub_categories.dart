@@ -22,30 +22,22 @@ class SubCategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = CategoryController.instance;
     return Scaffold(
-      appBar: SHFAppBar(
-        title: Text(category.name),
-        showBackArrow: true,
-      ),
+      appBar: SHFAppBar(title: Text(category.name), showBackArrow: true),
       body: Padding(
         padding: const EdgeInsets.all(SHFSizes.defaultSpace),
         child: Column(
           children: [
-
             ///Banner
             const SHFRoundedImage(
-              width: double.infinity,
-              imageURL: SHFImages.promoBanner3,
-              applyImageRadius: true,
-            ),
-            const SizedBox(
-              height: SHFSizes.spaceBtwSections,
-            ),
+                width: double.infinity,
+                imageURL: SHFImages.promoBanner3,
+                applyImageRadius: true),
+            const SizedBox(height: SHFSizes.spaceBtwSections),
 
             ///Sub-Categories
             FutureBuilder(
                 future: controller.getSubCategories(category.id),
                 builder: (context, snapshot) {
-
                   ///Handle loader, no record, or error message
                   const loader = SHFHorizontalProductShimmer();
                   final widget = SHFCloudHelperFunctions.checkMultiRecordState(
@@ -65,53 +57,49 @@ class SubCategoriesScreen extends StatelessWidget {
                             future: controller.getCategoryProducts(
                                 categoryId: subCategory.id),
                             builder: (context, snapshot) {
-
                               ///Handle loader, no record, or error message
-                              final widget = SHFCloudHelperFunctions.checkMultiRecordState(
-                                  snapshot: snapshot, loader: loader);
+                              final widget =
+                                  SHFCloudHelperFunctions.checkMultiRecordState(
+                                      snapshot: snapshot, loader: loader);
                               if (widget != null) return widget;
 
                               /// Record found
-                              final products = snapshot.data! ;
+                              final products = snapshot.data!;
 
                               return Column(
                                 children: [
-
                                   ///Heading
                                   SHFSectionHeading(
-                                    title: subCategory.name,
-                                    onPressed: () => Get.to(() => AllProducts(
                                       title: subCategory.name,
-                                      futureMethod: controller
-                                          .getCategoryProducts(
-                                          categoryId: subCategory.id,
-                                          limit: -1),)),
-                                  ),
+                                      onPressed: () => Get.to(() => AllProducts(
+                                            title: subCategory.name,
+                                            futureMethod:
+                                                controller.getCategoryProducts(
+                                                    categoryId: subCategory.id,
+                                                    limit: -1),
+                                          ))),
                                   const SizedBox(
-                                    height: SHFSizes.spaceBtwItems / 2,
-                                  ),
+                                      height: SHFSizes.spaceBtwItems / 2),
 
                                   SizedBox(
                                     height: 120,
                                     child: ListView.separated(
-                                      itemCount: products.length,
-                                      scrollDirection: Axis.horizontal,
-                                      separatorBuilder: (context, index) =>
-                                      const SizedBox(
-                                          width: SHFSizes.spaceBtwItems),
-                                      itemBuilder: (context, index) =>
-                                       SHFProductCardHorizontal(product: products[index]),
-                                    ),
+                                        itemCount: products.length,
+                                        scrollDirection: Axis.horizontal,
+                                        separatorBuilder: (context, index) =>
+                                            const SizedBox(
+                                                width: SHFSizes.spaceBtwItems),
+                                        itemBuilder: (context, index) =>
+                                            SHFProductCardHorizontal(
+                                                product: products[index])),
                                   ),
-                                  const SizedBox(height: SHFSizes.spaceBtwSections,)
+                                  const SizedBox(
+                                      height: SHFSizes.spaceBtwSections)
                                 ],
                               );
-                            }
-                        );
-                      }
-                  );
-                }
-            )
+                            });
+                      });
+                })
           ],
         ),
       ),

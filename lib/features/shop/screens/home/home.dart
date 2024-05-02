@@ -46,22 +46,17 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         ///Heading
                         SHFSectionHeading(
-                          title: 'Danh mục phổ biến',
-                          showActionButton: false,
-                          textColor: Colors.white,
-                        ),
-                        SizedBox(
-                          height: SHFSizes.spaceBtwItems,
-                        ),
+                            title: 'Danh mục phổ biến',
+                            showActionButton: false,
+                            textColor: Colors.white),
+                        SizedBox(height: SHFSizes.spaceBtwItems),
 
                         ///Categories
                         SHFHomeCategories(),
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: SHFSizes.spaceBtwSections,
-                  ),
+                  SizedBox(height: SHFSizes.spaceBtwSections),
                 ],
               ),
             ),
@@ -82,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                     title: 'Sản phẩm phổ biến',
                     onPressed: () => Get.to(() => AllProducts(
                           title: 'Sản phẩm phổ biến',
-                      futureMethod: controller.fetchAllFeaturedProducts(),
+                          futureMethod: controller.fetchAllFeaturedProducts(),
                         )),
                   ),
                   const SizedBox(
@@ -91,7 +86,9 @@ class HomeScreen extends StatelessWidget {
 
                   ///Popular Product
                   Obx(() {
-                    if (controller.isLoading.value) return const SHFVerticalProductShimmer();
+                    if (controller.isLoading.value) {
+                      return const SHFVerticalProductShimmer();
+                    }
 
                     if (controller.featuredProducts.isEmpty) {
                       return Center(

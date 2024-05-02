@@ -12,8 +12,8 @@ class OrderScreen extends StatelessWidget {
       ///Appbar
       appBar: SHFAppBar(
         title: Text(
-          'My Orders',
-          style: Theme.of(context).textTheme.headlineSmall,
+          'Đơn hàng của tôi',
+          style: Theme.of(context).textTheme.headlineSmall
         ),
         showBackArrow: true,
       ),

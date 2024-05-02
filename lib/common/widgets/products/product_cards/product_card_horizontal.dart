@@ -82,7 +82,7 @@ class SHFProductCardHorizontal extends StatelessWidget {
             ),
           ),
 
-          ///Details
+          ///Details, add to cart, pricing
            SizedBox(
             width: 172,
             child: Padding(

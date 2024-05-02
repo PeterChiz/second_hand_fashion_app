@@ -7,12 +7,13 @@ class CategoryModel {
   String parentId;
   bool isFeatured;
 
-  CategoryModel(
-      {required this.id,
-      required this.name,
-      required this.image,
-      this.parentId = '',
-      required this.isFeatured});
+  CategoryModel({
+    required this.id,
+    required this.name,
+    required this.image,
+    this.parentId = '',
+    required this.isFeatured,
+  });
 
   ///Empty Helper Function
   static CategoryModel empty() =>
@@ -36,11 +37,12 @@ class CategoryModel {
 
       //Map Json Record to the Model
       return CategoryModel(
-          id: document.id,
-          name: data['Name'] ?? '',
-          image: data['Image'] ?? '',
-          parentId: data['ParentId'] ?? '',
-          isFeatured: data['IsFeatured'] ?? false);
+        id: document.id,
+        name: data['Name'] ?? '',
+        image: data['Image'] ?? '',
+        parentId: data['ParentId'] ?? '',
+        isFeatured: data['IsFeatured'] ?? false,
+      );
     } else {
       return CategoryModel.empty();
     }

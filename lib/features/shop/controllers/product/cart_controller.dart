@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
 import 'package:second_hand_fashion_app/features/shop/controllers/product/variation_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/models/cart_item_model.dart';
@@ -17,7 +16,7 @@ class CartController extends GetxController {
   RxList<CartItemModel> cartItems = <CartItemModel>[].obs;
   final variationController = VariationController.instance;
 
-  CartController(){
+  CartController() {
     loadCartItems();
   }
 
@@ -51,55 +50,65 @@ class CartController extends GetxController {
       }
     }
     //Convert the productModel to a CartItemModel with the given quantity
-    final selectedCartItem = convertToCartItem(product, productQuantityInCart.value);
+    final selectedCartItem =
+        convertToCartItem(product, productQuantityInCart.value);
 
     //Check if already added in cart
-    int index = cartItems.indexWhere((cartItem) => cartItem.productId == selectedCartItem.productId && cartItem.variationId == selectedCartItem.variationId);
+    int index = cartItems.indexWhere((cartItem) =>
+        cartItem.productId == selectedCartItem.productId &&
+        cartItem.variationId == selectedCartItem.variationId);
 
-    if(index >= 0){
+    if (index >= 0) {
       //This quantity is already added or Updated/Removed from the design (Cart)(-)
       cartItems[index].quantity = selectedCartItem.quantity;
-    }else{
+    } else {
       cartItems.add(selectedCartItem);
     }
 
     updateCart();
 
-    SHFLoaders.customToast(message: 'Sản phẩm của bạn đã được thêm vào giỏ hàng');
+    SHFLoaders.customToast(
+        message: 'Sản phẩm của bạn đã được thêm vào giỏ hàng');
   }
 
-  void addOneToCart(CartItemModel item){
-    int index = cartItems.indexWhere((cartItem) => cartItem.productId == item.productId && cartItem.variationId == item.variationId);
+  void addOneToCart(CartItemModel item) {
+    int index = cartItems.indexWhere((cartItem) =>
+        cartItem.productId == item.productId &&
+        cartItem.variationId == item.variationId);
 
-    if(index >= 0){
+    if (index >= 0) {
       cartItems[index].quantity += 1;
-    }else{
+    } else {
       cartItems.add(item);
     }
 
     updateCart();
   }
 
-  void removeOneFromCart(CartItemModel item){
-    int index = cartItems.indexWhere((cartItem) => cartItem.productId == item.productId && cartItem.variationId == item.variationId);
+  void removeOneFromCart(CartItemModel item) {
+    int index = cartItems.indexWhere((cartItem) =>
+        cartItem.productId == item.productId &&
+        cartItem.variationId == item.variationId);
 
-    if(index > 0){
-      if(cartItems[index].quantity > 1){
+    if (index > 0) {
+      if (cartItems[index].quantity > 1) {
         cartItems[index].quantity -= 1;
       }
-    }else{
+    } else {
       //Show dialog before completely removing
-      cartItems[index].quantity == 1 ? removeFromCartDialog(index) : cartItems.removeAt(index);
+      cartItems[index].quantity == 1
+          ? removeFromCartDialog(index)
+          : cartItems.removeAt(index);
     }
 
     updateCart();
   }
 
-  void removeFromCartDialog(int index){
+  void removeFromCartDialog(int index) {
     Get.defaultDialog(
       title: 'Xóa sản phẩm',
       middleText: 'Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng không ?',
-      onConfirm: (){
+      onConfirm: () {
         //Xoa san pham khoi gio hang
         cartItems.removeAt(index);
         updateCart();
@@ -110,17 +119,18 @@ class CartController extends GetxController {
     );
   }
 
-  void updateAlreadyAddedProductCount(ProductModel product){
+  void updateAlreadyAddedProductCount(ProductModel product) {
     //If product has no variations then calculate CarEntries and display total number
     //Else make default entries to 0 and show cartEntries when variation is selected
-    if(product.productType == ProductType.single.toString()){
+    if (product.productType == ProductType.single.toString()) {
       productQuantityInCart.value = getProductQuantityInCart(product.id);
-    }else {
+    } else {
       //Get selected Variation if any
       final variationId = variationController.selectedVariation.value.id;
-      if(variationId.isNotEmpty){
-        productQuantityInCart.value = getVariationQuantityInCart(product.id, variationId);
-      }else{
+      if (variationId.isNotEmpty) {
+        productQuantityInCart.value =
+            getVariationQuantityInCart(product.id, variationId);
+      } else {
         productQuantityInCart.value = 0;
       }
     }
@@ -144,6 +154,7 @@ class CartController extends GetxController {
     return CartItemModel(
       productId: product.id,
       title: product.title,
+      price: price,
       quantity: quantity,
       variationId: variation.id,
       image: isVariation ? variation.image : product.thumbnail,
@@ -152,18 +163,18 @@ class CartController extends GetxController {
     );
   }
 
-  void updateCart(){
+  void updateCart() {
     updateCartTotals();
     saveCartItems();
     cartItems.refresh();
   }
 
-  void updateCartTotals(){
+  void updateCartTotals() {
     double calculatedTotalPrice = 0.0;
-    int calculatedNoOfItems  =0;
+    int calculatedNoOfItems = 0;
 
-    for(var item in cartItems){
-      calculatedTotalPrice += (item.price) *item.quantity.toDouble();
+    for (var item in cartItems) {
+      calculatedTotalPrice += (item.price) * item.quantity.toDouble();
       calculatedNoOfItems += item.quantity;
     }
 
@@ -171,30 +182,37 @@ class CartController extends GetxController {
     noOfCartItems.value = calculatedNoOfItems;
   }
 
-  void saveCartItems(){
+  void saveCartItems() {
     final cartItemStrings = cartItems.map((item) => item.toJson()).toList();
     SHFLocalStorage.instance().saveData('cartItems', cartItemStrings);
   }
 
-  void loadCartItems(){
-    final cartItemStrings = SHFLocalStorage.instance().readData<List<dynamic>>('cartItems');
-    if(cartItemStrings != null){
-      cartItems.assignAll(cartItemStrings.map((item) => CartItemModel.fromJson(item as Map<String, dynamic>)));
+  void loadCartItems() {
+    final cartItemStrings =
+        SHFLocalStorage.instance().readData<List<dynamic>>('cartItems');
+    if (cartItemStrings != null) {
+      cartItems.assignAll(cartItemStrings
+          .map((item) => CartItemModel.fromJson(item as Map<String, dynamic>)));
       updateCartTotals();
     }
   }
 
-  int getProductQuantityInCart(String productId){
-    final foundItem = cartItems.where((item) => item.productId == productId).fold(0, (previousValue, element) => previousValue + element.quantity);
+  int getProductQuantityInCart(String productId) {
+    final foundItem = cartItems
+        .where((item) => item.productId == productId)
+        .fold(0, (previousValue, element) => previousValue + element.quantity);
     return foundItem;
   }
 
-  int getVariationQuantityInCart(String productId, String variationId){
-    final foundItem = cartItems.firstWhere((item) => item.productId == productId && item.variationId == variationId);
+  int getVariationQuantityInCart(String productId, String variationId) {
+    final foundItem = cartItems.firstWhere(
+        (item) =>
+            item.productId == productId && item.variationId == variationId,
+        orElse: () => CartItemModel.empty());
     return foundItem.quantity;
   }
 
-  void clearCart(){
+  void clearCart() {
     productQuantityInCart.value = 0;
     cartItems.clear();
     updateCart();

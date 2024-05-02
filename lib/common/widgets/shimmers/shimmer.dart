@@ -1,16 +1,16 @@
-
 import 'package:flutter/material.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SHFShimmerEffect extends StatelessWidget {
-  const SHFShimmerEffect(
-      {super.key,
-      required this.width,
-      required this.height,
-       this.radius = 15,
-      this.color});
+  const SHFShimmerEffect({
+    super.key,
+    required this.width,
+    required this.height,
+    this.radius = 15,
+    this.color,
+  });
 
   final double width, height, radius;
   final Color? color;
@@ -20,7 +20,7 @@ class SHFShimmerEffect extends StatelessWidget {
     final dark = SHFHelperFunctions.isDarkMode(context);
     return Shimmer.fromColors(
       baseColor: dark ? Colors.grey[850]! : Colors.grey[300]!,
-      highlightColor:  dark ? Colors.grey[700]! : Colors.grey[100]!,
+      highlightColor: dark ? Colors.grey[700]! : Colors.grey[100]!,
       child: Container(
         width: width,
         height: height,

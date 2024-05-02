@@ -9,7 +9,6 @@ import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dar
 import 'package:second_hand_fashion_app/features/shop/controllers/brand_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/controllers/category_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/brand/brand_products.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/cart/cart.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
@@ -79,8 +78,7 @@ class StoreScreen extends StatelessWidget {
 
                       ///Brands GRID
                       Obx(() {
-                        if (brandController.isLoading.value)
-                          return const SHFBrandsShimmer();
+                        if (brandController.isLoading.value) return const SHFBrandsShimmer();
 
                         if (brandController.featuredBrands.isEmpty) {
                           return Center(

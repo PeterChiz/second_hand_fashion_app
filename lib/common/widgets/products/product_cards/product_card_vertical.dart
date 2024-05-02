@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:second_hand_fashion_app/common/styles/shadows.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:second_hand_fashion_app/common/widgets/images/shf_rounded_image.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/favourite_icon/favorites_icon.dart';
+import 'package:second_hand_fashion_app/common/widgets/products/product_cards/add_to_cart_button.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/product_price_text.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/product_title_text.dart';
 import 'package:second_hand_fashion_app/features/shop/controllers/product/poduct_controller.dart';
@@ -107,7 +107,7 @@ class SHFProductCardVertical extends StatelessWidget {
                       smallSize: true,
                     ),
                     const SizedBox(
-                      height: SHFSizes.spaceBtwItems / 2,
+                      height: SHFSizes.spaceBtwItems / 2
                     ),
                     SHFBrandTitleWithVerifiedIcon(title: product.brand!.name),
                   ],
@@ -125,23 +125,25 @@ class SHFProductCardVertical extends StatelessWidget {
                 Flexible(
                   child: Column(
                     children: [
-                      if (product.productType ==
-                              ProductType.single.toString() &&
-                          product.salePrice > 0)
-                        const Padding(
-                            padding: EdgeInsets.only(left: SHFSizes.sm)),
+                      if (product.productType == ProductType.single.toString() && product.salePrice > 0)
+                        Padding(
+                            padding: const EdgeInsets.only(left: SHFSizes.sm),
+                          child: Text(product.price.toString(),
+                            style: Theme.of(context).textTheme.labelMedium!.apply(decoration: TextDecoration.lineThrough),
+                          ),
+                        ),
 
                       ///Price, Show sale price as main price if sale exist
                       Padding(
                         padding: const EdgeInsets.only(left: SHFSizes.sm),
-                        child: SHFProductPriceText(
-                            price: controller.getProductPrice(product)),
+                        child: SHFProductPriceText(price: controller.getProductPrice(product)),
                       ),
                     ],
                   ),
                 ),
 
                 ///Add to Cart Button
+                ProductCardAddToCartButton(product: product,),
               ],
             )
           ],

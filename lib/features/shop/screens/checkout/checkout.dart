@@ -1,31 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:second_hand_fashion_app/common/widgets/success_screen/success_screen.dart';
+import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
+import 'package:second_hand_fashion_app/features/shop/controllers/product/cart_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/checkout/widgets/billing_address_section.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/checkout/widgets/billing_amount_section.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/checkout/widgets/billing_payment_section.dart';
-import 'package:second_hand_fashion_app/navigation_menu.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
-import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
+import 'package:second_hand_fashion_app/utils/helpers/pricing_calculator.dart';
 
 import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../common/widgets/products/cart/coupon_widget.dart';
+import '../../controllers/product/orderController.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cartController = CartController.instance;
+    final subTotal = cartController.totalCartPrice.value;
+    final orderController = Get.put(OrderController());
+    final totalAmount  = SHFPricingCalculator.calculateTotalPrice(subTotal, 'US');
+
     final dark = SHFHelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: SHFAppBar(
         showBackArrow: true,
         title: Text(
-          'Order Review',
+          'Đánh giá đơn hàng',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
@@ -35,18 +41,12 @@ class CheckoutScreen extends StatelessWidget {
           child: Column(
             children: [
               ///Item in Cart
-              const SHFCartItems(
-                showAddRemoveButtons: false,
-              ),
-              const SizedBox(
-                height: SHFSizes.spaceBtwSections,
-              ),
+              const SHFCartItems(showAddRemoveButtons: false),
+              const SizedBox(height: SHFSizes.spaceBtwSections),
 
               ///Coupon TextField
               const SHFCouponCode(),
-              const SizedBox(
-                height: SHFSizes.spaceBtwSections,
-              ),
+              const SizedBox(height: SHFSizes.spaceBtwSections),
 
               ///Billing Section
               SHFRoundedContainer(
@@ -57,21 +57,15 @@ class CheckoutScreen extends StatelessWidget {
                   children: [
                     ///Pricing
                     SHFBillingAmountSection(),
-                    SizedBox(
-                      height: SHFSizes.spaceBtwItems,
-                    ),
+                    SizedBox(height: SHFSizes.spaceBtwItems),
 
                     ///Driver
                     Divider(),
-                    SizedBox(
-                      height: SHFSizes.spaceBtwItems,
-                    ),
+                    SizedBox(height: SHFSizes.spaceBtwItems),
 
                     ///Payment Method
                     SHFBillingPaymentSection(),
-                    SizedBox(
-                      height: SHFSizes.spaceBtwItems,
-                    ),
+                    SizedBox(height: SHFSizes.spaceBtwItems),
 
                     ///Address
                     SHFBillingAddressSection(),
@@ -87,15 +81,11 @@ class CheckoutScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(SHFSizes.defaultSpace),
         child: ElevatedButton(
-            onPressed: () => Get.to(
-                  () => SuccessScreen(
-                    image: SHFImages.successfulPaymentIcon,
-                    title: 'Payment Success!',
-                    subTitle: 'Your item will be shipped soon',
-                    onPressed: () => Get.offAll(() => const NavigationMenu()),
-                  ),
-                ),
-            child: const Text('Checkout \$256.0')),
+            onPressed: subTotal > 0
+                ? () => orderController.processOrder(totalAmount)
+                : () =>  SHFLoaders.warningSnackBar(title: 'Giỏ hàng trống', message: 'Thêm mặt hàng vào giỏ hàng để tiếp tục.'),
+            child: Text(
+                'Thanh toán \$$totalAmount')),
       ),
     );
   }

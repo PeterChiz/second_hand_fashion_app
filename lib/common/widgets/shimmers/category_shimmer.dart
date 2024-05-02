@@ -18,9 +18,8 @@ class SHFCategoryShimmer extends StatelessWidget {
         shrinkWrap: true,
         itemCount: itemCount,
         scrollDirection: Axis.horizontal,
-        separatorBuilder: (_, __) => const SizedBox(
-          width: SHFSizes.spaceBtwItems,
-        ),
+        separatorBuilder: (_, __) =>
+            const SizedBox(width: SHFSizes.spaceBtwItems),
         itemBuilder: (_, __) {
           return const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,9 +30,7 @@ class SHFCategoryShimmer extends StatelessWidget {
                 height: 55,
                 radius: 55,
               ),
-              SizedBox(
-                height: SHFSizes.spaceBtwItems / 2,
-              ),
+              SizedBox(height: SHFSizes.spaceBtwItems / 2),
 
               ///Text
               SHFShimmerEffect(width: 55, height: 8),
