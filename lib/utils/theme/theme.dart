@@ -15,8 +15,9 @@ class SHFAppTheme{
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     fontFamily: 'Poppins',
+    disabledColor: SHFColors.grey,
     brightness: Brightness.light,
-    primaryColor: Colors.blue,
+    primaryColor: SHFColors.primary,
     textTheme: SHFTextTheme.lightTextTheme,
     chipTheme: SHFChipTheme.lightChipTheme,
     scaffoldBackgroundColor: Colors.white,
@@ -24,7 +25,7 @@ class SHFAppTheme{
     checkboxTheme: SHFCheckboxTheme.lightCheckboxTheme,
     bottomSheetTheme: SHFBottomSheetTheme.lightBottomSheetTheme,
     elevatedButtonTheme: SHFElevatedButtonTheme.lightElevatedButtonTheme,
-    outlinedButtonTheme: SHFOutlineButtonTheme.lightOutlineButtonTheme,
+    outlinedButtonTheme: SHFOutlinedButtonTheme.lightOutlinedButtonTheme,
     inputDecorationTheme: SHFTextFormFieldTheme.lightInputDecorationTheme,
   );
   static ThemeData darkTheme = ThemeData(
@@ -32,7 +33,7 @@ class SHFAppTheme{
     fontFamily: 'Poppins',
     disabledColor: SHFColors.grey,
     brightness: Brightness.dark,
-    primaryColor: Colors.blue,
+    primaryColor: SHFColors.primary,
     textTheme: SHFTextTheme.darkTextTheme,
     chipTheme: SHFChipTheme.darkChipTheme,
     scaffoldBackgroundColor: Colors.black,
@@ -40,7 +41,7 @@ class SHFAppTheme{
     checkboxTheme: SHFCheckboxTheme.darkCheckboxTheme,
     bottomSheetTheme: SHFBottomSheetTheme.darkBottomSheetTheme,
     elevatedButtonTheme: SHFElevatedButtonTheme.darkElevatedButtonTheme,
-    outlinedButtonTheme: SHFOutlineButtonTheme.darkOutlineButtonTheme,
+    outlinedButtonTheme: SHFOutlinedButtonTheme.darkOutlinedButtonTheme,
     inputDecorationTheme: SHFTextFormFieldTheme.darkInputDecorationTheme,
   );
 }

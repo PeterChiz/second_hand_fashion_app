@@ -15,46 +15,53 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = CartController.instance;
+    final cartItems = controller.cartItems;
     return Scaffold(
       appBar: SHFAppBar(
         showBackArrow: true,
-        title:
-            Text('Giỏ hàng', style: Theme.of(context).textTheme.headlineSmall),
+        title: Text('Giỏ hàng', style: Theme.of(context).textTheme.headlineSmall),
       ),
       body: Obx(() {
         //Nothing found widget
         final emptyWidget = SHFAnimationLoaderWidget(
-          text: 'Rất tiếc! Giỏ hàng trống',
-          animation: SHFImages.animalIcon,
-          showAction: true,
-          actionText: 'Mua sắm thôi nào!',
-          onActionPressed: () => Get.off(() => const NavigationMenu()),
-        );
-
-        if (controller.cartItems.isEmpty) {
-          return emptyWidget;
-        } else {
-          return const SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(SHFSizes.defaultSpace),
-
-              ///Item in Cart
-              child: SHFCartItems(),
-            ),
+            text: 'Rất tiếc! Giỏ hàng trống',
+            animation: SHFImages.animalIcon,
+            showAction: true,
+            actionText: 'Mua sắm thôi nào!',
+            onActionPressed: () => Get.off(() => const NavigationMenu()),
           );
-        }
+
+        /// Cart Items
+        return cartItems.isEmpty
+            ? emptyWidget
+            : const SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(SHFSizes.defaultSpace),
+
+            /// -- Items in Cart
+            child: SHFCartItems(),
+          ),
+        );
       }),
 
       ///Checkout Button
-      bottomNavigationBar: controller.cartItems.isEmpty
-          ? const SizedBox()
-          : Padding(
-              padding: const EdgeInsets.all(SHFSizes.defaultSpace),
+      bottomNavigationBar: Obx(
+            () {
+          return cartItems.isNotEmpty
+              ? Padding(
+            padding: const EdgeInsets.all(SHFSizes.defaultSpace),
+            child: SizedBox(
+              width: double.infinity,
               child: ElevatedButton(
-                  onPressed: () => Get.to(() => const CheckoutScreen()),
-                  child: Obx(() =>
-                      Text('Thanh toán \$${controller.totalCartPrice.value}'))),
+                onPressed: () => Get.to(() => const CheckoutScreen()),
+                child: Obx(() => Text('Thanh toán ${controller.totalCartPrice.value}')),
+              ),
             ),
+          )
+              : const SizedBox();
+        },
+      ),
     );
   }
 }
+

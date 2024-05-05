@@ -7,8 +7,8 @@ import '../../../../../utils/device/device_utility.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../controllers/onboarding/onboarding_controller.dart';
 
-class OnBoardingDotNavigation extends StatelessWidget {
-  const OnBoardingDotNavigation({
+class SHFOnBoardingDotNavigation extends StatelessWidget {
+  const SHFOnBoardingDotNavigation({
     super.key,
   });
 
@@ -16,6 +16,7 @@ class OnBoardingDotNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = OnBoardingController.instance;
     final dark = SHFHelperFunctions.isDarkMode(context);
+
     return Positioned(
       bottom: SHFDeviceUtils.getBottomNavigationBarHeight() + 25,
       left: SHFSizes.defaultSpace,

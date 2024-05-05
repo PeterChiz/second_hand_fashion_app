@@ -20,21 +20,16 @@ class OnBoardingPage extends StatelessWidget {
       padding: const EdgeInsets.all(SHFSizes.defaultSpace),
       child: Column(
         children: [
+          // Display the onboarding image
           Image(
               width: SHFHelperFunctions.screenWidth() * 0.8,
               height: SHFHelperFunctions.screenHeight() * 0.6,
               image: AssetImage(image)),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.headlineMedium,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: SHFSizes.spaceBtwInputFields),
-          Text(
-            subTitle,
-            style: Theme.of(context).textTheme.bodyMedium,
-            textAlign: TextAlign.center,
-          ),
+          // Display the onboarding title
+          Text(title, style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center),
+          const SizedBox(height: SHFSizes.spaceBtwItems),
+          // Display the onboarding subtitle
+          Text(subTitle, style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.center),
         ],
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:second_hand_fashion_app/common/widgets/images/shf_circular_image.dart';
-import 'package:second_hand_fashion_app/common/widgets/texts/product_price_text.dart';
-import 'package:second_hand_fashion_app/common/widgets/texts/product_title_text.dart';
+import 'package:second_hand_fashion_app/common/widgets/texts/shf_product_price_text.dart';
+import 'package:second_hand_fashion_app/common/widgets/texts/shf_product_title_text.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/shf_brand_title_text_with_verified_icon.dart';
 import 'package:second_hand_fashion_app/features/shop/controllers/product/poduct_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
@@ -13,64 +13,78 @@ import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 
 class SHFProductMetaData extends StatelessWidget {
-  const SHFProductMetaData({super.key, required this.product});
+  const SHFProductMetaData({
+    super.key,
+    required this.product,
+  });
 
   final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
-    final darkMode = SHFHelperFunctions.isDarkMode(context);
     final controller = ProductController.instance;
-    final salePercentage = controller.calculateDiscountPercentage(product.price, product.salePrice);
+    final salePercentage = ProductController.instance.calculateSalePercentage(product.price, product.salePrice);
+    final darkMode = SHFHelperFunctions.isDarkMode(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ///Price & Sale Price
+        /// Price & Sale Price
         Row(
           children: [
-            ///Sale tag
-            SHFRoundedContainer(
-                radius: SHFSizes.sm,
-                backgroundColor: SHFColors.secondary.withOpacity(0.8),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: SHFSizes.sm, vertical: SHFSizes.xs),
-                child: Text('$salePercentage%', style: Theme.of(context).textTheme.labelLarge!.apply(color: SHFColors.black),
-                )),
-            ///Price
-            if(product.productType == ProductType.single.toString() && product.salePrice > 0)
-              Text('\$${product.price}', style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough),),
-            if(product.productType == ProductType.single.toString() && product.salePrice > 0) const SizedBox(width: SHFSizes.spaceBtwItems,),
+            /// -- Sale Tag
+            if (salePercentage != null)
+              Row(
+                children: [
+                  SHFRoundedContainer(
+                    backgroundColor: SHFColors.secondary,
+                    radius: SHFSizes.sm,
+                    padding: const EdgeInsets.symmetric(horizontal: SHFSizes.sm, vertical: SHFSizes.xs),
+                    child: Text('$salePercentage%',
+                        style: Theme.of(context).textTheme.labelLarge!.apply(color: SHFColors.black)),
+                  ),
+                  const SizedBox(width: SHFSizes.spaceBtwItems)
+                ],
+              ),
+
+
+            // Actual Price if sale price not null.
+            if ((product.productVariations == null || product.productVariations!.isEmpty) && product.salePrice> 0.0)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(product.price.toString(), style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough),),
+                  const SizedBox(width: SHFSizes.spaceBtwItems)
+                ],
+              ),
+
+            // Price, Show sale price as main price if sale exist.
             SHFProductPriceText(price: controller.getProductPrice(product), isLarge: true),
           ],
         ),
-        const SizedBox(height: SHFSizes.spaceBtwItems / 1.5,),
-        ///Title
-        const SHFProductTitleText(title: 'Green Nike Sports Shirt'),
         const SizedBox(height: SHFSizes.spaceBtwItems / 1.5),
-        ///Stock Status
+        SHFProductTitleText(title: product.title),
+        const SizedBox(height: SHFSizes.spaceBtwItems / 1.5),
         Row(
           children: [
-            const SHFProductTitleText(title: 'Status'),
-            const SizedBox(width: SHFSizes.spaceBtwItems,),
-            Text(controller.getProductStockStatus(product.stock),style: Theme.of(context).textTheme.titleMedium,),
+            const SHFProductTitleText(title: 'Stock : ', smallSize: true),
+            Text(controller.getProductStockStatus(product), style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
-        const SizedBox(height: SHFSizes.spaceBtwItems / 1.5),
+        const SizedBox(height: SHFSizes.spaceBtwItems / 2),
 
-        ///Brand
+        /// Brand
         Row(
           children: [
             SHFCircularImage(
-              image: product.brand != null ? product.brand!.image : '',
-            width: 32,
+              width: 32,
               height: 32,
+              isNetworkImage: true,
+              image: product.brand!.image,
               overlayColor: darkMode ? SHFColors.white : SHFColors.black,
             ),
-            SHFBrandTitleWithVerifiedIcon(title: product.brand != null ? product.brand!.name : '', brandTextSize: TextSizes.medium,),
-
+            SHFBrandTitleWithVerifiedIcon(title: product.brand!.name, brandTextSize: TexSHFSizes.medium),
           ],
-        )
-
+        ),
       ],
     );
   }

@@ -4,7 +4,12 @@ import '../../../../utils/constants/colors.dart';
 import '../curved_edges/curved_edges_widget.dart';
 import 'circular_container.dart';
 
+/// A container widget with a primary color background and curved edges.
 class SHFPrimaryHeaderContainer extends StatelessWidget {
+  /// Create a container with a primary color background and curved edges.
+  ///
+  /// Parameters:
+  ///   - child: The widget to be placed inside the container.
   const SHFPrimaryHeaderContainer({
     super.key, required this.child,
   });
@@ -16,6 +21,7 @@ class SHFPrimaryHeaderContainer extends StatelessWidget {
     return SHFCurvedEdgeWidget(
       child: Container(
           color: SHFColors.primary,
+          padding: const EdgeInsets.only(bottom: 0),
           child: Stack(
             children: [
               ///Background Custom Shape

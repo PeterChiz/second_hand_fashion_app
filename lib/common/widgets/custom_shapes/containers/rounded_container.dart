@@ -2,28 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 
+/// A container widget with rounded corners and customizable properties.
 class SHFRoundedContainer extends StatelessWidget {
-  const SHFRoundedContainer(
-      {super.key,
-      this.width,
-      this.height,
-      this.radius = SHFSizes.cardRadiusLg,
-      this.child,
-      this.showBorder = false,
-      this.borderColor = SHFColors.borderPrimary,
-      this.backgroundColor = SHFColors.white,
-      this.padding,
-      this.margin});
+  /// Create a rounded container with customizable properties.
+  ///
+  /// Parameters:
+  ///   - width: The width of the container.
+  ///   - height: The height of the container.
+  ///   - radius: The border radius for the rounded corners.
+  ///   - padding: The padding inside the container.
+  ///   - margin: The margin around the container.
+  ///   - child: The widget to be placed inside the container.
+  ///   - backgroundColor: The background color of the container.
+  ///   - borderColor: The color of the container's border.
+  ///   - showBorder: A flag to determine if the container should have a border.
+  const SHFRoundedContainer({
+    super.key,
+    this.child,
+    this.width,
+    this.height,
+    this.margin,
+    this.showBorder = false,
+    this.padding = const EdgeInsets.all(SHFSizes.md),
+    this.borderColor = SHFColors.borderPrimary,
+    this.radius = SHFSizes.cardRadiusLg,
+    this.backgroundColor = SHFColors.white,
+  });
 
   final double? width;
   final double? height;
   final double radius;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsets? margin;
   final Widget? child;
-  final bool showBorder;
-  final Color borderColor;
   final Color backgroundColor;
-  final EdgeInsetsGeometry? padding;
-  final EdgeInsetsGeometry? margin;
+  final Color borderColor;
+  final bool showBorder;
 
   @override
   Widget build(BuildContext context) {

@@ -29,7 +29,6 @@ class SuccessScreen extends StatelessWidget {
 
               ///Buttons
               SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onPressed, child: const Text(SHFTexts.shfContinue))),
-              const SizedBox(height: SHFSizes.spaceBtwItems,),
             ],
           ),
         ),

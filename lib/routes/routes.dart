@@ -3,10 +3,10 @@ class SHFRoutes {
   static const store = '/store';
   static const favourites = '/favourites';
   static const settings = '/settings';
-  static const subCategories = '/subCategories';
+  static const subCategories = '/sub-categories';
   static const search = '/search';
-  static const productReviews = '/productReviews';
-  static const productDetail = '/productDetail';
+  static const productReviews = '/product-reviews';
+  static const productDetail = '/product-detail';
   static const order = '/order';
   static const checkout = '/checkout';
   static const cart = '/cart';

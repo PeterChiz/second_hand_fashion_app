@@ -6,6 +6,8 @@ import 'package:second_hand_fashion_app/features/authentication/screens/signup/w
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/constants/text_strings.dart';
 
+import '../../../../common/widgets/appbar/appbar.dart';
+
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
@@ -13,7 +15,7 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: const SHFAppBar(showBackArrow: true),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),

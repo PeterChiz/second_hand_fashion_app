@@ -1,35 +1,33 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../utils/constants/sizes.dart';
+import '../shimmers/shimmer.dart';
 
 class SHFRoundedImage extends StatelessWidget {
   const SHFRoundedImage({
     super.key,
+    this.border,
+    this.padding,
+    this.onPressed,
     this.width,
     this.height,
-    required this.imageURL,
     this.applyImageRadius = true,
-    this.border,
-    this.backgroundColor,
+    required this.imageUrl,
     this.fit = BoxFit.contain,
-    this.padding,
+    this.backgroundColor,
     this.isNetworkImage = false,
-    this.onPressed,
     this.borderRadius = SHFSizes.md,
   });
 
   final double? width, height;
-  final String imageURL;
+  final String imageUrl;
   final bool applyImageRadius;
   final BoxBorder? border;
   final Color? backgroundColor;
-
   final BoxFit? fit;
-
   final EdgeInsetsGeometry? padding;
-
   final bool isNetworkImage;
-
   final VoidCallback? onPressed;
   final double borderRadius;
 
@@ -46,11 +44,16 @@ class SHFRoundedImage extends StatelessWidget {
             color: backgroundColor,
             borderRadius: BorderRadius.circular(borderRadius)),
         child: ClipRRect(
-            borderRadius: applyImageRadius
-                ? BorderRadius.circular(borderRadius)
-                : BorderRadius.zero,
-            child: Image(
-              fit: fit, image: isNetworkImage ? NetworkImage(imageURL) : AssetImage(imageURL) as ImageProvider,
+            borderRadius: applyImageRadius ? BorderRadius.circular(borderRadius) : BorderRadius.zero,
+            child: isNetworkImage ? CachedNetworkImage(
+              fit: fit,
+              imageUrl: imageUrl,
+              progressIndicatorBuilder: (context, url, downloadProgress) => SHFShimmerEffect(width: width ?? double.infinity, height: height ?? 158),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            )
+                : Image(
+              fit: fit,
+              image: AssetImage(imageUrl),
             ),
         ),
       ),

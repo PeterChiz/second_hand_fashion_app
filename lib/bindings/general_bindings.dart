@@ -4,13 +4,21 @@ import 'package:second_hand_fashion_app/features/shop/controllers/product/checko
 import 'package:second_hand_fashion_app/features/shop/controllers/product/variation_controller.dart';
 import 'package:second_hand_fashion_app/utils/helpers/network_manager.dart';
 
+import '../features/shop/controllers/product/images_controller.dart';
+
 class GeneralBinding extends Bindings {
 
   @override
   void dependencies(){
+    /// -- Core
     Get.put(NetworkManager());
-    Get.put(VariationController());
-    Get.put(AddressController());
+
+    /// -- Product
     Get.put(CheckoutController());
+    Get.put(VariationController());
+    Get.put(ImagesController());
+
+    /// -- Other
+    Get.put(AddressController());
   }
 }

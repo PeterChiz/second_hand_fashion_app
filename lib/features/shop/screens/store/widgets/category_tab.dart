@@ -14,15 +14,14 @@ import 'package:second_hand_fashion_app/utils/helpers/cloud_helper_functions.dar
 import '../../../../../utils/constants/sizes.dart';
 
 class SHFCategoryTab extends StatelessWidget {
-  const SHFCategoryTab({
-    super.key, required this.category,
-  });
+  const SHFCategoryTab({super.key, required this.category});
 
   final CategoryModel category;
+
   @override
   Widget build(BuildContext context) {
     final controller = CategoryController.instance;
-    return  ListView(
+    return ListView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: [
@@ -30,38 +29,42 @@ class SHFCategoryTab extends StatelessWidget {
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
             children: [
-              ///Brands
+              /// -- Category Brands
               CategoryBrands(category: category),
-              const SizedBox(height: SHFSizes.spaceBtwItems,),
-              ///Products
+              const SizedBox(height: SHFSizes.spaceBtwSections * 2),
+
+              /// -- Category Products You May Like
               FutureBuilder(
                 future: controller.getCategoryProducts(categoryId: category.id),
                 builder: (context, snapshot) {
-                  ///Helper function: Handle loader, No record, or Error Message
+                  /// Helper Function: Handle Loader, No Record, OR ERROR Message
                   final response = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: const SHFVerticalProductShimmer());
+                  if (response != null) return response;
 
-                  if(response != null) return response;
-
-                  ///Record Found
+                  /// Record Found!
                   final products = snapshot.data!;
-
-
                   return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SHFSectionHeading(title: 'Bạn có thể thích',
+                      SHFSectionHeading(
+                        title: 'You might like',
+                        showActionButton: true,
                         onPressed: () => Get.to(AllProducts(
-                            title: category.name,
+                          title: category.name,
                           futureMethod: controller.getCategoryProducts(categoryId: category.id, limit: -1),
-                        ),
-                        ),
+                        )),
                       ),
-                      const SizedBox(height: SHFSizes.spaceBtwItems,),
-                      SHFGridLayout(itemCount: products.length, itemBuilder: (_,index) =>  SHFProductCardVertical(product: products[index])),
+                      const SizedBox(height: SHFSizes.spaceBtwItems),
+                      SHFGridLayout(
+                        itemCount: products.length < 4 ? products.length : 4,
+                        itemBuilder: (_, index) => SHFProductCardVertical(product: products[index], isNetworkImage: true),
+                      ),
                     ],
                   );
-                }
+                },
               ),
 
+              const SizedBox(height: SHFSizes.spaceBtwSections),
             ],
           ),
         ),

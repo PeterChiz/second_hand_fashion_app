@@ -1,6 +1,6 @@
-///Custom exception class to hand various Firebase-related errors
+/// Custom exception class to handle various Firebase-related errors.
 class SHFFirebaseException implements Exception {
-  ///The error code associated with the exception
+  /// The error code associated with the exception.
   final String code;
 
   /// Constructor that takes an error code.
@@ -41,7 +41,7 @@ class SHFFirebaseException implements Exception {
         return 'The reCAPTCHA response is invalid. Please try again.';
       case 'app-not-authorized':
         return 'The app is not authorized to use Firebase Authentication with the provided API key.';
-      case 'keychain - error':
+      case 'keychain-error':
         return 'A keychain error occurred. Please check the keychain and try again.';
       case 'internal-error':
         return 'An internal authentication error occurred. Please try again later.';
@@ -57,7 +57,7 @@ class SHFFirebaseException implements Exception {
         return 'An account already exists with the same email but different sign-in credentials.';
       case 'missing-iframe-start':
         return 'The email template is missing the iframe start tag.';
-      case 'missing - iframe - end':
+      case 'missing-iframe-end':
         return 'The email template is missing the iframe end tag.';
       case 'missing-iframe-src':
         return 'The email template is missing the iframe src attribute.';

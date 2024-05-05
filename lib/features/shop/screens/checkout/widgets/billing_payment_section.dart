@@ -30,7 +30,7 @@ class SHFBillingPaymentSection extends StatelessWidget {
                 child:  Image(image: AssetImage(controller.selectedPaymentMethod.value.image), fit: BoxFit.contain),
               ),
               const SizedBox(height: SHFSizes.spaceBtwItems /2),
-              Text(controller.selectedPaymentMethod.value.name, style: Theme.of(context).textTheme.bodyLarge),
+              Text(controller.selectedPaymentMethod.value.name.capitalize.toString(), style: Theme.of(context).textTheme.bodyLarge),
             ],
           ),
         )

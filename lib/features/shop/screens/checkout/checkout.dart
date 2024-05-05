@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
+import 'package:second_hand_fashion_app/utils/popups/loader.dart';
 import 'package:second_hand_fashion_app/features/shop/controllers/product/cart_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/cart/widgets/cart_items.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/checkout/widgets/billing_address_section.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/checkout/widgets/billing_amount_section.dart';
+import 'package:second_hand_fashion_app/common/widgets/products/cart/billing_amount_section.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/checkout/widgets/billing_payment_section.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
@@ -24,14 +24,13 @@ class CheckoutScreen extends StatelessWidget {
     final cartController = CartController.instance;
     final subTotal = cartController.totalCartPrice.value;
     final orderController = Get.put(OrderController());
-    final totalAmount  = SHFPricingCalculator.calculateTotalPrice(subTotal, 'US');
-
+    final totalAmount = SHFPricingCalculator.calculateTotalPrice(subTotal, 'US');
     final dark = SHFHelperFunctions.isDarkMode(context);
+
     return Scaffold(
       appBar: SHFAppBar(
         showBackArrow: true,
-        title: Text(
-          'Đánh giá đơn hàng',
+        title: Text('Đánh giá đơn hàng',
           style: Theme.of(context).textTheme.headlineSmall,
         ),
       ),
@@ -39,6 +38,7 @@ class CheckoutScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               ///Item in Cart
               const SHFCartItems(showAddRemoveButtons: false),
@@ -53,22 +53,22 @@ class CheckoutScreen extends StatelessWidget {
                 showBorder: true,
                 padding: const EdgeInsets.all(SHFSizes.md),
                 backgroundColor: dark ? SHFColors.black : SHFColors.white,
-                child: const Column(
-                  children: [
+                child:  Column(
+                  children: <Widget>[
                     ///Pricing
-                    SHFBillingAmountSection(),
-                    SizedBox(height: SHFSizes.spaceBtwItems),
+                    SHFBillingAmountSection(subTotal: subTotal),
+                    const SizedBox(height: SHFSizes.spaceBtwItems),
 
                     ///Driver
-                    Divider(),
-                    SizedBox(height: SHFSizes.spaceBtwItems),
+                    const Divider(),
+                    const SizedBox(height: SHFSizes.spaceBtwItems),
 
                     ///Payment Method
-                    SHFBillingPaymentSection(),
-                    SizedBox(height: SHFSizes.spaceBtwItems),
+                    const SHFBillingPaymentSection(),
+                    const SizedBox(height: SHFSizes.spaceBtwItems),
 
                     ///Address
-                    SHFBillingAddressSection(),
+                    const SHFBillingAddressSection(),
                   ],
                 ),
               )
@@ -80,12 +80,15 @@ class CheckoutScreen extends StatelessWidget {
       ///Checkout Button
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(SHFSizes.defaultSpace),
-        child: ElevatedButton(
-            onPressed: subTotal > 0
-                ? () => orderController.processOrder(totalAmount)
-                : () =>  SHFLoaders.warningSnackBar(title: 'Giỏ hàng trống', message: 'Thêm mặt hàng vào giỏ hàng để tiếp tục.'),
-            child: Text(
-                'Thanh toán \$$totalAmount')),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+              onPressed: subTotal > 0
+                  ? () => orderController.processOrder(totalAmount)
+                  : () =>  SHFLoaders.warningSnackBar(title: 'Giỏ hàng trống', message: 'Thêm mặt hàng vào giỏ hàng để tiếp tục.'),
+              child: Text(
+                  'Thanh toán \$${totalAmount.toStringAsFixed(2)}')),
+        ),
       ),
     );
   }

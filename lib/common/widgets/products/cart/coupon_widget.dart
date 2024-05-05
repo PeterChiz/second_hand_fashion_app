@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
-import '../../../../utils/helpers/helper_functions.dart';
 import '../../custom_shapes/containers/rounded_container.dart';
 
 class SHFCouponCode extends StatelessWidget {
@@ -12,21 +11,23 @@ class SHFCouponCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = SHFHelperFunctions.isDarkMode(context);
+    final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return SHFRoundedContainer(
       showBorder: true,
-      backgroundColor: dark ? SHFColors.dark : SHFColors.white,
+      backgroundColor: isDark ? SHFColors.dark : SHFColors.white,
       padding: const EdgeInsets.only(
           top: SHFSizes.sm,
           bottom: SHFSizes.sm,
           right: SHFSizes.sm,
-          left: SHFSizes.sm),
+          left: SHFSizes.md),
       child: Row(
         children: [
+          /// TextField
           Flexible(
               child: TextFormField(
+                expands: false,
                 decoration: const InputDecoration(
-                  hintText: 'Have a promo code? Enter here',
+                  hintText: 'Mã khuyến mãi',
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   enabledBorder: InputBorder.none,
@@ -41,14 +42,14 @@ class SHFCouponCode extends StatelessWidget {
               child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: dark
+                    foregroundColor: isDark
                         ? SHFColors.white.withOpacity(0.5)
                         : SHFColors.dark.withOpacity(0.5),
                     backgroundColor: Colors.grey.withOpacity(0.2),
                     side: BorderSide(
                         color: Colors.grey.withOpacity(0.1)),
                   ),
-                  child: const Text('Apply')))
+                  child: const Text('Chấp nhận')))
         ],
       ),
     );

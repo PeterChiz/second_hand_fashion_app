@@ -14,8 +14,9 @@ class CheckoutController extends GetxController {
 
   @override
   void onInit() {
-    selectedPaymentMethod.value =
-        PaymentMethodModel(name: 'Thanh toán khi nhận hàng', image: SHFImages.successfulPaymentIcon);
+    selectedPaymentMethod.value = PaymentMethodModel(
+        name: 'Thanh toán khi nhận hàng',
+        image: SHFImages.successfulPaymentIcon);
     super.onInit();
   }
 
@@ -33,8 +34,9 @@ class CheckoutController extends GetxController {
                   showActionButton: false),
               const SizedBox(height: SHFSizes.spaceBtwSections),
               SHFPaymentTile(
-                  paymentMethod:
-                      PaymentMethodModel(name: 'Momo', image: SHFImages.momo)),
+                  paymentMethod: PaymentMethodModel(
+                      name: 'Thanh toán khi nhận hàng',
+                      image: SHFImages.successfulPaymentIcon)),
               const SizedBox(height: SHFSizes.spaceBtwItems / 2),
               SHFPaymentTile(
                   paymentMethod:
@@ -46,7 +48,8 @@ class CheckoutController extends GetxController {
                       image: SHFImages.creditCard)),
               const SizedBox(height: SHFSizes.spaceBtwItems / 2),
               SHFPaymentTile(
-                  paymentMethod: PaymentMethodModel(name: 'Thanh toán khi nhận hàng', image: SHFImages.successfulPaymentIcon)),
+                  paymentMethod:
+                      PaymentMethodModel(name: 'Momo', image: SHFImages.momo)),
               const SizedBox(height: SHFSizes.spaceBtwItems / 2),
               const SizedBox(height: SHFSizes.spaceBtwSections),
             ],

@@ -4,9 +4,10 @@ import 'package:second_hand_fashion_app/utils/device/device_utility.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/helpers/helper_functions.dart';
 
+/// A custom tab bar widget with customizable appearance.
 class SHFTabBar extends StatelessWidget implements PreferredSizeWidget{
   ///Nếu muốn thêm màu nền cho các tab phải wrap then trong Material widget.
-  ///Để làm được điều đó, ta cần Widget [PreferredSize] và đó là lý do tại sao đã tạo lớp tùy chỉnh [PreferredSizeWidget]
+  ///Để làm được điều đó, ta cần Widget [PreferredSize] và nên phải tạo lớp tùy chỉnh [PreferredSizeWidget]
   const SHFTabBar({
     super.key, required this.tabs,
   });

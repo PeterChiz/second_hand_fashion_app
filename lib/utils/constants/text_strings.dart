@@ -31,21 +31,22 @@ class SHFTexts{
   static const String userName = "Tên tài khoản";
   // static const String phoneNo = "Phone Number";
   static const String phoneNo = "Số điện thoại";
-  static const String rememberMe = "Remember Me";
-  static const String forgetPassword = "Forget Password";
+  static const String rememberMe = "Nhớ mật khẩu";
+  static const String forgetPassword = "Quên mật khẩu";
   static const String signIn = "Đăng nhập";
   // static const String signIn = "Sign In";
   static const String createAccount = "Tạo tài khoản";
   // static const String createAccount = "Create Account";
-  static const String orSignInWith = "or sign in with";
-  static const String orSignUpWith = "or sign up with";
-  static const String iAgreeTo = "I agree to";
-  static const String privacyPolicy = "Privacy Policy";
+  static const String orSignInWith = "hoặc đăng nhập bằng";
+  static const String orSignUpWith = "hoặc đăng ký bằng";
+  static const String iAgreeTo = "Tôi đồng ý với";
+  static const String privacyPolicy = "Chính sách quyền riêng tư";
   static const String termOfUse = "Term of use";
   static const String verificationCode = "verificationCode";
   // static const String resendEmail = "Resend Email";
   static const String resendEmail = "Gửi lại Email";
   static const String resendEmailIn = "Resend Email in";
+  static const String termsOfUse = "Điều khoản sử dụng";
 
   static const String loginTitle = "Hello bạn <3";
   // static const String loginTitle = "Welcome back";
@@ -77,11 +78,14 @@ class SHFTexts{
   static const String submit = "Submit";
   static const String skip = "Skip";
   static const String appName = "Hòa Second Hand Fashion";
-  static const String done = "Done";
+  static const String done = "Ok";
 
   // static const String search = "Search in Store";
   // static const String poCategory = "Popular Categories";
 
   // static const String warningDeleteAccount = 'Are you sure you want to delete your account permanently? This is not reversible and all of your data will be removed permanently';
   static const String warningDeleteAccount = 'Bạn có chắc chắn muốn xóa tài khoản của mình vĩnh viễn không? Điều này không thể đảo ngược và tất cả dữ liệu của bạn sẽ bị xóa vĩnh viễn';
+
+  // -- Product
+  static const String popularProducts = "Sản phẩm phổ biến";
 }

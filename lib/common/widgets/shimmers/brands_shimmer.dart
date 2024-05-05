@@ -10,9 +10,9 @@ class SHFBrandsShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SHFGridLayout(
-      itemCount: itemCount,
-      itemBuilder: (_, __) => const SHFShimmerEffect(width: 300, height: 800),
       mainAxisExtent: 80,
+      itemCount: itemCount,
+      itemBuilder: (_, __) => const SHFShimmerEffect(width: 300, height: 80),
     );
   }
 }

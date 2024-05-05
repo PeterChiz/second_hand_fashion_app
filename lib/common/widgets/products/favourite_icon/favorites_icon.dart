@@ -6,6 +6,10 @@ import 'package:second_hand_fashion_app/features/shop/controllers/product/favori
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 
 class SHFFavoritesIcon extends StatelessWidget {
+  /// A custom Icon widget which handles its own logic to add or remove products from the Wishlist.
+  /// You just have to call this widget on your design and pass a product id.
+  ///
+  /// It will auto do the logic defined in this widget.
   const SHFFavoritesIcon({super.key, required this.productId});
 
   final String productId;
@@ -14,8 +18,8 @@ class SHFFavoritesIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(FavoritesController());
     return Obx(() => SHFCircularIcon(
-      icon: controller.isFavorite(productId) ? Iconsax.heart5 : Iconsax.heart,
-      color: controller.isFavorite(productId) ? SHFColors.error : null,
+      icon: controller.isFavourite(productId) ? Iconsax.heart5 : Iconsax.heart,
+      color: controller.isFavourite(productId) ? SHFColors.error : null,
       onPressed: () => controller.toggleFavoriteProduct(productId),
     ));
   }

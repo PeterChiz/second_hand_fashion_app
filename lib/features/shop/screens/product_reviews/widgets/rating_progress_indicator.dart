@@ -1,31 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/product_reviews/widgets/progress_indicator_and_rating.dart';
 
-class SHFOverallProductRating extends StatelessWidget {
-  const SHFOverallProductRating({
-    super.key,
+import '../../../../../utils/constants/colors.dart';
+import '../../../../../utils/device/device_utility.dart';
+
+class SHFRatingProgressIndicator extends StatelessWidget {
+  const SHFRatingProgressIndicator({
+    super.key, required this.text, required this.value,
   });
+
+  final String text;
+  final double value;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
-            flex: 3,
-            child: Text(
-              '4.8',
-              style: Theme.of(context).textTheme.displayLarge,
-            )),
-        const Expanded(
-          flex: 7,
-          child: Column(
-            children: [
-              SHFRatingProgressIndicator(text: '5', value: 1.0,),
-              SHFRatingProgressIndicator(text: '4', value: 0.8,),
-              SHFRatingProgressIndicator(text: '3', value: 0.6,),
-              SHFRatingProgressIndicator(text: '2', value: 0.4,),
-              SHFRatingProgressIndicator(text: '1', value: 0.2,),
-            ],
+          flex: 1,
+          child: Text(
+            text,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ),
+        Expanded(
+          flex: 11,
+          child: SizedBox(
+            width: SHFDeviceUtils.getScreenWidth(context) *
+                0.8,
+            child: LinearProgressIndicator(
+              value: value,
+              minHeight: 11,
+              backgroundColor: SHFColors.grey,
+              borderRadius: BorderRadius.circular(7),
+              valueColor: const AlwaysStoppedAnimation(
+                  SHFColors.primary),
+            ),
           ),
         )
       ],

@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
 
-class SHFOutlineButtonTheme{
-  SHFOutlineButtonTheme._();
+import '../../constants/colors.dart';
+import '../../constants/sizes.dart';
 
-  static final lightOutlineButtonTheme = OutlinedButtonThemeData(
+/* -- Light & Dark Outlined Button Themes -- */
+class SHFOutlinedButtonTheme {
+  SHFOutlinedButtonTheme._(); //To avoid creating instances
+
+
+  /* -- Light Theme -- */
+  static final lightOutlinedButtonTheme  = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
       elevation: 0,
-      foregroundColor: Colors.black,
-      side: const BorderSide(color: Colors.blue),
-      textStyle: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w600),
-      padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      foregroundColor: SHFColors.dark,
+      side: const BorderSide(color: SHFColors.borderPrimary),
+      padding: const EdgeInsets.symmetric(vertical: SHFSizes.buttonHeight, horizontal: 20),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SHFSizes.buttonRadius)),
+      textStyle: const TextStyle(fontSize: 16, color: SHFColors.black, fontWeight: FontWeight.w600, fontFamily: 'Poppins'),
     ),
   );
 
-  static final darkOutlineButtonTheme = OutlinedButtonThemeData(
+  /* -- Dark Theme -- */
+  static final darkOutlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
-      elevation: 0,
-      foregroundColor: Colors.white,
-      side: const BorderSide(color: Colors.blueAccent),
-      textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
-      padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      foregroundColor: SHFColors.light,
+      side: const BorderSide(color: SHFColors.borderPrimary),
+      padding: const EdgeInsets.symmetric(vertical: SHFSizes.buttonHeight, horizontal: 20),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SHFSizes.buttonRadius)),
+      textStyle: const TextStyle(fontSize: 16, color: SHFColors.textWhite, fontWeight: FontWeight.w600, fontFamily: 'Poppins'),
     ),
   );
 }

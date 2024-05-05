@@ -6,8 +6,8 @@ import '../../../../../utils/device/device_utility.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../controllers/onboarding/onboarding_controller.dart';
 
-class OnboardingNextButton extends StatelessWidget {
-  const OnboardingNextButton({
+class SHFOnboardingNextButton extends StatelessWidget {
+  const SHFOnboardingNextButton({
     super.key,
   });
 
@@ -19,8 +19,7 @@ class OnboardingNextButton extends StatelessWidget {
       bottom: SHFDeviceUtils.getBottomNavigationBarHeight(),
       child: ElevatedButton(
         onPressed: () => OnBoardingController.instance.nextPage(),
-        style: ElevatedButton.styleFrom(
-            shape: const CircleBorder(), backgroundColor: dark ? SHFColors.primary : Colors.black),
+        style: ElevatedButton.styleFrom(shape: const CircleBorder(), backgroundColor: dark ? SHFColors.primary : Colors.black),
         child: const Icon(Iconsax.arrow_right_3),
       ),
     );

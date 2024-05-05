@@ -7,6 +7,13 @@ import 'package:second_hand_fashion_app/utils/device/device_utility.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
 class SHFAppBar extends StatelessWidget implements PreferredSizeWidget {
+  /// Custom appbar for achieving a desired design goal.
+  /// - Set [title] for a custom title.
+  /// - [showBackArrow] to toggle the visibility of the back arrow.
+  /// - [leadingIcon] for a custom leading icon.
+  /// - [leadingOnPressed] callback for the leading icon press event.
+  /// - [actions] for adding a list of action widgets.
+  /// - Horizontal padding of the appbar can be customized inside this widget.
   const SHFAppBar(
       {super.key,
       this.title,

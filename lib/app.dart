@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/bindings/general_bindings.dart';
 import 'package:second_hand_fashion_app/routes/app_routes.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
+import 'package:second_hand_fashion_app/utils/constants/text_strings.dart';
 import 'package:second_hand_fashion_app/utils/theme/theme.dart';
 
 
@@ -13,6 +14,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      title: SHFTexts.appName,
       themeMode: ThemeMode.system,
       theme: SHFAppTheme.lightTheme,
       darkTheme: SHFAppTheme.darkTheme,

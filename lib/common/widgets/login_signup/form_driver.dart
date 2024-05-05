@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../utils/constants/colors.dart';
-import '../../../utils/constants/text_strings.dart';
 import '../../../utils/helpers/helper_functions.dart';
 
 class SHFFormDivider extends StatelessWidget {
@@ -24,7 +22,7 @@ class SHFFormDivider extends StatelessWidget {
                 thickness: 0.5,
                 indent: 60,
                 endIndent: 5)),
-        Text(SHFTexts.orSignInWith.capitalize!,
+        Text(dividerText,
             style: Theme.of(context).textTheme.labelMedium),
         Flexible(
             child: Divider(

@@ -42,13 +42,12 @@ class ProductVariationModel {
     if (data.isEmpty) return ProductVariationModel.empty();
     return ProductVariationModel(
       id: data['Id'] ?? '',
-      attributeValues: Map<String, String>.from(
-        data['AttributeValues'],
-      ),
       price: double.parse((data['Price'] ?? 0.0).toString()),
       sku: data['SKU'] ?? 0,
+      stock: data['Stock'] ?? 0,
       salePrice: double.parse(((data['SalePrice'] ?? 0.0).toString())),
       image: data['Image'] ?? '',
+      attributeValues: Map<String, String>.from(data['AttributeValues']),
     );
   }
 }

@@ -13,8 +13,9 @@ import 'package:second_hand_fashion_app/features/shop/screens/home/home.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/order/order.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_reviews/product_reviews.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/store/store.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/wishlist/wishlist.dart';
 import 'package:second_hand_fashion_app/routes/routes.dart';
+
+import '../features/shop/screens/favourites/favourite.dart';
 
 class AppRoutes{
   static final pages = [
@@ -22,7 +23,7 @@ class AppRoutes{
     GetPage(name: SHFRoutes.store, page: () => const StoreScreen()),
     GetPage(name: SHFRoutes.favourites, page: () => const FavouriteScreen()),
     GetPage(name: SHFRoutes.settings, page: () => const SettingsScreen()),
-    GetPage(name: SHFRoutes.productReviews, page: () => const ProductReviewScreen()),
+    GetPage(name: SHFRoutes.productReviews, page: () => const ProductReviewsScreen()),
     GetPage(name: SHFRoutes.order, page: () => const OrderScreen()),
     GetPage(name: SHFRoutes.checkout, page: () => const CheckoutScreen()),
     GetPage(name: SHFRoutes.cart, page: () => const CartScreen()),
@@ -31,7 +32,7 @@ class AppRoutes{
     GetPage(name: SHFRoutes.signup, page: () => const SignupScreen()),
     GetPage(name: SHFRoutes.verifyEmail, page: () => const VerifyEmailScreen()),
     GetPage(name: SHFRoutes.signIn, page: () => const LoginScreen()),
-    GetPage(name: SHFRoutes.forgetPassword, page: () => const ForgetPassword()),
+    GetPage(name: SHFRoutes.forgetPassword, page: () => const ForgetPasswordScreen()),
     GetPage(name: SHFRoutes.onBoarding, page: () => const OnBoardingScreen()),
   ];
 

@@ -10,54 +10,54 @@ class ImagesController extends GetxController{
   ///Variable
   Rx<String> selectedProductImage = ''.obs;
 
-  ///Get all images from product and variations
-  List<String> getAllProductImages(ProductModel product){
-    //Use get to add unique images only
+  /// -- Get All Images from product and Variations
+  List<String> getAllProducSHFImages(ProductModel product) {
+    // Use Set to add unique images only
     Set<String> images = {};
 
-    //Load thumbnail image
+    // Load thumbnail image
     images.add(product.thumbnail);
-
-    //Assign Thumbnail as Selected Image
+    // Assign Thumbnail as Selected Image
     selectedProductImage.value = product.thumbnail;
 
-    //Get all images from the Product Model if not null
-    if(product.images != null){
+    // Get all images from the Product Model if not null.
+    if (product.images != null) {
       images.addAll(product.images!);
     }
 
-    //Get all images from the Product Variations id not null
-    if(product.productVariations != null || product.productVariations!.isNotEmpty){
+    // Get all images from the Product Variations if not null.
+    if (product.productVariations != null || product.productVariations!.isNotEmpty) {
       images.addAll(product.productVariations!.map((variation) => variation.image));
     }
+
     return images.toList();
   }
 
-  ///Show image popup
-  void showEnlargedImage(String image){
+  /// -- Show Image Popup
+  void showEnlargedImage(String image) {
     Get.to(
-      fullscreenDialog:  true,
-        () => Dialog.fullscreen(
-
+      fullscreenDialog: true,
+          () => Dialog.fullscreen(
+        child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Padding(padding: const EdgeInsets.symmetric(vertical: SHFSizes.defaultSpace * 2, horizontal: SHFSizes.defaultSpace),
-              child: CachedNetworkImage(imageUrl: image,),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: SHFSizes.defaultSpace * 2, horizontal: SHFSizes.defaultSpace),
+                child: CachedNetworkImage(imageUrl: image),
               ),
-              const SizedBox(height: SHFSizes.spaceBtwSections,),
+              const SizedBox(height: SHFSizes.spaceBtwSections),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
                   width: 150,
-                  child: OutlinedButton(onPressed: () => Get.back(), child: const Text('Close')),
+                  child: OutlinedButton(onPressed: () => Get.back(), child: const Text('Đóng')),
                 ),
-              )
+              ),
             ],
           ),
-        )
+        ),
+      ),
     );
   }
 }

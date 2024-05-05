@@ -4,9 +4,10 @@ import 'package:second_hand_fashion_app/common/styles/shadows.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:second_hand_fashion_app/common/widgets/images/shf_rounded_image.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/favourite_icon/favorites_icon.dart';
-import 'package:second_hand_fashion_app/common/widgets/products/product_cards/add_to_cart_button.dart';
-import 'package:second_hand_fashion_app/common/widgets/texts/product_price_text.dart';
-import 'package:second_hand_fashion_app/common/widgets/texts/product_title_text.dart';
+import 'package:second_hand_fashion_app/common/widgets/products/product_cards/widgets/add_to_cart_button.dart';
+import 'package:second_hand_fashion_app/common/widgets/products/product_cards/widgets/product_card_pricing_widget.dart';
+import 'package:second_hand_fashion_app/common/widgets/products/product_cards/widgets/product_sale_tag.dart';
+import 'package:second_hand_fashion_app/common/widgets/texts/shf_product_title_text.dart';
 import 'package:second_hand_fashion_app/features/shop/controllers/product/poduct_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/product_detail.dart';
@@ -18,22 +19,24 @@ import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 import '../../texts/shf_brand_title_text_with_verified_icon.dart';
 
 class SHFProductCardVertical extends StatelessWidget {
-  const SHFProductCardVertical({super.key, required this.product});
+  const SHFProductCardVertical(
+      {super.key, required this.product, this.isNetworkImage = true});
 
   final ProductModel product;
+  final bool isNetworkImage;
 
   @override
   Widget build(BuildContext context) {
-    final controller = ProductController.instance;
+    final productController = ProductController.instance;
     final dark = SHFHelperFunctions.isDarkMode(context);
-    final salePercentage = controller.calculateDiscountPercentage(
+    final salePercentage = productController.calculateSalePercentage(
         product.price, product.salePrice);
 
     ///Container với side paddings, color, edges, radius and shadow.
     return GestureDetector(
-      onTap: () => Get.to(() => ProductDetailScreen(
-            product: product,
-          )),
+      onTap: () => Get.to(() => ProductDetailScreen(product: product)),
+
+      /// Container with side paddings, color, edges, radius and shadow.
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),
@@ -43,6 +46,7 @@ class SHFProductCardVertical extends StatelessWidget {
           color: dark ? SHFColors.darkGrey : SHFColors.white,
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// Thumbnail, Wishlist Button, Discount Tag
             SHFRoundedContainer(
@@ -55,29 +59,14 @@ class SHFProductCardVertical extends StatelessWidget {
                   ///Thumbnail Image
                   Center(
                     child: SHFRoundedImage(
-                      imageURL: product.thumbnail,
                       applyImageRadius: true,
-                      isNetworkImage: true,
+                      isNetworkImage: isNetworkImage,
+                      imageUrl: product.thumbnail,
                     ),
                   ),
 
-                  ///Sale Tag
-                  if (salePercentage != null)
-                    Positioned(
-                      top: 12,
-                      child: SHFRoundedContainer(
-                          radius: SHFSizes.sm,
-                          backgroundColor: SHFColors.secondary.withOpacity(0.8),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: SHFSizes.sm, vertical: SHFSizes.xs),
-                          child: Text(
-                            '$salePercentage%',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .apply(color: SHFColors.black),
-                          )),
-                    ),
+                  /// -- Sale Tag
+                  if (salePercentage != null) ProductSaleTagWidget(salePercentage: salePercentage),
 
                   ///Favourite Icon Button
                   Positioned(
@@ -97,55 +86,32 @@ class SHFProductCardVertical extends StatelessWidget {
             ///Details
             Padding(
               padding: const EdgeInsets.only(left: SHFSizes.sm),
-              child: SizedBox(
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SHFProductTitleText(
-                      title: product.title,
-                      smallSize: true,
-                    ),
-                    const SizedBox(
-                      height: SHFSizes.spaceBtwItems / 2
-                    ),
-                    SHFBrandTitleWithVerifiedIcon(title: product.brand!.name),
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SHFProductTitleText(title: product.title, smallSize: true),
+                  const SizedBox(height: SHFSizes.spaceBtwItems / 2),
+                  SHFBrandTitleWithVerifiedIcon(title: product.brand!.name, brandTextSize: TexSHFSizes.small),
+                ],
               ),
             ),
             //Thêm Spacer() vào đây để giữ nguyên chiều cao của mỗi Box trong trường hợp 1 hoặc 2 dòng Heading
+            /// Price & Add to cart button
+            /// Use Spacer() to utilize all the space and set the price and cart button at the bottom.
+            /// This usually happens when Product title is in single line or 2 lines (Max)
             const Spacer(),
 
             ///Price Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ///Price
-                Flexible(
-                  child: Column(
-                    children: [
-                      if (product.productType == ProductType.single.toString() && product.salePrice > 0)
-                        Padding(
-                            padding: const EdgeInsets.only(left: SHFSizes.sm),
-                          child: Text(product.price.toString(),
-                            style: Theme.of(context).textTheme.labelMedium!.apply(decoration: TextDecoration.lineThrough),
-                          ),
-                        ),
+                /// Pricing
+                PricingWidget(product: product),
 
-                      ///Price, Show sale price as main price if sale exist
-                      Padding(
-                        padding: const EdgeInsets.only(left: SHFSizes.sm),
-                        child: SHFProductPriceText(price: controller.getProductPrice(product)),
-                      ),
-                    ],
-                  ),
-                ),
-
-                ///Add to Cart Button
-                ProductCardAddToCartButton(product: product,),
+                /// Add to cart
+                ProductCardAddToCartButton(product: product),
               ],
-            )
+            ),
           ],
         ),
       ),

@@ -2,36 +2,38 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
+import 'package:second_hand_fashion_app/utils/popups/loader.dart';
 import 'package:second_hand_fashion_app/data/repositories/authentication/authentication_repository.dart';
-import 'package:second_hand_fashion_app/data/repositories/authentication/user/user_repository.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/login/login.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/models/user_model.dart';
-import 'package:second_hand_fashion_app/features/pertonalization/screens/profile/widgets/re_authenticate_user_login_form.dart';
+import 'package:second_hand_fashion_app/features/pertonalization/screens/profile/re_authenticate_user_login_form.dart';
 import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/constants/text_strings.dart';
 import 'package:second_hand_fashion_app/utils/helpers/network_manager.dart';
 import 'package:second_hand_fashion_app/utils/popups/full_screen_loader.dart';
 
+import '../../../common/widgets/loaders/circular_loader.dart';
+import '../../../data/repositories/user/user_repository.dart';
+
 class UserController extends GetxController {
   static UserController get instance => Get.find();
 
-  final profileLoading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
   final imageUploading = false.obs;
+  final profileLoading = false.obs;
+  final profileImageUrl = ''.obs;
   final hidePassword = false.obs;
   final verifyEmail = TextEditingController();
   final verifyPassword = TextEditingController();
-
-  // final verifyRepository = Get.put(UserRepository());
   final userRepository = Get.put(UserRepository());
   GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
 
+  /// init user data when Home Screen appears
   @override
   void onInit() {
-    super.onInit();
     fetchUserRecord();
+    super.onInit();
   }
 
   ///Tìm nạp hồ sơ người dùng
@@ -48,40 +50,47 @@ class UserController extends GetxController {
   }
 
   ///Lưu bản ghi người dùng từ bất kỳ nguồn đăng ký nào
-  Future<void> saveUserRecord(UserCredential? userCredential) async {
+  Future<void> saveUserRecord({UserModel? user, UserCredential? userCredentials}) async {
     try {
-      //Trước tiên, hãy cập nhật người dùng Rx, sau đó kiểm tra xem dữ
-      // liệu người dùng đã được lưu trữ chưa. nếu không lưu trữ dữ liệu mới
+      // First UPDATE Rx User and then check if user data is already stored. If not store new data
       await fetchUserRecord();
 
-      if (user.value.id.isEmpty) {
-        if (userCredential != null) {
-          //chuyển đổi tên thành họ và tên
-          final nameParts =
-              UserModel.nameParts(userCredential.user!.displayName ?? '');
-          final username = UserModel.generateUsername(
-              userCredential.user!.displayName ?? '');
+      // If no record already stored.
+      if (this.user.value.id.isEmpty) {
+        if (userCredentials != null) {
+          // Convert Name to First and Last Name
+          final nameParts = UserModel.nameParts(userCredentials.user!.displayName ?? '');
+          final customUsername = UserModel.generateUsername(userCredentials.user!.displayName ?? '');
 
-          //Map data
-          final user = UserModel(
-            id: userCredential.user!.uid,
+          // Map data
+          final newUser = UserModel(
+            id: userCredentials.user!.uid,
             firstName: nameParts[0],
-            lastName:
-                nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
-            userName: username,
-            email: userCredential.user!.email ?? '',
-            phoneNumber: userCredential.user!.phoneNumber ?? '',
-            profilePicture: userCredential.user!.photoURL ?? '',
+            lastName: nameParts.length > 1 ? nameParts.sublist(1).join(' ') : "",
+            username: customUsername,
+            email: userCredentials.user!.email ?? '',
+            phoneNumber: userCredentials.user!.phoneNumber ?? '',
+            profilePicture: userCredentials.user!.photoURL ?? '',
           );
-          //Save user data
+
+          // Save user data
+          await userRepository.saveUserRecord(newUser);
+
+          // Assign new user to the RxUser so that we can use it through out the app.
+          this.user(newUser);
+        } else if (user != null) {
+          // Save Model when user registers using Email and Password
           await userRepository.saveUserRecord(user);
+
+          // Assign new user to the RxUser so that we can use it through out the app.
+          this.user(user);
         }
       }
     } catch (e) {
       SHFLoaders.warningSnackBar(
-          title: 'Dữ liệu chưa được lưu',
-          message:
-              'Đã xảy ra lỗi khi lưu thông tin của bạn. Bạn có thể lưu lại dữ liệu trong Hồ sơ của mình');
+        title: 'Không thể lưu dữ liệu',
+        message: 'Đã xảy ra lỗi khi lưu thông tin của bạn. Bạn có thể lưu lại dữ liệu trong Hồ sơ của mình.',
+      );
     }
   }
 
@@ -113,8 +122,8 @@ class UserController extends GetxController {
 
       ///Người dùng xác thực lại lần đầu
       final auth = AuthenticationRepository.instance;
-      final provider =
-          auth.authUser.providerData.map((e) => e.providerId).first;
+      final provider = auth.firebaseUser!.providerData.map((e) => e.providerId).first;
+
       if (provider.isNotEmpty) {
         //Re Verify Auth Email
         if (provider == 'google.com') {
@@ -129,7 +138,7 @@ class UserController extends GetxController {
       }
     } catch (e) {
       SHFFullScreenLoader.stopLoading();
-      SHFLoaders.warningSnackBar(title: 'Oh snap', message: e.toString());
+      SHFLoaders.warningSnackBar(title: 'Có lỗi', message: e.toString());
     }
   }
 
@@ -159,7 +168,7 @@ class UserController extends GetxController {
       Get.offAll(() => const LoginScreen());
     } catch (e) {
       SHFFullScreenLoader.stopLoading();
-      SHFLoaders.warningSnackBar(title: 'Oh snap', message: e.toString());
+      SHFLoaders.warningSnackBar(title: 'Có lỗi', message: e.toString());
     }
   }
 
@@ -170,21 +179,58 @@ class UserController extends GetxController {
       if(image != null){
         imageUploading.value = true;
         //upload image
-        final imageUrl =  await userRepository.uploadImage('Users/Images/Profile', image);
+        final uploadedImage = await userRepository.uploadImage('Users/Images/Profile/', image);
+        profileImageUrl.value = uploadedImage;
 
         //Update user Image Record
-        Map<String, dynamic> json = {'ProfilePicture': imageUrl};
-        await userRepository.updateSingleField(json);
+        Map<String, dynamic> newImage = {'ProfilePicture': uploadedImage};
+        await userRepository.updateSingleField(newImage);
 
-        user.value.profilePicture = imageUrl;
+        user.value.profilePicture = uploadedImage;
         user.refresh();
+
+        imageUploading.value = false;
 
         SHFLoaders.successSnackBar(title: 'Chúc mừng', message: 'Ảnh đại diện của bạn đã được cập nhật thành công');
       }
     }catch(e){
-      SHFLoaders.errorSnackBar(title: 'Oh snap', message: 'Có gì đó bị lỗi $e');
-    }finally{
       imageUploading.value = false;
+      SHFLoaders.errorSnackBar(title: 'Có lỗi', message: 'Có gì đó bị lỗi $e');
+    }
+  }
+
+  /// Logout Loader Function
+  logout() {
+    try {
+      Get.defaultDialog(
+        contentPadding: const EdgeInsets.all(SHFSizes.md),
+        title: 'Đăng xuất',
+        middleText: 'Bạn có chắc muốn đăng xuất không ?',
+        confirm: ElevatedButton(
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: SHFSizes.lg),
+            child: Text('Xác nhận'),
+          ),
+          onPressed: () async {
+            onClose();
+
+            /// On Confirmation show any loader until user Logged Out.
+            Get.defaultDialog(
+              title: '',
+              barrierDismissible: false,
+              backgroundColor: Colors.transparent,
+              content: const SHFCircularLoader(),
+            );
+            await AuthenticationRepository.instance.logout();
+          },
+        ),
+        cancel: OutlinedButton(
+          child: const Text('Hủy'),
+          onPressed: () => Navigator.of(Get.overlayContext!).pop(),
+        ),
+      );
+    } catch (e) {
+      SHFLoaders.errorSnackBar(title: 'Có lỗi', message: e.toString());
     }
   }
 }

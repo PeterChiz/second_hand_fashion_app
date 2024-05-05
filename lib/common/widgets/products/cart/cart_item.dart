@@ -5,31 +5,31 @@ import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/helper_functions.dart';
 import '../../images/shf_rounded_image.dart';
-import '../../texts/product_title_text.dart';
+import '../../texts/shf_product_title_text.dart';
 import '../../texts/shf_brand_title_text_with_verified_icon.dart';
 
 class SHFCartItem extends StatelessWidget {
   const SHFCartItem({
     super.key,
-    required this.cartItem,
+    required this.item,
   });
 
-  final CartItemModel cartItem;
+  final CartItemModel item;
 
   @override
   Widget build(BuildContext context) {
+    final dark = SHFHelperFunctions.isDarkMode(context);
     return Row(
       children: [
         ///Image
         SHFRoundedImage(
-            imageURL: cartItem.image ?? '',
-            width: 60,
-            height: 60,
-            isNetworkImage: true,
-            padding: const EdgeInsets.all(SHFSizes.sm),
-            backgroundColor: SHFHelperFunctions.isDarkMode(context)
-                ? SHFColors.darkerGrey
-                : SHFColors.light),
+          imageUrl: item.image ?? '',
+          width: 60,
+          height: 60,
+          isNetworkImage: true,
+          padding: const EdgeInsets.all(SHFSizes.sm),
+          backgroundColor: dark ? SHFColors.darkerGrey : SHFColors.light,
+        ),
         const SizedBox(width: SHFSizes.spaceBtwItems),
 
         ///Title, Price & Size
@@ -38,17 +38,14 @@ class SHFCartItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SHFBrandTitleWithVerifiedIcon(title: cartItem.brandName ?? ''),
+              SHFBrandTitleWithVerifiedIcon(title: item.brandName ?? ''),
               Flexible(
-                  child: SHFProductTitleText(
-                title: cartItem.title,
-                maxLines: 1,
-              )),
+                  child: SHFProductTitleText(title: item.title, maxLines: 1)),
 
               ///Attributes
               Text.rich(
                 TextSpan(
-                    children: (cartItem.selectedVariation ?? {})
+                    children: (item.selectedVariation ?? {})
                         .entries
                         .map((e) => TextSpan(
                               children: [

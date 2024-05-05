@@ -20,6 +20,7 @@ class SHFSignupForm extends StatelessWidget {
       key: controller.signupFormKey,
       child: Column(
         children: [
+          const SizedBox(height: SHFSizes.spaceBtwSections),
           ///First and Last name
           Row(
             children: [
@@ -53,39 +54,44 @@ class SHFSignupForm extends StatelessWidget {
           const SizedBox(height: SHFSizes.spaceBtwInputFields),
 
           /// username
+          // TextFormField(
+          //   validator: (value) =>
+          //       SHFValidator.validationEmptyText('Tên tài khoản', value),
+          //   controller: controller.userName,
+          //   expands: false,
+          //   decoration: const InputDecoration(
+          //       labelText: SHFTexts.userName,
+          //       prefixIcon: Icon(Iconsax.user_edit)),
+          // ),
+          // const SizedBox(height: SHFSizes.spaceBtwInputFields),
           TextFormField(
-            validator: (value) =>
-                SHFValidator.validationEmptyText('Tên tài khoản', value),
-            controller: controller.userName,
+            controller: controller.username,
+            validator: SHFValidator.validateUsername,
             expands: false,
-            decoration: const InputDecoration(
-                labelText: SHFTexts.userName,
-                prefixIcon: Icon(Iconsax.user_edit)),
+            decoration: const InputDecoration(labelText: SHFTexts.userName, prefixIcon: Icon(Iconsax.user_edit)),
           ),
           const SizedBox(height: SHFSizes.spaceBtwInputFields),
 
           ///email
           TextFormField(
-            validator: (value) => SHFValidator.validateEmail(value),
             controller: controller.email,
-            decoration: const InputDecoration(
-                labelText: SHFTexts.email, prefixIcon: Icon(Iconsax.direct)),
+            validator: SHFValidator.validateEmail,
+            decoration: const InputDecoration(labelText: SHFTexts.email, prefixIcon: Icon(Iconsax.direct)),
           ),
           const SizedBox(height: SHFSizes.spaceBtwInputFields),
 
           ///phone number
           TextFormField(
-            validator: (value) => SHFValidator.validatePhoneNumber(value),
             controller: controller.phoneNumber,
-            decoration: const InputDecoration(
-                labelText: SHFTexts.phoneNo, prefixIcon: Icon(Iconsax.call)),
+            validator: SHFValidator.validatePhoneNumber,
+            decoration: const InputDecoration(labelText: SHFTexts.phoneNo, prefixIcon: Icon(Iconsax.call)),
           ),
           const SizedBox(height: SHFSizes.spaceBtwInputFields),
 
           ///password
           Obx(
             () => TextFormField(
-              validator: (value) => SHFValidator.validatePassword(value),
+              validator: SHFValidator.validatePassword,
               controller: controller.password,
               obscureText: controller.hidePassword.value,
               decoration: InputDecoration(

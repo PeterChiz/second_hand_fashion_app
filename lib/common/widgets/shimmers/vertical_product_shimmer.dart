@@ -4,7 +4,10 @@ import 'package:second_hand_fashion_app/common/widgets/shimmers/shimmer.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 
 class SHFVerticalProductShimmer extends StatelessWidget {
-  const SHFVerticalProductShimmer({super.key, this.itemCount = 4});
+  const SHFVerticalProductShimmer({
+    super.key,
+    this.itemCount = 4,
+  });
 
   final int itemCount;
 
@@ -19,11 +22,11 @@ class SHFVerticalProductShimmer extends StatelessWidget {
                 children: [
                   ///Image
                   SHFShimmerEffect(width: 180, height: 180),
-                  SizedBox(height: SHFSizes.spaceBtwItems,),
+                  SizedBox(height: SHFSizes.spaceBtwItems),
 
                   ///Text
                   SHFShimmerEffect(width: 160, height: 15),
-                  SizedBox(height: SHFSizes.spaceBtwItems /2,),
+                  SizedBox(height: SHFSizes.spaceBtwItems / 2),
                   SHFShimmerEffect(width: 110, height: 15),
                 ],
               ),

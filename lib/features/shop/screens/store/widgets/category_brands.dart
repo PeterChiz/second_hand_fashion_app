@@ -9,7 +9,10 @@ import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/helpers/cloud_helper_functions.dart';
 
 class CategoryBrands extends StatelessWidget {
-  const CategoryBrands({super.key, required this.category});
+  const CategoryBrands({
+    super.key,
+    required this.category,
+  });
 
   final CategoryModel category;
 
@@ -17,52 +20,48 @@ class CategoryBrands extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = BrandController.instance;
     return FutureBuilder(
-        future: controller.getBrandsForCategory(category.id),
-        builder: (context, snapshot) {
-          ///Handle loader, no record, or error message
-          const loader = Column(
-            children: [
-              SHFListTileShimmer(),
-              SizedBox(height: SHFSizes.spaceBtwItems,),
-              SHFBoxesShimmer(),
-              SizedBox(height: SHFSizes.spaceBtwItems,),
-            ],
-          );
+      future: BrandController.instance.getBrandsForCategory(category.id),
+      builder: (_, snapshot) {
+        /// Handle Loader, No Record, OR Error Message
+        const loader = Column(
+          children: [
+            SHFListTileShimmer(),
+            SizedBox(height: SHFSizes.spaceBtwItems),
+            SHFBoxesShimmer(),
+            SizedBox(height: SHFSizes.spaceBtwItems),
+          ],
+        );
+        final widget = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);
+        if (widget != null) return widget;
 
+        /// Record Found!
+        final brands = snapshot.data!;
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: brands.length,
+          itemBuilder: (_, index) {
+            final brand = brands[index];
 
-          final widget = SHFCloudHelperFunctions.checkMultiRecordState(
-              snapshot: snapshot, loader: loader);
-          if (widget != null) return widget;
+            /// Load Brand Products
+            return FutureBuilder(
+              future: controller.getBrandProducts(brand.id, 3),
+              builder: (_, snapshot) {
+                /// Handle Loader, No Record, OR Error Message
+                final widget = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);
+                if (widget != null) return widget;
 
-          ///Record found
-          final brands = snapshot.data!;
-
-          return ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: brands.length,
-            itemBuilder: (_, index) {
-              final brand = brands[index];
-              return FutureBuilder(
-                future: controller.getBrandProducts(
-                    brandId: brand.id, limit: 3),
-                builder: (context, snapshot) {
-
-                  ///Handle loader, no record, or error message
-                  final widget = SHFCloudHelperFunctions.checkMultiRecordState(
-                      snapshot: snapshot, loader: loader);
-                  if (widget != null) return widget;
-
-                  ///Record found
-                  final products = snapshot.data!;
-
-                  return SHFBrandShowcase(brand: brand,
-                      images: products.map((e) => e.thumbnail).toList());
-                },
-              );
-            },
-          );
-        }
+                /// Record Found!
+                final products = snapshot.data!;
+                return SHFBrandShowcase(
+                  brand: brand,
+                  images: products.map((e) => e.thumbnail).toList(),
+                );
+              },
+            );
+          },
+        );
+      },
     );
   }
 }

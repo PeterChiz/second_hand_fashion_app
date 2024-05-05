@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:second_hand_fashion_app/common/widgets/appbar/appbar.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/controllers/address_controller.dart';
@@ -10,7 +11,7 @@ class AddNewAddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = AddressController.instance;
+    final controller = Get.put(AddressController());
 
     return Scaffold(
       appBar: const SHFAppBar(
@@ -18,7 +19,7 @@ class AddNewAddressScreen extends StatelessWidget {
         title: Text('Thêm địa chỉ mới'),
       ),
       body: SingleChildScrollView(
-        child: Padding(
+        child: Container(
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Form(
             key:  controller.addressFormKey,

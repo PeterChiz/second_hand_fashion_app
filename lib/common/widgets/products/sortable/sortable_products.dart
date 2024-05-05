@@ -5,12 +5,14 @@ import 'package:second_hand_fashion_app/features/shop/controllers/all_products_c
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 
 import '../../../../utils/constants/sizes.dart';
+import '../../../../utils/device/device_utility.dart';
 import '../../layouts/grid_layout.dart';
 import '../product_cards/product_card_vertical.dart';
 
 class SHFSortableProducts extends StatelessWidget {
   const SHFSortableProducts({
-    super.key, required this.products,
+    super.key,
+    required this.products,
   });
 
   final List<ProductModel> products;
@@ -24,23 +26,36 @@ class SHFSortableProducts extends StatelessWidget {
       children: [
         ///Dropdown
         DropdownButtonFormField(
+          decoration: const InputDecoration(prefixIcon: Icon(Iconsax.sort)),
           onChanged: (value) {
             //Sort products based on the selected option
             controller.sortProducts(value!);
           },
           value: controller.selectedSortOption.value,
-          decoration: const InputDecoration(prefixIcon: Icon(Iconsax.sort)),
-          items: ['Tên', 'Giá cao đến thấp', 'Giá thấp đến cao', 'Giảm giá', 'Mới nhất', 'Phổ biến']
+          items: [
+            'Tên',
+            'Giá cao đến thấp',
+            'Giá thấp đến cao',
+            'Giảm giá',
+            'Mới nhất',
+            'Phổ biến'
+          ]
               .map((option) =>
-              DropdownMenuItem(value: option, child: Text(option)))
+                  DropdownMenuItem(value: option, child: Text(option)))
               .toList(),
         ),
         const SizedBox(height: SHFSizes.spaceBtwSections),
 
         ///Products
-        Obx(() => SHFGridLayout(itemCount: controller.products.length, itemBuilder: (_,index) =>  SHFProductCardVertical(product:controller.products[index]))),
+        Obx(
+          () => SHFGridLayout(
+            itemCount: controller.products.length,
+            itemBuilder: (_, index) =>
+                SHFProductCardVertical(product: controller.products[index], isNetworkImage: true),
+          ),
+        ),
+        SizedBox(height: SHFDeviceUtils.getBottomNavigationBarHeight() + SHFSizes.defaultSpace),
       ],
     );
   }
 }
-

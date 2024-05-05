@@ -12,12 +12,14 @@ class SHFAnimationLoaderWidget extends StatelessWidget {
   /// animation: Đường dẫn tới file ảnh động Lottie
   /// showAction: Có hiển thị nút hành động hay không
   /// onActionPressed: Hàm gọi lại được thực thi khi hành động được nhấn
-  const SHFAnimationLoaderWidget({super.key,
+  const SHFAnimationLoaderWidget({
+    super.key,
     required this.text,
     required this.animation,
     this.showAction = false,
     this.actionText,
-    this.onActionPressed});
+    this.onActionPressed,
+  });
 
   final String text;
   final String animation;
@@ -31,32 +33,30 @@ class SHFAnimationLoaderWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset(animation, width: MediaQuery
-              .of(context)
-              .size
-              .width * 0.8), //Display Lottie animation
-          const SizedBox(height: SHFSizes.defaultSpace,),
-          Text(
-            text,
-            style: Theme
-                .of(context)
-                .textTheme
-                .bodyMedium,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: SHFSizes.defaultSpace,),
+          Lottie.asset(animation,
+              width: MediaQuery.of(context).size.width *
+                  0.8), //Display Lottie animation
+          const SizedBox(height: SHFSizes.defaultSpace),
+          Text(text,
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center),
+          const SizedBox(height: SHFSizes.defaultSpace),
           showAction
               ? SizedBox(
-            width: 250,
-            child: OutlinedButton(onPressed: onActionPressed,
-                style: OutlinedButton.styleFrom(backgroundColor: SHFColors.dark),
-                child: Text(actionText!, style: Theme
-                    .of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .apply(color: SHFColors.light),)),
-
-          ) : const SizedBox(),
+                  width: 250,
+                  child: OutlinedButton(
+                      onPressed: onActionPressed,
+                      style: OutlinedButton.styleFrom(
+                          backgroundColor: SHFColors.dark),
+                      child: Text(
+                        actionText!,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .apply(color: SHFColors.light),
+                      )),
+                )
+              : const SizedBox(),
         ],
       ),
     );

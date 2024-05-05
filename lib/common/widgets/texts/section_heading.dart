@@ -6,7 +6,7 @@ class SHFSectionHeading extends StatelessWidget {
     this.textColor,
     this.showActionButton = true,
     required this.title,
-    this.buttonTitle = 'View all',
+    this.buttonTitle = 'Xem tất cả',
     this.onPressed,
   });
 

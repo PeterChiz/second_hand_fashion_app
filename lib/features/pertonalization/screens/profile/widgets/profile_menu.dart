@@ -27,23 +27,14 @@ class SHFProfileMenu extends StatelessWidget {
           children: [
             Expanded(
                 flex: 3,
-                child: Text(
-                  title,
-                  style: Theme.of(context).textTheme.bodySmall,
-                  overflow: TextOverflow.ellipsis,
-                )),
+                child:
+                    Text(title, style: Theme.of(context).textTheme.bodySmall)),
             Expanded(
                 flex: 5,
-                child: Text(
-                  value,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  overflow: TextOverflow.ellipsis,
-                )),
-            Expanded(
-                child: Icon(
-              icon,
-              size: 18,
-            )),
+                child: Text(value,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    overflow: TextOverflow.ellipsis)),
+            Expanded(child: Icon(icon, size: 18)),
           ],
         ),
       ),

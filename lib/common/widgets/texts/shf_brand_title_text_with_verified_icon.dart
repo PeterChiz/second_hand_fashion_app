@@ -14,14 +14,14 @@ class SHFBrandTitleWithVerifiedIcon extends StatelessWidget {
     this.textColor,
     this.iconColor = SHFColors.primary,
     this.textAlign = TextAlign.center,
-    this.brandTextSize = TextSizes.small,
+    this.brandTextSize = TexSHFSizes.small,
   });
 
   final String title;
   final int maxLines;
   final Color? textColor, iconColor;
   final TextAlign? textAlign;
-  final TextSizes brandTextSize;
+  final TexSHFSizes brandTextSize;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class SHFBrandTitleWithVerifiedIcon extends StatelessWidget {
               color: textColor,
               maxLines: maxLines,
               textAlign: textAlign,
-              brandTextSizes: brandTextSize,
+              brandTextSize: brandTextSize,
             )
         ),
         const SizedBox(width: SHFSizes.xs),

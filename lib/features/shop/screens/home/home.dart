@@ -6,12 +6,15 @@ import 'package:second_hand_fashion_app/features/shop/controllers/product/poduct
 import 'package:second_hand_fashion_app/features/shop/screens/all_products/all_products.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/home/widgets/promo_slider.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
-import '../../../../common/widgets/custom_shapes/containers/search_container.dart';
+import '../../../../data/repositories/product/product_repository.dart';
+import '../../../../utils/constants/text_strings.dart';
+import '../../../../utils/device/device_utility.dart';
+import 'widgets/header_search_container.dart';
 import '../../../../common/widgets/layouts/grid_layout.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../utils/constants/sizes.dart';
 import 'widgets/home_appbar.dart';
-import 'widgets/home_categories.dart';
+import 'widgets/header_categories.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -23,87 +26,69 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ///Header
+            /// Header
             const SHFPrimaryHeaderContainer(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ///Appbar
+                  /// -- Appbar
                   SHFHomeAppBar(),
-                  SizedBox(
-                    height: SHFSizes.spaceBtwSections,
-                  ),
-
-                  ///Searchbar
-                  SHFSearchContainer(text: 'Tìm kiếm mặt hàng'),
-                  SizedBox(
-                    height: SHFSizes.spaceBtwSections,
-                  ),
-
-                  ///Categories
-                  Padding(
-                    padding: EdgeInsets.only(left: SHFSizes.defaultSpace),
-                    child: Column(
-                      children: [
-                        ///Heading
-                        SHFSectionHeading(
-                            title: 'Danh mục phổ biến',
-                            showActionButton: false,
-                            textColor: Colors.white),
-                        SizedBox(height: SHFSizes.spaceBtwItems),
-
-                        ///Categories
-                        SHFHomeCategories(),
-                      ],
-                    ),
-                  ),
                   SizedBox(height: SHFSizes.spaceBtwSections),
+
+                  /// -- Searchbar
+                  SHFSearchContainer(text: 'Tìm kiếm mặt hàng', showBorder: false),
+                  SizedBox(height: SHFSizes.spaceBtwSections),
+
+                  /// -- Categories
+                  SHFHeaderCategories(),
+                  SizedBox(height: SHFSizes.spaceBtwSections * 2),
                 ],
               ),
             ),
 
-            ///Body
-            Padding(
+            /// -- Body
+            Container(
               padding: const EdgeInsets.all(SHFSizes.defaultSpace),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ///Promo Slider
+                  /// -- Promo Slider 1
                   const SHFPromoSlider(),
-                  const SizedBox(
-                    height: SHFSizes.spaceBtwSections,
-                  ),
+                  const SizedBox(height: SHFSizes.spaceBtwSections),
 
-                  ///Heading
+                  /// -- Products Heading
                   SHFSectionHeading(
-                    title: 'Sản phẩm phổ biến',
-                    onPressed: () => Get.to(() => AllProducts(
-                          title: 'Sản phẩm phổ biến',
-                          futureMethod: controller.fetchAllFeaturedProducts(),
-                        )),
-                  ),
-                  const SizedBox(
-                    height: SHFSizes.spaceBtwSections,
-                  ),
-
-                  ///Popular Product
-                  Obx(() {
-                    if (controller.isLoading.value) {
-                      return const SHFVerticalProductShimmer();
-                    }
-
-                    if (controller.featuredProducts.isEmpty) {
-                      return Center(
-                          child: Text(
-                        'Không tìm thấy dữ liệu',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ));
-                    }
-                    return SHFGridLayout(
-                      itemCount: controller.featuredProducts.length,
-                      itemBuilder: (_, index) => SHFProductCardVertical(
-                        product: controller.featuredProducts[index],
+                    title: SHFTexts.popularProducts,
+                    onPressed: () => Get.to(
+                          () => AllProducts(
+                        title: SHFTexts.popularProducts,
+                        futureMethod: ProductRepository.instance.getAllFeaturedProducts(),
                       ),
-                    );
-                  })
+                    ),
+                  ),
+                  const SizedBox(height: SHFSizes.spaceBtwItems),
+
+                  /// Products Section
+                  Obx(
+                        () {
+                      // Display loader while products are loading
+                      if (controller.isLoading.value) return const SHFVerticalProductShimmer();
+
+                      // Check if no featured products are found
+                      if (controller.featuredProducts.isEmpty) {
+                        return Center(child: Text('Không tìm thấy dữ liệu!', style: Theme.of(context).textTheme.bodyMedium));
+                      } else {
+                        // Featured Products Found!
+                        return SHFGridLayout(
+                          itemCount: controller.featuredProducts.length,
+                          itemBuilder: (_, index) =>
+                              SHFProductCardVertical(product: controller.featuredProducts[index], isNetworkImage: true),
+                        );
+                      }
+                    },
+                  ),
+
+                  SizedBox(height: SHFDeviceUtils.getBottomNavigationBarHeight() + SHFSizes.defaultSpace),
                 ],
               ),
             )

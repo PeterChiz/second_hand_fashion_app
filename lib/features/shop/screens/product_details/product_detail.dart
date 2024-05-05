@@ -4,14 +4,15 @@ import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/button_add_to_cart_widget.dart';
+import 'package:second_hand_fashion_app/common/widgets/products/cart/button_add_to_cart_widget.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/product_attributes.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/product_detail_image_slider.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/product_meta_data.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/widgets/rating_share_widget.dart';
-import 'package:second_hand_fashion_app/utils/constants/enums.dart';
 
 import '../../../../utils/constants/sizes.dart';
+import '../../../../utils/device/device_utility.dart';
+import '../checkout/checkout.dart';
 import '../product_reviews/product_reviews.dart';
 
 class ProductDetailScreen extends StatelessWidget {
@@ -21,61 +22,75 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      bottomNavigationBar:  SHFBottomAddToCart(product: product),
+    return Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ///1. Product Image Slider
-             SHFProductImageSlider(product: product,),
+            /// 1 - Product Image Slider
+            SHFProducSHFImageslider(product: product),
 
-            ///2. Product Details
-            Padding(
-              padding: const EdgeInsets.only(
-                  right: SHFSizes.defaultSpace,
-                  left: SHFSizes.defaultSpace,
-                  bottom: SHFSizes.defaultSpace),
+            /// 2 - Product Details
+            Container(
+              padding: const EdgeInsets.only(right: SHFSizes.defaultSpace, left: SHFSizes.defaultSpace, bottom: SHFSizes.defaultSpace),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ///Rating & Share Button
+                  /// - Rating & Share
                   const SHFRatingAndShare(),
-                  ///Price, Title, Stack &  Brand
-                  SHFProductMetaData(product: product,),
-                  ///Attributes
-                  if(product.productType == ProductType.variable.toString())  ProductAttributes(product: product,),
-                  if(product.productType == ProductType.variable.toString()) const SizedBox(height: SHFSizes.spaceBtwSections,),
-                  ///Checkout Button
-                  SizedBox(width: double.infinity,child: ElevatedButton(onPressed: (){}, child: const Text('Checkout'))),
-                  const SizedBox(height: SHFSizes.spaceBtwSections,),
-                  ///Description
-                  const SHFSectionHeading(title: 'Description',showActionButton: false,),
+
+                  /// - Price, Title, Stock, & Brand
+                  SHFProductMetaData(product: product),
+                  const SizedBox(height: SHFSizes.spaceBtwSections / 2),
+
+                  /// -- Attributes
+                  // If Product has no variations do not show attributes as well.
+                  if (product.productVariations != null && product.productVariations!.isNotEmpty) SHFProductAttributes(product: product),
+                  if (product.productVariations != null && product.productVariations!.isNotEmpty) const SizedBox(height: SHFSizes.spaceBtwSections),
+
+                  /// -- Checkout Button
+                  SizedBox(
+                    width: SHFDeviceUtils.getScreenWidth(context),
+                    child: ElevatedButton(child: const Text('Thanh toán'), onPressed: () => Get.to(() => const CheckoutScreen())),
+                  ),
+                  const SizedBox(height: SHFSizes.spaceBtwSections),
+
+                  /// - Description
+                  const SHFSectionHeading(title: 'Mô tả', showActionButton: false),
                   const SizedBox(height: SHFSizes.spaceBtwItems),
+                  // Read more package
                   ReadMoreText(
-                    product.description ?? '',
+                    product.description!,
                     trimLines: 2,
+                    colorClickableText: Colors.pink,
                     trimMode: TrimMode.Line,
-                    trimCollapsedText: 'Show more',
-                    trimExpandedText: 'Less',
+                    trimCollapsedText: ' Chi tiết',
+                    trimExpandedText: ' Thu nhỏ',
                     moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                     lessStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                   ),
-                  ///Reviews
+                  const SizedBox(height: SHFSizes.spaceBtwSections),
+
+                  /// - Reviews
                   const Divider(),
-                  const SizedBox(height: SHFSizes.spaceBtwItems,),
+                  const SizedBox(height: SHFSizes.spaceBtwItems),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SHFSectionHeading(title: 'Review(3)', showActionButton: false,),
-                      IconButton(onPressed: () => Get.to(() => const ProductReviewScreen()), icon: const Icon(Iconsax.arrow_right_3,size: 18,)),
+                      const SHFSectionHeading(title: 'Reviews (199)', showActionButton: false),
+                      IconButton(
+                        icon: const Icon(Iconsax.arrow_right_3, size: 18),
+                        onPressed: () => Get.to(() => const ProductReviewsScreen(), fullscreenDialog: true),
+                      )
                     ],
                   ),
-                  const SizedBox(height: SHFSizes.spaceBtwSections,),
                 ],
               ),
             ),
           ],
         ),
       ),
+      bottomNavigationBar: SHFBottomAddToCart(product: product),
     );
   }
 }

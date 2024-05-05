@@ -51,7 +51,7 @@ class SHFOrderListItems extends StatelessWidget {
                       : SHFColors.light,
                   child: Column(
                     children: [
-                      ///Row row
+                      ///Top row
                       Row(
                         children: [
                           ///1. Image

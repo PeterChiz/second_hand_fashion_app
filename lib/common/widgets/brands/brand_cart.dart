@@ -9,10 +9,21 @@ import '../custom_shapes/containers/rounded_container.dart';
 import '../images/shf_circular_image.dart';
 import '../texts/shf_brand_title_text_with_verified_icon.dart';
 
+/// A card widget representing a brand.
 class SHFBrandCard extends StatelessWidget {
+  /// Default constructor for the TBrandCard.
+  ///
+  /// Parameters:
+  ///   - brand: The brand model to display.
+  ///   - showBorder: A flag indicating whether to show a border around the card.
+  ///   - onTap: Callback function when the card is tapped.
   const SHFBrandCard({
-    super.key, required this.showBorder, this.onTap, required this.brand,
+    super.key,
+    required this.showBorder,
+    this.onTap,
+    required this.brand,
   });
+
   final BrandModel brand;
   final bool showBorder;
   final void Function()? onTap;
@@ -21,23 +32,22 @@ class SHFBrandCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+
       ///Container Design
       child: SHFRoundedContainer(
         showBorder: showBorder,
         backgroundColor: Colors.transparent,
         padding: const EdgeInsets.all(SHFSizes.sm),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             ///Icon
             Flexible(
-
               child: SHFCircularImage(
                 isNetworkImage: true,
                 image: brand.image,
                 backgroundColor: Colors.transparent,
-                overlayColor:
-                SHFHelperFunctions.isDarkMode(context)
+                overlayColor: SHFHelperFunctions.isDarkMode(context)
                     ? SHFColors.white
                     : SHFColors.black,
               ),
@@ -52,20 +62,16 @@ class SHFBrandCard extends StatelessWidget {
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment:
-                CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SHFBrandTitleWithVerifiedIcon(
                     title: brand.name,
-                    brandTextSize: TextSizes.large,
+                    brandTextSize: TexSHFSizes.large,
                   ),
                   Text(
-                    '${brand.productsCount ?? 0} chiếc',
+                    '${brand.productsCount ?? 0} sản phẩm',
                     overflow: TextOverflow.ellipsis,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .labelMedium,
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ],
               ),

@@ -5,7 +5,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:second_hand_fashion_app/data/repositories/authentication/user/user_repository.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/login/login.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/signup/verify_email.dart';
@@ -16,51 +15,51 @@ import 'package:second_hand_fashion_app/utils/exceptions/format_exceptions.dart'
 import 'package:second_hand_fashion_app/utils/exceptions/platform_exceptions.dart';
 import 'package:second_hand_fashion_app/utils/local_storage/storage_utility.dart';
 
+import '../user/user_repository.dart';
+
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
 
-  ///Variable
+  /// Variables
   final deviceStorage = GetStorage();
+  late final Rx<User?> _firebaseUser;
   final _auth = FirebaseAuth.instance;
 
-  ///Nhận dữ liệu người dùng xác thực
-  User get authUser => _auth.currentUser!;
+  /// Getters
+  User? get firebaseUser => _firebaseUser.value;
+
+  String get getUserID => _firebaseUser.value?.uid ?? "";
+
+  String get getUserEmail => _firebaseUser.value?.email ?? "";
+
+  String get getDisplayName => _firebaseUser.value?.displayName ?? "";
+
+  String get getPhoneNo => _firebaseUser.value?.phoneNumber ?? "";
 
   ///Được gọi từ main.dart khi khởi chạy ứng dụng
-    @override
-    void onReady() {
-      //Loại bỏ màn hình chờ gốc
-      FlutterNativeSplash.remove();
-      //Chuyển hướng đến màn hình thích hợp
-      screenRedirect();
-    }
+  @override
+  void onReady() {
+    _firebaseUser = Rx<User?>(_auth.currentUser);
+    _firebaseUser.bindStream(_auth.userChanges());
+    FlutterNativeSplash.remove();
+    screenRedirect(_firebaseUser.value);
+  }
 
   ///Function xác định màn hình liên quan và chuyển hướng phù hợp
-  void screenRedirect() async {
-    final user = _auth.currentUser;
+   screenRedirect(User? user) async {
     if (user != null) {
-      //neu nguoi dung da dang nhap
+      // User Logged-In: If email verified let the user go to Home Screen else to the Email Verification Screen
       if (user.emailVerified) {
-        //khoi tao bo nho cu the cho user
+        // Initialize User Specific Storage
         await SHFLocalStorage.init(user.uid);
-
-        //neu email cua nguoi dung duoc xac minh => dieu huong den menu NavigationMenu
         Get.offAll(() => const NavigationMenu());
       } else {
-        //neu email cua nguoi dung chua duoc xac minh => dieu huong den VerifyEmailScreen
-        Get.offAll(() => VerifyEmailScreen(
-              email: _auth.currentUser?.email,
-            ));
+        Get.offAll(() => VerifyEmailScreen(email: getUserEmail));
       }
     } else {
-      //Local Storage
-      deviceStorage.writeIfNull('IsFirstTime', true);
-      //Kiểm tra xem đây có phải là lần đầu tiên khởi chạy ứng dụng không
-      deviceStorage.read('IsFirstTime') != true
-          ? Get.offAll(() =>
-              const LoginScreen()) //Chuyển hướng đến LoginScreen nếu không phải lần đầu
-          : Get.offAll(
-              const OnBoardingScreen()); //chuyển hướng đến OnboardingScreen nếu đây là lần đầu tiên
+      // Local Storage: User is new or Logged out! If new then write isFirstTime Local storage variable = true.
+      deviceStorage.writeIfNull('isFirstTime', true);
+      deviceStorage.read('isFirstTime') != true ? Get.offAll(() => const LoginScreen()) : Get.offAll(() => const OnBoardingScreen());
     }
   }
 
@@ -81,7 +80,7 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Đã có lỗi gì đó, vui lòng thử lại!';
     }
   }
 
@@ -100,7 +99,7 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Đã có lỗi gì đó, vui lòng thử lại!';
     }
   }
 
@@ -117,7 +116,7 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Đã có lỗi gì đó, vui lòng thử lại!';
     }
   }
 
@@ -135,7 +134,7 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Đã có lỗi gì đó, vui lòng thử lại!';
     }
   }
 
@@ -157,7 +156,7 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Đã có lỗi gì đó, vui lòng thử lại!';
     }
   }
 
@@ -189,7 +188,7 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
-      if(kDebugMode) print('Something went wrong: $e');
+      if(kDebugMode) print('Đã có xảy ra lỗi: $e');
       return null;
     }
   }
@@ -201,6 +200,7 @@ class AuthenticationRepository extends GetxController {
   ///[LogoutUser] - Valid for any authentication
   Future<void> logout() async {
     try {
+      await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
@@ -212,7 +212,7 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Đã có lỗi gì đó, vui lòng thử lại!';
     }
   }
 
@@ -230,7 +230,7 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Đã có lỗi gì đó, vui lòng thử lại!';
     }
   }
 }

@@ -39,18 +39,17 @@ class SHFLoginForm extends StatelessWidget {
             ///Password
             Obx(
               () => TextFormField(
-                validator: (value) => SHFValidator.validatePassword(value),
-                controller: controller.password,
                 obscureText: controller.hidePassword.value,
+                controller: controller.password,
+                validator: (value) =>
+                    SHFValidator.validationEmptyText('Password', value),
                 decoration: InputDecoration(
                   labelText: SHFTexts.password,
                   prefixIcon: const Icon(Iconsax.password_check),
                   suffixIcon: IconButton(
                     onPressed: () => controller.hidePassword.value =
                         !controller.hidePassword.value,
-                    icon: Icon(controller.hidePassword.value
-                        ? Iconsax.eye_slash
-                        : Iconsax.eye),
+                    icon: const Icon(Iconsax.eye_slash),
                   ),
                 ),
               ),
@@ -63,17 +62,19 @@ class SHFLoginForm extends StatelessWidget {
               children: [
                 ///Remember me
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Obx(() => Checkbox(
                         value: controller.rememberMe.value,
-                        onChanged: (value) => controller.rememberMe.value = !controller.rememberMe.value)),
+                        onChanged: (value) =>
+                            controller.rememberMe.value = value!)),
                     const Text(SHFTexts.rememberMe),
                   ],
                 ),
 
                 ///Forger Password
                 TextButton(
-                    onPressed: () => Get.to(() => const ForgetPassword()),
+                    onPressed: () => Get.to(() => const ForgetPasswordScreen()),
                     child: const Text(SHFTexts.forgetPassword)),
               ],
             ),
@@ -81,10 +82,11 @@ class SHFLoginForm extends StatelessWidget {
 
             ///Sign In Button
             SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                    onPressed: () => controller.emailAndPasswordSignIn(),
-                    child: const Text(SHFTexts.signIn))),
+              width: double.infinity,
+              child: ElevatedButton(
+                  onPressed: () => controller.emailAndPasswordSignIn(),
+                  child: const Text(SHFTexts.signIn)),
+            ),
             const SizedBox(height: SHFSizes.spaceBtwItems),
 
             ///Create account button
@@ -93,7 +95,6 @@ class SHFLoginForm extends StatelessWidget {
                 child: OutlinedButton(
                     onPressed: () => Get.to(() => const SignupScreen()),
                     child: const Text(SHFTexts.createAccount))),
-            const SizedBox(height: SHFSizes.spaceBtwSections),
           ],
         ),
       ),

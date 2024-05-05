@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -7,34 +8,30 @@ import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/constants/text_strings.dart';
 import 'package:second_hand_fashion_app/utils/validators/validation.dart';
 
-class ForgetPassword extends StatelessWidget {
-  const ForgetPassword({super.key});
+class ForgetPasswordScreen extends StatelessWidget {
+  const ForgetPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ForgetPasswordController());
     return Scaffold(
-      appBar: const SHFAppBar(),
+      /// Custom Appbar
+      appBar: SHFAppBar(actions: [
+        IconButton(
+            onPressed: () => Get.back(), icon: const Icon(CupertinoIcons.clear))
+      ]),
       body: Padding(
         padding: const EdgeInsets.all(SHFSizes.defaultSpace),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ///Headings
-            Text(
-              SHFTexts.forgetPasswordTitle,
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            const SizedBox(
-              height: SHFSizes.spaceBtwItems,
-            ),
-            Text(
-              SHFTexts.forgetPasswordSubTitle,
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-            const SizedBox(
-              height: SHFSizes.spaceBtwSections * 2,
-            ),
+            Text(SHFTexts.forgetPasswordTitle,
+                style: Theme.of(context).textTheme.headlineMedium),
+            const SizedBox(height: SHFSizes.spaceBtwItems),
+            Text(SHFTexts.forgetPasswordSubTitle,
+                style: Theme.of(context).textTheme.labelMedium),
+            const SizedBox(height: SHFSizes.spaceBtwSections * 2),
 
             ///Text field
             Form(

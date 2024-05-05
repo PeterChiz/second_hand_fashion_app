@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
+import 'package:second_hand_fashion_app/utils/popups/loader.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
 import 'package:second_hand_fashion_app/data/repositories/address/address_repository.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/models/address_model.dart';
@@ -11,6 +11,8 @@ import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/helpers/cloud_helper_functions.dart';
 import 'package:second_hand_fashion_app/utils/helpers/network_manager.dart';
 import 'package:second_hand_fashion_app/utils/popups/full_screen_loader.dart';
+
+import '../../../data/repositories/authentication/authentication_repository.dart';
 
 class AddressController extends GetxController {
   static AddressController get instance => Get.find();
@@ -25,16 +27,14 @@ class AddressController extends GetxController {
   GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
 
   RxBool refreshData = true.obs;
-  final Rx<AddressModel> selectedAddress = AddressModel.empty().obs;
   final addressRepository = Get.put(AddressRepository());
+  final Rx<AddressModel> selectedAddress = AddressModel.empty().obs;
 
   ///Fetch all user specific addresses
   Future<List<AddressModel>> getAllUserAddresses() async {
     try {
-      final addresses = await addressRepository.fetchUserAddress();
-      selectedAddress.value = addresses.firstWhere(
-          (element) => element.selectedAddress,
-          orElse: () => AddressModel.empty());
+      final addresses = await addressRepository.fetchUserAddresses();
+      selectedAddress.value = addresses.firstWhere((element) => element.selectedAddress, orElse: () => AddressModel.empty());
       return addresses;
     } catch (e) {
       SHFLoaders.errorSnackBar(
@@ -45,56 +45,43 @@ class AddressController extends GetxController {
 
   Future selectAddress(AddressModel newSelectedAddress) async {
     try {
-      Get.defaultDialog(
-        title: '',
-        onWillPop: () async {
-          return false;
-        },
-        barrierDismissible: false,
-        backgroundColor: Colors.transparent,
-        // content: const SHFCircularLoader(),
-      );
-
-      //Clear the 'selected' field
-      if (selectedAddress.value.id.isNotEmpty) {
-        await addressRepository.updateSelectedField(
-            selectedAddress.value.id, false);
+      // Clear the "selected" field
+      if(selectedAddress.value.id.isNotEmpty){
+        await addressRepository.updateSelectedField(AuthenticationRepository.instance.getUserID, selectedAddress.value.id, false);
       }
-      //Assign selected address
+
+      // Assign selected address
       newSelectedAddress.selectedAddress = true;
       selectedAddress.value = newSelectedAddress;
-      //Set the 'selected' field to true for the newly selected address
-      await addressRepository.updateSelectedField(
-          selectedAddress.value.id, true);
 
-      Get.back();
+      // Set the "selected" field to true for the newly selected address
+      await addressRepository.updateSelectedField(AuthenticationRepository.instance.getUserID, selectedAddress.value.id, true);
     } catch (e) {
       SHFLoaders.errorSnackBar(
           title: 'Có lỗi khi lựa chọn', message: e.toString());
     }
   }
 
-  ///Add new address
+  ///Thêm địa chỉ mới
   Future addNewAddress() async {
     try {
-      //start loading
-      SHFFullScreenLoader.openLoadingDialog(
-          'Đang tải địa chỉ', SHFImages.docerAnimation);
+      // Start Loading
+      SHFFullScreenLoader.openLoadingDialog('Đang lưu trữ địa chỉ...', SHFImages.docerAnimation);
 
-      //Check internet connecting
+      // Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         SHFFullScreenLoader.stopLoading();
         return;
       }
 
-      //Form validation
+      // Form Validation
       if (!addressFormKey.currentState!.validate()) {
         SHFFullScreenLoader.stopLoading();
         return;
       }
 
-      //Save address data
+      // Save Address Data
       final address = AddressModel(
         id: '',
         name: name.text.trim(),
@@ -106,27 +93,25 @@ class AddressController extends GetxController {
         country: country.text.trim(),
         selectedAddress: true,
       );
-      final id = await addressRepository.addAddress(address);
+      final id = await addressRepository.addAddress(address, AuthenticationRepository.instance.getUserID);
 
-      //Update selected address status
+      // Update Selected Address status
       address.id = id;
-      selectedAddress(address);
+      await selectAddress(address);
 
-      //Remove loader
+      // Remove Loader
       SHFFullScreenLoader.stopLoading();
 
-      //Show success message
-      SHFLoaders.successSnackBar(
-          title: 'Chúc mừng',
-          message: 'Địa chỉ của bạn đã được lưu thành công');
+      // Show Success Message
+      SHFLoaders.successSnackBar(title: 'Chúc mừng', message: 'Địa chỉ của bạn đã được lưu thành công');
 
-      //Refresh address data
+      // Refresh Addresses Data
       refreshData.toggle();
 
-      //Reset field
+      // Reset fields
       resetFormFields();
 
-      //Redirect
+      // Redirect
       Navigator.of(Get.context!).pop();
     } catch (e) {
       //Remove loader
@@ -146,10 +131,11 @@ class AddressController extends GetxController {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SHFSectionHeading(
-                title: 'Chọn địa chỉ', showActionButton: false),
+                title: 'Chọn địa chỉ'),
             FutureBuilder(
               future: getAllUserAddresses(),
               builder: (_, snapshot) {
+                /// Helper Function: Handle Loader, No Record, OR ERROR Message
                 final response = SHFCloudHelperFunctions.checkMultiRecordState(
                     snapshot: snapshot);
                 if (response != null) return response;
@@ -160,7 +146,7 @@ class AddressController extends GetxController {
                   itemBuilder: (_, index) => SHFSingAddress(
                     address: snapshot.data![index],
                     onTap: () async {
-                      selectedAddress(snapshot.data![index]);
+                      await selectAddress(snapshot.data![index]);
                       Get.back();
                     },
                   ),
@@ -170,11 +156,8 @@ class AddressController extends GetxController {
             const SizedBox(height: SHFSizes.defaultSpace * 2),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => Get.to(() => const AddNewAddressScreen()),
-                child: const Text('Thêm địa chỉ mới'),
-              ),
-            )
+              child: ElevatedButton(onPressed: () => Get.to(() => const AddNewAddressScreen()), child: const Text('Thêm địa chỉ mới')),
+            ),
           ],
         ),
       ),

@@ -9,10 +9,11 @@ class SHFTextFormFieldTheme{
     errorMaxLines: 3,
     prefixIconColor: SHFColors.darkGrey,
     suffixIconColor: SHFColors.darkGrey,
-    labelStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeMd, color: SHFColors.black),
-    hintStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeSm, color: Colors.black),
-    errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal),
-    floatingLabelStyle: const TextStyle().copyWith(color: SHFColors.black.withOpacity(0.8)),
+    // constraints: const BoxConstraints.expand(height: SHFSizes.inputFieldHeight),
+    labelStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeMd, color: SHFColors.black, fontFamily: 'Poppins'),
+    hintStyle: const TextStyle().copyWith(fontSize: SHFSizes.fonSHFSizesm, color: SHFColors.black, fontFamily: 'Poppins'),
+    errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal, fontFamily: 'Poppins'),
+    floatingLabelStyle: const TextStyle().copyWith(color: SHFColors.black.withOpacity(0.8), fontFamily: 'Poppins'),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
       borderSide: const BorderSide(width: 1, color: SHFColors.grey),
@@ -21,13 +22,13 @@ class SHFTextFormFieldTheme{
       borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
       borderSide: const BorderSide(width: 1, color: SHFColors.grey),
     ),
-    focusedBorder: const OutlineInputBorder().copyWith(
+    focusedBorder:const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
       borderSide: const BorderSide(width: 1, color: SHFColors.dark),
     ),
     errorBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
-      borderSide: const BorderSide(width: 1, color: SHFColors.warning)
+      borderSide: const BorderSide(width: 1, color: SHFColors.warning),
     ),
     focusedErrorBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
@@ -39,10 +40,10 @@ class SHFTextFormFieldTheme{
     errorMaxLines: 2,
     prefixIconColor: SHFColors.darkGrey,
     suffixIconColor: SHFColors.darkGrey,
-
-    labelStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeMd, color: SHFColors.white),
-    hintStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeSm, color: SHFColors.white),
-    floatingLabelStyle: const TextStyle().copyWith(color: SHFColors.white.withOpacity(0.8)),
+    // constraints: const BoxConstraints.expand(height: SHFSizes.inputFieldHeight),
+    labelStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeMd, color: SHFColors.white, fontFamily: 'Poppins'),
+    hintStyle: const TextStyle().copyWith(fontSize: SHFSizes.fonSHFSizesm, color: SHFColors.white, fontFamily: 'Poppins'),
+    floatingLabelStyle: const TextStyle().copyWith(color: SHFColors.white.withOpacity(0.8), fontFamily: 'Poppins'),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),
       borderSide: const BorderSide(width: 1, color: SHFColors.darkGrey),

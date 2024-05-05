@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_dot_navigation.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_next_button.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_page.dart';
-import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_skip.dart';
+import 'package:second_hand_fashion_app/features/authentication/screens/onboarding/widgets/onboarding_skip_button.dart';
 import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/text_strings.dart';
 import '../../controllers/onboarding/onboarding_controller.dart';
@@ -14,6 +14,7 @@ class OnBoardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Controller for managing onboarding logic and state.
     final controller = Get.put(OnBoardingController());
 
     return Scaffold(
@@ -42,11 +43,11 @@ class OnBoardingScreen extends StatelessWidget {
             ],
           ),
           ///Skip button
-          const OnBoardingSkip(),
+          const SHFOnBoardingSkipButton(),
           ///Dot Navigation SmoothPageIndicator
-          const OnBoardingDotNavigation(),
+          const SHFOnBoardingDotNavigation(),
           ///Circular
-          const OnboardingNextButton(),
+          const SHFOnboardingNextButton(),
         ],
       ),
     );

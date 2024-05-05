@@ -8,6 +8,8 @@ import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/constants/text_strings.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
+import '../../../../common/widgets/appbar/appbar.dart';
+
 class VerifyEmailScreen extends StatelessWidget {
   const VerifyEmailScreen({super.key, this.email});
 
@@ -17,12 +19,11 @@ class VerifyEmailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(VerifyEmailController());
     return Scaffold(
-      /// The close icon in the app bar is used to log out the user and redirect them to the login screen.
-      /// This approach is taken to handle scenarios where the user enters the registration process,
-      /// and the data is stored. Upon reopening the app, it checks if the email is verified.
-      /// If not verified, the app always navigates to the verification screen.
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
+      /// Appbar close icon will first Logout the user & then redirect back to Login Screen()
+      /// Reason: We will store the data when user enters the Register Button on Previous screen.
+      /// Whenever the user opens the app, we will check if email is verified or not.
+      /// If not verified we will always show this Verification screen.
+      appBar: SHFAppBar(
         actions: [
           IconButton(
               onPressed: () => AuthenticationRepository.instance.logout(),
@@ -48,25 +49,19 @@ class VerifyEmailScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: SHFSizes.spaceBtwItems,
-              ),
+              const SizedBox(height: SHFSizes.spaceBtwItems),
               Text(
                 email ?? '',
                 style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: SHFSizes.spaceBtwItems,
-              ),
+              const SizedBox(height: SHFSizes.spaceBtwItems),
               Text(
                 SHFTexts.confirmEmailSubTitle,
                 style: Theme.of(context).textTheme.labelMedium,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: SHFSizes.spaceBtwSections,
-              ),
+              const SizedBox(height: SHFSizes.spaceBtwSections),
 
               ///Buttons
               SizedBox(
@@ -78,6 +73,8 @@ class VerifyEmailScreen extends StatelessWidget {
               const SizedBox(
                 height: SHFSizes.spaceBtwItems,
               ),
+
+              /// Resend Email, You can also add timer
               SizedBox(
                   width: double.infinity,
                   child: TextButton(

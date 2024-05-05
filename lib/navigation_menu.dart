@@ -7,7 +7,7 @@ import 'package:second_hand_fashion_app/features/shop/screens/store/store.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
-import 'features/shop/screens/wishlist/wishlist.dart';
+import 'features/shop/screens/favourites/favourite.dart';
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
@@ -21,8 +21,9 @@ class NavigationMenu extends StatelessWidget {
         () => NavigationBar(
           height: 80,
           elevation: 0,
-          selectedIndex: controller.selectedIndex.value,
-          onDestinationSelected: (index) => controller.selectedIndex.value = index,
+          animationDuration: const Duration(seconds: 3),
+          selectedIndex: controller.selectedMenu.value,
+          onDestinationSelected: (index) => controller.selectedMenu.value = index,
           backgroundColor: darkMode ? SHFColors.black : SHFColors.white,
           indicatorColor: darkMode ? SHFColors.white.withOpacity(0.1) : SHFColors.black.withOpacity(0.1),
 
@@ -34,13 +35,14 @@ class NavigationMenu extends StatelessWidget {
           ],
         ),
       ),
-      body: Obx(() => controller.screens[controller.selectedIndex.value]),//lấy giá trị màu vào
+      body: Obx(() => controller.screens[controller.selectedMenu.value]),//lấy giá trị màu vào
     );
   }
 }
 
 class NavigationController extends GetxController {
-  final Rx<int> selectedIndex = 0.obs;
+  static NavigationController get instance => Get.find();
+  final Rx<int> selectedMenu = 0.obs;
 
   final screens = [const HomeScreen(),const StoreScreen(),const FavouriteScreen(),const SettingsScreen()];
 }

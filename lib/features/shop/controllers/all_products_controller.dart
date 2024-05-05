@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
+import 'package:second_hand_fashion_app/utils/popups/loader.dart';
 import 'package:second_hand_fashion_app/data/repositories/product/product_repository.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 
@@ -8,23 +8,28 @@ class AllProductController extends GetxController {
   static AllProductController get instance => Get.find();
 
   final repository = ProductRepository.instance;
-  final RxString selectedSortOption = 'Name'.obs;
+  final RxString selectedSortOption = 'Tên'.obs;
   final RxList<ProductModel> products = <ProductModel>[].obs;
 
-  Future<List<ProductModel>> fetchProductByQuery(Query? query) async {
+  Future<List<ProductModel>> fetchProductsByQuery(Query? query) async {
     try {
-      if (query == null) return [];
-
-      final products = await repository.fetchProductsByQuery(query);
-
-      return products;
+      if(query == null) return [];
+      return await repository.fetchProductsByQuery(query);
     } catch (e) {
-      SHFLoaders.errorSnackBar(title: 'Oh snap!', message: e.toString());
+      SHFLoaders.errorSnackBar(title: 'Có lỗi!', message: e.toString());
       return [];
     }
   }
 
+  void assignProducts(List<ProductModel> products) {
+    // Assign products to the 'products' list
+    this.products.assignAll(products);
+    sortProducts('Tên');
+  }
+
   void sortProducts(String sortOption) {
+    selectedSortOption.value = sortOption;
+
     switch (sortOption) {
       case 'Tên':
         products.sort((a, b) => a.title.compareTo(b.title));
@@ -50,14 +55,9 @@ class AllProductController extends GetxController {
         });
         break;
       default:
-          //Default sorting option: Name
-        products.sort((a,b) => a.title.compareTo(b.title));
+      // Default sorting option: Name
+        products.sort((a, b) => a.title.compareTo(b.title));
     }
   }
 
-  void assignProducts(List<ProductModel> products){
-    //Assign product to the 'Products' list
-    this.products.assignAll(products);
-    sortProducts('Name');
-    }
 }

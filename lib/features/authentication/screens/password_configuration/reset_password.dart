@@ -7,6 +7,7 @@ import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/constants/text_strings.dart';
 
+import '../../../../common/widgets/appbar/appbar.dart';
 import '../../../../utils/helpers/helper_functions.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
@@ -16,21 +17,27 @@ class ResetPasswordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ForgetPasswordController());
+
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
+      /// Appbar to go back OR close all screens and Goto LoginScreen()
+      appBar: SHFAppBar(
         actions: [
           IconButton(
-              onPressed: () => Get.back(),
-              icon: const Icon(CupertinoIcons.clear))
+              onPressed: () => Get.offAll(const LoginScreen()),
+              icon: const Icon(CupertinoIcons.clear)),
         ],
       ),
-      body:  SingleChildScrollView(
-        child: Padding(padding: const EdgeInsets.all(SHFSizes.defaultSpace),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
             children: [
               ///Image
-              Image(image: const  AssetImage(SHFImages.deliveredEmailIllustration), width: SHFHelperFunctions.screenWidth() * 0.6,),
+              Image(
+                image: const AssetImage(SHFImages.deliveredEmailIllustration),
+                width: SHFHelperFunctions.screenWidth() * 0.6,
+              ),
               const SizedBox(height: SHFSizes.spaceBtwSections),
 
               ///Email, Title & SubTitle
@@ -40,18 +47,38 @@ class ResetPasswordScreen extends StatelessWidget {
               const SizedBox(height: SHFSizes.spaceBtwItems,),
               Text(SHFTexts.changeYourPasswordSubTitle, style: Theme.of(context).textTheme.headlineMedium,textAlign: TextAlign.center,),
               const SizedBox(height: SHFSizes.spaceBtwSections,),
+              // Text(SHFTexts.changeYourPasswordTitle,
+              //     style: Theme.of(context).textTheme.headlineMedium,
+              //     textAlign: TextAlign.center),
+              // const SizedBox(height: SHFSizes.spaceBtwItems),
+              // Text('chibui@gmail.com',
+              //     textAlign: TextAlign.center,
+              //     style: Theme.of(context).textTheme.labelLarge),
+              // const SizedBox(height: SHFSizes.spaceBtwItems),
+              // Text(
+              //   SHFTexts.changeYourPasswordSubTitle,
+              //   textAlign: TextAlign.center,
+              //   style: Theme.of(context).textTheme.labelMedium,
+              // ),
+              // const SizedBox(height: SHFSizes.spaceBtwSections),
+
               ///Buttons
               SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(onPressed: () => Get.offAll(()=> const LoginScreen()), child: const Text(SHFTexts.done))),
-              const SizedBox(height: SHFSizes.spaceBtwItems,),
+                  child: ElevatedButton(
+                      onPressed: () => Get.offAll(() => const LoginScreen()),
+                      child: const Text(SHFTexts.done))),
+              const SizedBox(height: SHFSizes.spaceBtwItems),
               SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(onPressed: () => ForgetPasswordController.instance.resendPasswordResetEmail(email), child: const Text(SHFTexts.resendEmail))),
+                  child: TextButton(
+                      onPressed: () =>
+                          controller.resendPasswordResetEmail(email),
+                      child: const Text(SHFTexts.resendEmail))),
             ],
           ),
         ),
-    ),
+      ),
     );
   }
 }

@@ -1,11 +1,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
-import 'package:second_hand_fashion_app/data/repositories/authentication/user/user_repository.dart';
+import 'package:second_hand_fashion_app/utils/popups/loader.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/controllers/user_controller.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/screens/profile/profile.dart';
 
+import '../../../data/repositories/user/user_repository.dart';
 import '../../../utils/constants/image_strings.dart';
 import '../../../utils/helpers/network_manager.dart';
 import '../../../utils/popups/full_screen_loader.dart';
@@ -20,7 +20,7 @@ class UpdateNameController extends GetxController {
   final userRepository = Get.put(UserRepository());
   GlobalKey<FormState> updateUserNameFormKey = GlobalKey<FormState>();
 
-  ///Khởi tạo dữ liệu người dùng khi HomeScreen xuất hiện
+  /// init user data when Home Screen appears
   @override
   void onInit() {
     initializeNames();
@@ -71,7 +71,7 @@ class UpdateNameController extends GetxController {
       Get.off(()=>const ProfileScreen());
     } catch (e) {
       SHFFullScreenLoader.stopLoading();
-      SHFLoaders.errorSnackBar(title: 'Oh snap', message: e.toString());
+      SHFLoaders.errorSnackBar(title: 'Có lỗi', message: e.toString());
     }
   }
 }

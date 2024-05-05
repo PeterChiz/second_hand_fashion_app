@@ -12,8 +12,8 @@ import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/helpers/helper_functions.dart';
 import '../../../models/product_model.dart';
 
-class SHFProductImageSlider extends StatelessWidget {
-  const SHFProductImageSlider({
+class SHFProducSHFImageslider extends StatelessWidget {
+  const SHFProducSHFImageslider({
     super.key,
     required this.product,
   });
@@ -24,28 +24,32 @@ class SHFProductImageSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = SHFHelperFunctions.isDarkMode(context);
     final controller = Get.put(ImagesController());
-    final images = controller.getAllProductImages(product);
+    final images = controller.getAllProducSHFImages(product);
     return SHFCurvedEdgeWidget(
       child: Container(
         color: dark ? SHFColors.darkerGrey : SHFColors.light,
         child: Stack(
           children: [
             ///Main Large Image
-             SizedBox(
+            SizedBox(
                 height: 400,
                 child: Padding(
-                  padding: const EdgeInsets.all(SHFSizes.productImageRadius * 2),
-                  child: Center(
-                      child: Obx(() {
-                        final image = controller.selectedProductImage.value;
-                        return GestureDetector(
-                          onTap: () => controller.showEnlargedImage(image),
-                          child: CachedNetworkImage(
-                              imageUrl: image,
-                            progressIndicatorBuilder: (_, __, downloadProgress) => CircularProgressIndicator(value: downloadProgress.progress, color: SHFColors.primary,),
-                          ),
-                        );
-                      } )),
+                  padding:
+                      const EdgeInsets.all(SHFSizes.productImageRadius * 2),
+                  child: Center(child: Obx(() {
+                    final image = controller.selectedProductImage.value;
+                    return GestureDetector(
+                      onTap: () => controller.showEnlargedImage(image),
+                      child: CachedNetworkImage(
+                        imageUrl: image,
+                        progressIndicatorBuilder: (_, __, downloadProgress) =>
+                            CircularProgressIndicator(
+                          value: downloadProgress.progress,
+                          color: SHFColors.primary,
+                        ),
+                      ),
+                    );
+                  })),
                 )),
 
             ///Image Slider
@@ -62,28 +66,32 @@ class SHFProductImageSlider extends StatelessWidget {
                   physics: const AlwaysScrollableScrollPhysics(),
                   separatorBuilder: (_, __) =>
                       const SizedBox(width: SHFSizes.spaceBtwItems),
-                  itemBuilder: (_, index) => Obx(
-                    () {
-                      final imageSelected = controller.selectedProductImage.value == images[index];
-                      return  SHFRoundedImage(
-                        width: 80,
-                        isNetworkImage: true,
-                        imageURL: images[index],
-                        padding: const EdgeInsets.all(SHFSizes.sm),
-                        backgroundColor: dark ? SHFColors.dark : SHFColors.white,
-                        border: Border.all(color: imageSelected ? SHFColors.primary : Colors.transparent),
-                      );
-                    }
-                  ),
+                  itemBuilder: (_, index) => Obx(() {
+                    final imageSelected =
+                        controller.selectedProductImage.value == images[index];
+                    return SHFRoundedImage(
+                      width: 80,
+                      isNetworkImage: true,
+                      padding: const EdgeInsets.all(SHFSizes.sm),
+                      backgroundColor: dark ? SHFColors.dark : SHFColors.white,
+                      border: Border.all(
+                          color: imageSelected
+                              ? SHFColors.primary
+                              : Colors.transparent),
+                      imageUrl: images[index],
+                    );
+                  }),
                 ),
               ),
             ),
 
             ///Appbar Icons
-             SHFAppBar(
+            SHFAppBar(
               showBackArrow: true,
               actions: [
-                SHFFavoritesIcon(productId: product.id,)
+                SHFFavoritesIcon(
+                  productId: product.id,
+                )
               ],
             )
           ],

@@ -1,157 +1,115 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:second_hand_fashion_app/common/widgets/images/shf_rounded_image.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/favourite_icon/favorites_icon.dart';
-import 'package:second_hand_fashion_app/common/widgets/texts/product_price_text.dart';
-import 'package:second_hand_fashion_app/common/widgets/texts/product_title_text.dart';
+import 'package:second_hand_fashion_app/common/widgets/products/product_cards/widgets/add_to_cart_button.dart';
+import 'package:second_hand_fashion_app/common/widgets/products/product_cards/widgets/product_card_pricing_widget.dart';
+import 'package:second_hand_fashion_app/common/widgets/products/product_cards/widgets/product_sale_tag.dart';
+import 'package:second_hand_fashion_app/common/widgets/texts/shf_product_title_text.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/shf_brand_title_text_with_verified_icon.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
 import '../../../../features/shop/controllers/product/poduct_controller.dart';
+import '../../../../features/shop/screens/product_details/product_detail.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/enums.dart';
 import '../../../../utils/constants/sizes.dart';
 
 class SHFProductCardHorizontal extends StatelessWidget {
-  const SHFProductCardHorizontal({super.key, required this.product});
+  const SHFProductCardHorizontal({super.key, required this.product, this.isNetworkImage=true});
 
   final ProductModel product;
+  final bool isNetworkImage;
+
 
   @override
   Widget build(BuildContext context) {
-    final controller = ProductController.instance;
-    final dark = SHFHelperFunctions.isDarkMode(context);
-    final salePercentage = controller.calculateDiscountPercentage(product.price, product.salePrice);
+    final isDark = SHFHelperFunctions.isDarkMode(context);
+    final salePercentage = ProductController.instance.calculateSalePercentage(product.price, product.salePrice);
 
+    return GestureDetector(
+      onTap: () => Get.to(() => ProductDetailScreen(product: product)),
 
-    return Container(
-      width: 310,
-      padding: const EdgeInsets.all(1),
-      decoration: BoxDecoration(
+      /// Container with side paddings, color, edges, radius and shadow.
+      child: Container(
+        width: 310,
+        padding: const EdgeInsets.all(1),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(SHFSizes.productImageRadius),
+          color: SHFHelperFunctions.isDarkMode(context) ? SHFColors.darkerGrey : SHFColors.lightContainer,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /// Thumbnail
+            SHFRoundedContainer(
+              height: 120,
+              padding: const EdgeInsets.all(SHFSizes.sm),
+              backgroundColor: isDark ? SHFColors.dark : SHFColors.light,
+              child: Stack(
+                children: [
+                  /// -- Thumbnail Image
+                  SHFRoundedImage(width: 120, height: 120, imageUrl: product.thumbnail, isNetworkImage: isNetworkImage),
 
-        borderRadius: BorderRadius.circular(SHFSizes.productImageRadius),
-        color: dark ? SHFColors.darkerGrey : SHFColors.lightContainer,
-      ),
-      child: Row(
-        children: [
-          ///Thumbnail
-          SHFRoundedContainer(
-            height: 120,
-            padding: const EdgeInsets.all(SHFSizes.sm),
-            backgroundColor: dark ? SHFColors.dark : SHFColors.white,
-            child:  Stack(
-              children: [
-                ///Thumbnail Image
-                 SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: SHFRoundedImage(
-                      imageURL: product.thumbnail,
-                      applyImageRadius: true,
-                      isNetworkImage: true,
-                    ),
-                ),
+                  /// -- Sale Tag
+                  if (salePercentage != null) ProductSaleTagWidget(salePercentage: salePercentage),
 
-                ///Sale Tag
-                if(salePercentage != null)
-                Positioned(
-                  top: 12,
-                  child: SHFRoundedContainer(
-                      radius: SHFSizes.sm,
-                      backgroundColor: SHFColors.secondary.withOpacity(0.8),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: SHFSizes.sm, vertical: SHFSizes.xs),
-                      child: Text(
-                        '$salePercentage%',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .apply(color: SHFColors.black),
-                      )),
-                ),
-
-                ///Favourite Icon Button
-                   Positioned(
+                  /// -- Favourite Icon Button
+                  Positioned(
                     top: 0,
                     right: 0,
                     child: SHFFavoritesIcon(productId: product.id),
-                )
-              ],
-            ),
-          ),
-
-          ///Details, add to cart, pricing
-           SizedBox(
-            width: 172,
-            child: Padding(
-              padding: const EdgeInsets.only(top: SHFSizes.sm, left: SHFSizes.sm),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SHFProductTitleText(title: product.title, smallSize: true,),
-                      const SizedBox(height: SHFSizes.spaceBtwItems/2),
-                      SHFBrandTitleWithVerifiedIcon(title: product.brand!.name),
-                    ],
                   ),
-
-                  const Spacer(),
-
-                  ///Price Row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ///Price
-                      Flexible(
-                        child: Column(
-                          children: [
-                            if (product.productType ==
-                                ProductType.single.toString() &&
-                                product.salePrice > 0)
-                              const Padding(
-                                  padding: EdgeInsets.only(left: SHFSizes.sm)),
-
-                            ///Price, Show sale price as main price if sale exist
-                            Padding(
-                              padding: const EdgeInsets.only(left: SHFSizes.sm),
-                              child: SHFProductPriceText(
-                                  price: controller.getProductPrice(product)),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      ///Add to Cart Button
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: SHFColors.dark,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(SHFSizes.cardRadiusMd),
-                            bottomRight: Radius.circular(SHFSizes.productImageRadius),
-                          ),
-                        ),
-                        child: const SizedBox(
-                            width: SHFSizes.iconLg * 1.2,
-                            height: SHFSizes.iconLg * 1.2,
-                            child: Center(
-                              child: Icon(
-                                Iconsax.add,
-                                color: SHFColors.white,
-                              ),
-                            )),
-                      )
-                    ],
-                  )
                 ],
               ),
             ),
-          )
-        ],
+            const SizedBox(height: SHFSizes.spaceBtwItems / 2),
+
+            /// -- Details, Add to Cart, & Pricing
+            Container(
+              padding: const EdgeInsets.only(left: SHFSizes.sm),
+              width: 172,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /// -- Details
+                  Padding(
+                    padding: const EdgeInsets.only(top: SHFSizes.sm),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SHFProductTitleText(
+                          title: product.title,
+                          smallSize: true,
+                          maxLines: 2,
+                        ),
+                        const SizedBox(height: SHFSizes.spaceBtwItems / 2),
+                        SHFBrandTitleWithVerifiedIcon(title: product.brand!.name, brandTextSize: TexSHFSizes.small),
+                      ],
+                    ),
+                  ),
+
+                  /// Price & Add to cart button
+                  /// Use Spacer() to utilize all the space and set the price and cart button at the bottom.
+                  /// This usually happens when Product title is in single line or 2 lines (Max)
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      /// Pricing
+                      PricingWidget(product: product),
+
+                      /// Add to cart
+                      ProductCardAddToCartButton(product: product),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-    );
-  }
+    );  }
 }

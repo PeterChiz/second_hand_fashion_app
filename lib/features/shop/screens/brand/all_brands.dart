@@ -5,17 +5,17 @@ import 'package:second_hand_fashion_app/common/widgets/brands/brand_cart.dart';
 import 'package:second_hand_fashion_app/common/widgets/layouts/grid_layout.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
 import 'package:second_hand_fashion_app/features/shop/controllers/brand_controller.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/brand/brand_products.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 
 import '../../../../common/widgets/shimmers/brands_shimmer.dart';
+import 'brand.dart';
 
-class ALlBrandsScreen extends StatelessWidget {
-  const ALlBrandsScreen({super.key});
+class AllBrandsScreen extends StatelessWidget {
+  const AllBrandsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final brandController = BrandController.instance;
+    final controller = BrandController.instance;
     return Scaffold(
       appBar: const SHFAppBar(
         title: Text('Brand'),
@@ -26,7 +26,7 @@ class ALlBrandsScreen extends StatelessWidget {
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
             children: [
-              ///Heading
+              /// Sub Categories
               const SHFSectionHeading(
                 title: 'Brands',
                 showActionButton: false,
@@ -36,34 +36,31 @@ class ALlBrandsScreen extends StatelessWidget {
               ),
 
               ///Brands
-              Obx(() {
-                if (brandController.isLoading.value) return const SHFBrandsShimmer();
+              Obx(
+                    () {
+                  // Check if categories are still loading
+                  if (controller.isLoading.value) return const SHFBrandsShimmer();
 
-                if (brandController.allBrands.isEmpty) {
-                  return Center(
-                    child: Text(
-                      'không tìm thấy dữ liệu',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .apply(color: Colors.white),
-                    ),
-                  );
-                }
-
-                return SHFGridLayout(
-                    itemCount: brandController.allBrands.length,
-                    mainAxisExtent: 80,
-                    itemBuilder: (_, index) {
-                      final brand =
-                      brandController.allBrands[index];
-                      return SHFBrandCard(
-                        brand: brand,
-                        showBorder: true,
-                        onTap: () => Get.to(() =>  BrandProducts(brand: brand,)),
-                      );
-                    });
-              })
+                  // Check if there are no featured categories found
+                  if (controller.allBrands.isEmpty) {
+                    return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white)));
+                  } else {
+                    /// Data Found
+                    return SHFGridLayout(
+                      itemCount: controller.allBrands.length,
+                      mainAxisExtent: 80,
+                      itemBuilder: (_, index) {
+                        final brand = controller.allBrands[index];
+                        return SHFBrandCard(
+                          brand: brand,
+                          showBorder: true,
+                          onTap: () => Get.to(() => BrandScreen(brand: brand)),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),

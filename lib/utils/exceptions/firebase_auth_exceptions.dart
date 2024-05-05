@@ -1,12 +1,12 @@
-///Custom exception class to hand various Firebase authentication-related errors
+/// Custom exception class to handle various Firebase authentication-related errors.
 class SHFFirebaseAuthException implements Exception {
-  ///The error code associated with the exception
+  /// The error code associated with the exception.
   final String code;
 
-  ///Constructor that takes an error code
+  /// Constructor that takes an error code.
   SHFFirebaseAuthException(this.code);
 
-  ///Get the corresponding error message based on the error code
+  /// Get the corresponding error message based on the error code.
   String get message {
     switch (code) {
       case 'email-already-in-use':
@@ -17,7 +17,7 @@ class SHFFirebaseAuthException implements Exception {
         return 'The password is too weak. Please choose a stronger password.';
       case 'user-disabled':
         return 'This user account has been disabled. Please contact support for assistance.';
-      case 'user - not - found':
+      case 'user-not-found':
         return 'Invalid login details. User not found.';
       case 'wrong-password':
         return 'Incorrect password. Please check your password and try again.';
@@ -38,7 +38,7 @@ class SHFFirebaseAuthException implements Exception {
       case 'user-mismatch':
         return 'The supplied credentials do not correspond to the previously signed in user.';
       case 'account-exists-with-different-credential':
-        return 'An account already exists with the same email but different sign-in credentials. ';
+        return 'An account already exists with the same email but different sign-in credentials.';
       case 'operation-not-allowed':
         return 'This operation is not allowed. Contact support for assistance.';
       case 'expired-action-code':
@@ -62,12 +62,12 @@ class SHFFirebaseAuthException implements Exception {
       case 'invalid-sender':
         return 'The email template sender is invalid. Please verify the sender\'s email.';
       case 'invalid-recipient-email':
-        return 'The recipient email address is invalid. Please provide a valid recipient email';
+        return 'The recipient email address is invalid. Please provide a valid recipient email.';
       case 'missing-iframe-start':
         return 'The email template is missing the iframe start tag.';
       case 'missing-iframe-end':
         return 'The email template is missing the iframe end tag.';
-      case 'missing-iframe-snd':
+      case 'missing-iframe-src':
         return 'The email template is missing the iframe src attribute.';
       case 'auth-domain-config-required':
         return 'The authDomain configuration is required for the action code verification link.';
@@ -99,10 +99,8 @@ class SHFFirebaseAuthException implements Exception {
         return 'An internal authentication error occurred. Please try again later.';
       case 'INVALID_LOGIN_CREDENTIALS':
         return 'Invalid login credentials.';
-
       default:
-        throw const FormatException(
-            'An unexpected Firebase error occurred. Please try again.');
+        return 'An unexpected authentication error occurred. Please try again.';
     }
   }
 }

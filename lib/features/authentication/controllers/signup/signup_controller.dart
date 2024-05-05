@@ -1,29 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:second_hand_fashion_app/common/widgets/loaders/loader.dart';
+import 'package:second_hand_fashion_app/utils/popups/loader.dart';
 import 'package:second_hand_fashion_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:second_hand_fashion_app/features/authentication/screens/signup/verify_email.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/models/user_model.dart';
 import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/helpers/network_manager.dart';
 import 'package:second_hand_fashion_app/utils/popups/full_screen_loader.dart';
-
-import '../../../../data/repositories/authentication/user/user_repository.dart';
+import '../../../pertonalization/controllers/user_controller.dart';
 
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();
 
-  ///Variable
-  final hidePassword = true.obs; //Observable for hiding/showing password
-  final privacyPolicy = true.obs; //Observable for privacy policy acceptance
-  final email = TextEditingController(); //Controller for ... input
-  final lastName = TextEditingController();
-  final userName = TextEditingController();
-  final password = TextEditingController();
-  final firstName = TextEditingController();
-  final phoneNumber = TextEditingController();
+  /// Variables
+  final hidePassword = true.obs; // Observable for hiding/showing password
+  final privacyPolicy = true.obs; // Observable for privacy policy acceptance
+  final email = TextEditingController(); // Controller for email input
+  final lastName = TextEditingController(); // Controller for last name input
+  final username = TextEditingController(); // Controller for username input
+  final password = TextEditingController(); // Controller for password input
+  final firstName = TextEditingController(); // Controller for first name input
+  final phoneNumber = TextEditingController(); // Controller for phone number input
 
-  GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> signupFormKey = GlobalKey<FormState>(); // Form key for form validation
+
 
   ///SIGNUP
   void signup() async {
@@ -55,20 +55,22 @@ class SignupController extends GetxController {
                 'Để tạo tài khoản, bạn phải đọc và chấp nhận Chính sách quyền riêng tư & Điều khoản sử dụng');
         return;
       }
+
       //Đăng ký người dùng trong Xác thực Firebase & Lưu dữ liệu người dùng trong Firebase
-      final userCredential = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());
+      await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());
+
       //Lưu dữ liệu người dùng Xác thực trong Firebase Firestore
       final newUser = UserModel(
-          id: userCredential.user!.uid,
-          lastName: lastName.text.trim(),
-          firstName: firstName.text.trim(),
-          userName: userName.text.trim(),
-          email: email.text.trim(),
-          phoneNumber: phoneNumber.text.trim(),
-          profilePicture: '');
+        id: AuthenticationRepository.instance.getUserID,
+        firstName: firstName.text.trim(),
+        lastName: lastName.text.trim(),
+        username: username.text.trim(),
+        email: email.text.trim(),
+        phoneNumber: phoneNumber.text.trim(),
+        profilePicture: '',
+      );
 
-      final userRepository = Get.put(UserRepository());
-      await userRepository.saveUserRecord(newUser);
+      await UserController.instance.saveUserRecord(user: newUser);
 
       //Remove Loader
       SHFFullScreenLoader.stopLoading();
@@ -76,13 +78,13 @@ class SignupController extends GetxController {
       //Hiển thị thông báo thành công
       SHFLoaders.successSnackBar(title: 'Chúc mừng', message: 'Tài khoản của bạn đã được tạo! Xác minh email để tiếp tục.');
       //Move to Verify Email Screen
-      Get.to(() => VerifyEmailScreen(email: email.text.trim(),));
+      Get.to(() => const VerifyEmailScreen());
     } catch (e) {
       //Remove Loader
       SHFFullScreenLoader.stopLoading();
 
       //Hiển thị lỗi cho người dùng
-      SHFLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      SHFLoaders.errorSnackBar(title: 'Có lỗi!', message: e.toString());
     }
   }
 }
