@@ -20,20 +20,20 @@ class UploadDataController extends GetxController {
 
   Future<void> uploadCategories() async {
     try {
-      // The following line will enable the Android and iOS wakelock.
+      // Dòng sau sẽ kích hoạt khóa đánh thức Android và iOS.
       WakelockPlus.enable();
 
-      SHFFullScreenLoader.openLoadingDialog('Sit Tight! Your CATEGORIES are uploading...', SHFImages.cloudUploadingAnimation);
+      SHFFullScreenLoader.openLoadingDialog('DANH MỤC của bạn đang tải lên...', SHFImages.cloudUploadingAnimation);
 
       final controller = Get.put(CategoryRepository());
 
-      // Upload All Categories and replace the Parent IDs in Firebase Console
+      // Tải lên tất cả danh mục và thay thế ID gốc trong Bảng điều khiển Firebase
       await controller.uploadDummyData(SHFDummyData.categories);
 
-      // Re-fetch latest Categories
+      //Tìm nạp lại Danh mục mới nhất
       await CategoryController.instance.fetchCategories();
 
-      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'All Categories Uploaded Successfully.');
+      SHFLoaders.successSnackBar(title: 'Chúc mừng', message: 'Tất cả danh mục đã được upload thành công.');
     } catch (e) {
       SHFLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     } finally {
@@ -49,16 +49,16 @@ class UploadDataController extends GetxController {
       WakelockPlus.enable();
 
       SHFFullScreenLoader.openLoadingDialog(
-        'Sit Tight! Your PRODUCT CATEGORIES relationship is uploading...',
+        'PRODUCT CATEGORIES của bạn đang tải lên...',
         SHFImages.cloudUploadingAnimation,
       );
 
       final controller = Get.put(CategoryRepository());
 
-      // Upload All Categories and replace the Parent IDs in Firebase Console
+      // Tải lên tất cả danh mục và thay thế ID gốc trong Bảng điều khiển Firebase
       await controller.uploadProductCategoryDummyData(SHFDummyData.productCategories);
 
-      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'All Categories Uploaded Successfully.');
+      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'Tất cả danh mục đã được tải lên');
     } catch (e) {
       SHFLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     } finally {
@@ -73,7 +73,7 @@ class UploadDataController extends GetxController {
       // The following line will enable the Android and iOS wakelock.
       WakelockPlus.enable();
 
-      SHFFullScreenLoader.openLoadingDialog('Sit Tight! Your BRANDS are uploading...', SHFImages.cloudUploadingAnimation);
+      SHFFullScreenLoader.openLoadingDialog('Đang tải lên', SHFImages.cloudUploadingAnimation);
 
       final controller = Get.put(BrandRepository());
 
@@ -84,7 +84,7 @@ class UploadDataController extends GetxController {
       final brandController = Get.put(BrandController());
       await brandController.getFeaturedBrands();
 
-      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'All Brands Uploaded Successfully.');
+      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'Tất cả brand đã được upload');
     } catch (e) {
       SHFLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     } finally {
@@ -100,7 +100,7 @@ class UploadDataController extends GetxController {
       WakelockPlus.enable();
 
       SHFFullScreenLoader.openLoadingDialog(
-        'Sit Tight! Your BRANDS & CATEGORIES relationship is uploading...',
+        'Đang tải lên',
         SHFImages.cloudUploadingAnimation,
       );
 
@@ -109,7 +109,7 @@ class UploadDataController extends GetxController {
       // Upload All Categories and replace the Parent IDs in Firebase Console
       await controller.uploadBrandCategoryDummyData(SHFDummyData.brandCategory);
 
-      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'All Brands Uploaded Successfully.');
+      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'Tất cả brand đã được upload');
     } catch (e) {
       SHFLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     } finally {
@@ -125,7 +125,7 @@ class UploadDataController extends GetxController {
       WakelockPlus.enable();
 
       SHFFullScreenLoader.openLoadingDialog(
-        'Sit Tight! Your Products are uploading. It may take a while...',
+        'Đang tải lên',
         SHFImages.cloudUploadingAnimation,
       );
 
@@ -137,7 +137,7 @@ class UploadDataController extends GetxController {
       // Re-fetch latest Featured Products
       ProductController.instance.fetchFeaturedProducts();
 
-      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'All Products Uploaded Successfully.');
+      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'Tất cả products đã được upload.');
     } catch (e) {
       SHFLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     } finally {
@@ -152,7 +152,7 @@ class UploadDataController extends GetxController {
       // The following line will enable the Android and iOS wakelock.
       WakelockPlus.enable();
 
-      SHFFullScreenLoader.openLoadingDialog('Sit Tight! Your Banners are uploading. It may take a while...', SHFImages.cloudUploadingAnimation);
+      SHFFullScreenLoader.openLoadingDialog('Đang tải lên', SHFImages.cloudUploadingAnimation);
 
       final controller = Get.put(BannerRepository());
 
@@ -163,7 +163,7 @@ class UploadDataController extends GetxController {
       final bannerController = Get.put(BannerController());
       await bannerController.fetchBanners();
 
-      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'All Products Uploaded Successfully.');
+      SHFLoaders.successSnackBar(title: 'Congratulations', message: 'Tất cả product đã được upload');
     } catch (e) {
       SHFLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
     } finally {

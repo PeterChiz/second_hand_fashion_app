@@ -1,10 +1,10 @@
 ///List of Enum
 //Enum về cơ bản không phải là một hàm, enum cũng là một phương thức, nên được sử dụng để so sánh
 //Enum thì không thể được tạo trong một lớp
-enum TexSHFSizes { small, medium, large }
+enum TextSizes { small, medium, large }
 
 enum ProductType { single, variable }
 
 enum OrderStatus { pending, processing, shipped, delivered, cancelled }
 
-enum PaymentMethods { paypal, googlePay, applePay, visa, masterCard, creditCard, paystack, razorPay, paytm }
+enum PaymentMethods { paypal, googlePay, applePay, visa, masterCard, creditCard, paystack, razorPay, paytm, momo, PoD }

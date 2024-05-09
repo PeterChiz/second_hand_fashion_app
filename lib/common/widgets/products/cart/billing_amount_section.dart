@@ -20,9 +20,10 @@ class SHFBillingAmountSection extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             )),
             Text(
-              '\$${subTotal.toStringAsFixed(2)}',
+              '${subTotal.toStringAsFixed(2)}\đ',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
+
           ],
         ),
         const SizedBox(height: SHFSizes.spaceBtwItems / 2),
@@ -36,7 +37,7 @@ class SHFBillingAmountSection extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             )),
             Text(
-              '\$${SHFPricingCalculator.calculateShippingCost(subTotal, '79')}',
+              '${SHFPricingCalculator.calculateShippingCost(subTotal, '79')}\đ',
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ],
@@ -52,7 +53,7 @@ class SHFBillingAmountSection extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             )),
             Text(
-              '\$${SHFPricingCalculator.calculateTax(subTotal, '79')}',
+              '${SHFPricingCalculator.calculateTax(subTotal, '79')}\đ',
               style: Theme.of(context).textTheme.labelLarge,
             ),
           ],
@@ -70,7 +71,7 @@ class SHFBillingAmountSection extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             )),
             Text(
-              '\$${SHFPricingCalculator.calculateTotalPrice(subTotal, '79').toStringAsFixed(2)}',
+              '${SHFPricingCalculator.calculateTotalPrice(subTotal, '79').toStringAsFixed(2)}\đ',
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],

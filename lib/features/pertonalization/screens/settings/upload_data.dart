@@ -25,7 +25,7 @@ class UploadDataScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SHFSectionHeading(title: 'Main Record', showActionButton: false),
+                  const SHFSectionHeading(title: '', showActionButton: false),
                   const SizedBox(height: SHFSizes.spaceBtwItems),
                   ListTile(
                     leading: const Icon(Iconsax.category, size: 28, color: SHFColors.primary),

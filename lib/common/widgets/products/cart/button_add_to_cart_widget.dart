@@ -10,7 +10,10 @@ import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 import 'add_remove_cart_button.dart';
 
 class SHFBottomAddToCart extends StatelessWidget {
-  const SHFBottomAddToCart({super.key, required this.product});
+  const SHFBottomAddToCart({
+    super.key,
+    required this.product,
+  });
 
   final ProductModel product;
 
@@ -19,18 +22,18 @@ class SHFBottomAddToCart extends StatelessWidget {
     final controller = CartController.instance;
     controller.updateAlreadyAddedProductCount(product);
     final dark = SHFHelperFunctions.isDarkMode(context);
+
     return Container(
-      padding: const EdgeInsets.symmetric(
-          horizontal: SHFSizes.defaultSpace,
-          vertical: SHFSizes.defaultSpace / 2),
+      padding: const EdgeInsets.symmetric(horizontal: SHFSizes.defaultSpace, vertical: SHFSizes.defaultSpace / 2),
       decoration: BoxDecoration(
-          color: dark ? SHFColors.darkerGrey : SHFColors.light,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(SHFSizes.cardRadiusLg),
-            topRight: Radius.circular(SHFSizes.cardRadiusLg),
-          )),
+        color: dark ? SHFColors.darkerGrey : SHFColors.light,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(SHFSizes.cardRadiusLg),
+          topRight: Radius.circular(SHFSizes.cardRadiusLg),
+        ),
+      ),
       child: Obx(
-        () => Row(
+            () => Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Add OR Remove Cart Product Icon Buttons
@@ -49,7 +52,7 @@ class SHFBottomAddToCart extends StatelessWidget {
                 side: const BorderSide(color: SHFColors.black),
               ),
               child: const Row(
-                children: [Icon(Iconsax.shopping_bag), SizedBox(width: SHFSizes.spaceBtwItems / 2), Text('Thêm vào giỏ hàng')],
+                children: [Icon(Iconsax.shopping_bag), SizedBox(width: SHFSizes.spaceBtwItems / 2), Text('Add to Bag')],
               ),
             ),
           ],

@@ -11,7 +11,7 @@ class SHFTextFormFieldTheme{
     suffixIconColor: SHFColors.darkGrey,
     // constraints: const BoxConstraints.expand(height: SHFSizes.inputFieldHeight),
     labelStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeMd, color: SHFColors.black, fontFamily: 'Poppins'),
-    hintStyle: const TextStyle().copyWith(fontSize: SHFSizes.fonSHFSizesm, color: SHFColors.black, fontFamily: 'Poppins'),
+    hintStyle: const TextStyle().copyWith(fontSize: SHFSizes.fonSHFSizeSm, color: SHFColors.black, fontFamily: 'Poppins'),
     errorStyle: const TextStyle().copyWith(fontStyle: FontStyle.normal, fontFamily: 'Poppins'),
     floatingLabelStyle: const TextStyle().copyWith(color: SHFColors.black.withOpacity(0.8), fontFamily: 'Poppins'),
     border: const OutlineInputBorder().copyWith(
@@ -42,7 +42,7 @@ class SHFTextFormFieldTheme{
     suffixIconColor: SHFColors.darkGrey,
     // constraints: const BoxConstraints.expand(height: SHFSizes.inputFieldHeight),
     labelStyle: const TextStyle().copyWith(fontSize: SHFSizes.fontSizeMd, color: SHFColors.white, fontFamily: 'Poppins'),
-    hintStyle: const TextStyle().copyWith(fontSize: SHFSizes.fonSHFSizesm, color: SHFColors.white, fontFamily: 'Poppins'),
+    hintStyle: const TextStyle().copyWith(fontSize: SHFSizes.fonSHFSizeSm, color: SHFColors.white, fontFamily: 'Poppins'),
     floatingLabelStyle: const TextStyle().copyWith(color: SHFColors.white.withOpacity(0.8), fontFamily: 'Poppins'),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(SHFSizes.inputFieldRadius),

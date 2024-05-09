@@ -9,7 +9,6 @@ import 'package:second_hand_fashion_app/utils/local_storage/storage_utility.dart
 class CartController extends GetxController {
   static CartController get instance => Get.find();
 
-  ///Variable
   RxInt noOfCartItems = 0.obs;
   RxDouble totalCartPrice = 0.0.obs;
   RxInt productQuantityInCart = 0.obs;
@@ -27,14 +26,15 @@ class CartController extends GetxController {
       variationController.resetSelectedAttributes();
     }
     final variation = variationController.selectedVariation.value;
-    final isVariation = variationController.selectedVariation.value.id.isNotEmpty;
+    final isVariation =
+        variationController.selectedVariation.value.id.isNotEmpty;
     final price = isVariation
         ? variation.salePrice > 0.0
-        ? variation.salePrice
-        : variation.price
+            ? variation.salePrice
+            : variation.price
         : product.salePrice > 0.0
-        ? product.salePrice
-        : product.price;
+            ? product.salePrice
+            : product.price;
     return CartItemModel(
       productId: product.id,
       title: product.title,
@@ -47,42 +47,43 @@ class CartController extends GetxController {
     );
   }
 
-  //Them item vao gio hang
   void addToCart(ProductModel product) {
-    //Quantity check
+    // Quantity Check
     if (productQuantityInCart.value < 1) {
-      SHFLoaders.customToast(message: 'Số lượng đã chọn');
+      SHFLoaders.customToast(message: 'Chọn số lượng');
       return;
     }
 
-    //Variation selected?
+    // Variation Selected?
     if (product.productType == ProductType.variable.toString() &&
         variationController.selectedVariation.value.id.isEmpty) {
-      SHFLoaders.customToast(message: 'Mặt hàng đã chọn');
+      SHFLoaders.customToast(message: 'Chọn mặt hàng');
       return;
     }
 
-    //Out of stock status
+    // Out of Stock
     if (product.productType == ProductType.variable.toString()) {
       if (variationController.selectedVariation.value.stock < 1) {
         SHFLoaders.warningSnackBar(
-            title: 'Rất tiếc', message: 'Mặt hàng đã chọn đã hết hàng');
+            message: 'Mặt hàng được chọn đã hết hàng.', title: 'Oh Snap!');
         return;
       }
     } else {
       if (product.stock < 1) {
         SHFLoaders.warningSnackBar(
-            title: 'Rất tiếc', message: 'Sản phẩm đã chọn đã hết hàng');
+            message: 'Sản phẩm được chọn đã hết hàng.', title: 'Oh Snap!');
         return;
       }
     }
-    //Convert the productModel to a CartItemModel with the given quantity
+
+    // Convert the ProductModel to a CartItemModel with the given quantity
     final selectedCartItem =
         convertToCartItem(product, productQuantityInCart.value);
 
-    //Check if already added in cart
-    int index = cartItems.indexWhere((cartItem) => cartItem.productId == selectedCartItem.productId && cartItem.variationId == selectedCartItem.variationId);
-
+    // Check if already added in the Cart
+    int index = cartItems.indexWhere((cartItem) =>
+        cartItem.productId == selectedCartItem.productId &&
+        cartItem.variationId == selectedCartItem.variationId);
 
     if (index >= 0) {
       // This quantity is already added or Updated/Removed from the design (Cart)(-)
@@ -92,13 +93,14 @@ class CartController extends GetxController {
     }
 
     updateCart();
-
     SHFLoaders.customToast(
-        message: 'Sản phẩm của bạn đã được thêm vào giỏ hàng');
+        message: 'Sản phẩm của bạn đã được thêm vào Giỏ hàng.');
   }
 
   void addOneToCart(CartItemModel item) {
-    int index = cartItems.indexWhere((cartItem) => cartItem.productId == item.productId && cartItem.variationId == item.variationId);
+    int index = cartItems.indexWhere((cartItem) =>
+        cartItem.productId == item.productId &&
+        cartItem.variationId == item.variationId);
 
     if (index >= 0) {
       cartItems[index].quantity += 1;
@@ -110,14 +112,18 @@ class CartController extends GetxController {
   }
 
   void removeOneFromCart(CartItemModel item) {
-    int index = cartItems.indexWhere((cartItem) => cartItem.productId == item.productId && cartItem.variationId == item.variationId);
+    int index = cartItems.indexWhere((cartItem) =>
+        cartItem.productId == item.productId &&
+        cartItem.variationId == item.variationId);
 
     if (index >= 0) {
       if (cartItems[index].quantity > 1) {
         cartItems[index].quantity -= 1;
       } else {
         // Show dialog before completely removing
-        cartItems[index].quantity == 1 ? removeFromCartDialog(index) : cartItems.removeAt(index);
+        cartItems[index].quantity == 1
+            ? removeFromCartDialog(index)
+            : cartItems.removeAt(index);
       }
       updateCart();
     }
@@ -126,15 +132,15 @@ class CartController extends GetxController {
   void removeFromCartDialog(int index) {
     Get.defaultDialog(
       title: 'Xóa sản phẩm',
-      middleText: 'Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng không ?',
+      middleText: 'Bạn có chắc chắn muốn loại bỏ sản phẩm này?',
       onConfirm: () {
-        //Xoa san pham khoi gio hang
+        // Remove the item from the cart
         cartItems.removeAt(index);
         updateCart();
-        SHFLoaders.customToast(message: 'Đã xóa sản phẩm khỏi giỏ hàng');
+        SHFLoaders.customToast(message: 'Sản phẩm đã được xóa khỏi giỏ hàng.');
         Get.back();
       },
-      onCancel: () => Get.back(),
+      onCancel: () => () => Get.back(),
     );
   }
 
@@ -145,9 +151,11 @@ class CartController extends GetxController {
   }
 
   void loadCartItems() async {
-    final cartItemStrings = SHFLocalStorage.instance().readData<List<dynamic>>('cartItems');
+    final cartItemStrings =
+        SHFLocalStorage.instance().readData<List<dynamic>>('cartItems');
     if (cartItemStrings != null) {
-      cartItems.assignAll(cartItemStrings.map((item) => CartItemModel.fromJson(item as Map<String, dynamic>)));
+      cartItems.assignAll(cartItemStrings
+          .map((item) => CartItemModel.fromJson(item as Map<String, dynamic>)));
       updateCartTotals();
     }
   }
@@ -180,7 +188,8 @@ class CartController extends GetxController {
       // Get selected Variation if any...
       final variationId = variationController.selectedVariation.value.id;
       if (variationId.isNotEmpty) {
-        productQuantityInCart.value = getVariationQuantityInCart(product.id, variationId);
+        productQuantityInCart.value =
+            getVariationQuantityInCart(product.id, variationId);
       } else {
         productQuantityInCart.value = 0;
       }
@@ -188,14 +197,15 @@ class CartController extends GetxController {
   }
 
   int getProductQuantityInCart(String productId) {
-    final foundItem =
-    cartItems.where((item) => item.productId == productId).fold(0, (previousValue, element) => previousValue + element.quantity);
+    final foundItem = cartItems
+        .where((item) => item.productId == productId)
+        .fold(0, (previousValue, element) => previousValue + element.quantity);
     return foundItem;
   }
 
   int getVariationQuantityInCart(String productId, String variationId) {
     final foundItem = cartItems.firstWhere(
-          (item) => item.productId == productId && item.variationId == variationId,
+      (item) => item.productId == productId && item.variationId == variationId,
       orElse: () => CartItemModel.empty(),
     );
 
@@ -207,6 +217,4 @@ class CartController extends GetxController {
     cartItems.clear();
     updateCart();
   }
-
-
 }

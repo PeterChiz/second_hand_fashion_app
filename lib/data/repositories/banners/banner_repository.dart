@@ -17,7 +17,7 @@ class BannerRepository extends GetxController {
   ///Đặt tất cả những thứ khác liên quan đến User hiện tại
   Future<List<BannerModel>> fetchBanners() async {
     try {
-      final result = await _db.collection('Banners').where('active', isEqualTo: true).limit(3).get();
+      final result = await _db.collection('Banners').where('Active', isEqualTo: true).limit(3).get();
       return result.docs
           .map((documentSnapshot) => BannerModel.fromSnapshot(documentSnapshot))
           .toList();

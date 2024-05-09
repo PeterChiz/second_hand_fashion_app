@@ -1,8 +1,7 @@
 import '../../features/shop/models/cart_model.dart';
 
-class SHFPricingCalculator{
-
-  /// -- Calculate Price based on tax and shipping
+class SHFPricingCalculator {
+  /// -- Tính toán giá dựa trên thuế và phí vận chuyển
   static double calculateTotalPrice(double productPrice, String location) {
     double taxRate = getTaxRateForLocation(location);
     double taxAmount = productPrice * taxRate;
@@ -10,15 +9,16 @@ class SHFPricingCalculator{
     double shippingCost = getShippingCost(location);
 
     double totalPrice = productPrice + taxAmount + shippingCost;
-    return double.tryParse(totalPrice.toStringAsFixed(2)) ?? 0.0;
+    return double.tryParse(totalPrice.toStringAsFixed(2)) ?? 0;
   }
 
-  /// -- Calculate shipping cost
+  /// -- Tính toán phí vận chuyển
   static String calculateShippingCost(double productPrice, String location) {
     double shippingCost = getShippingCost(location);
     return shippingCost.toStringAsFixed(2);
   }
-  /// -- Calculate tax
+
+  /// -- Tính toán thuế
   static String calculateTax(double productPrice, String location) {
     double taxRate = getTaxRateForLocation(location);
     double taxAmount = productPrice * taxRate;
@@ -26,19 +26,18 @@ class SHFPricingCalculator{
   }
 
   static double getTaxRateForLocation(String location) {
-    // Lookup the tax rate for the given location from a tax rate database or API.
-    // Return the appropriate tax rate.
-    return 0.10; // Example tax rate of 10%
+    return 0.10; //thuế VAT 10%
   }
 
   static double getShippingCost(String location) {
-    // Lookup the shipping cost for the given location using a shipping rate API.
-    // Calculate the shipping cost based on various factors like distance, weight, etc.
-    return 5.00; // Example shipping cost of $5
+    // Tra cứu phí vận chuyển cho vị trí cụ thể bằng cách sử dụng API phí vận chuyển.
+    // Tính toán phí vận chuyển dựa trên các yếu tố khác nhau như khoảng cách, trọng lượng, vv.
+    return 5.00; // Ví dụ phí vận chuyển là $5
   }
 
-  /// -- Sum all cart values and return total amount
+  /// -- Tính tổng giá trị tất cả các mặt hàng trong giỏ hàng và trả về tổng số tiền
   static double calculateCartTotal(CartModel cart) {
-    return cart.items.map((e) => e.price).fold(0, (previousPrice, currentPrice) => previousPrice + (currentPrice));
+    return cart.items.map((e) => e.price).fold(
+        0, (previousPrice, currentPrice) => previousPrice + (currentPrice));
   }
 }

@@ -158,7 +158,7 @@ class SHFImages {
   static const String promoBanner1 = "assets/images/products/promo-banner-1.png";
   static const String promoBanner2 = "assets/images/products/promo-banner-2.png";
   static const String promoBanner3 = "assets/images/products/promo-banner-3.png";
-  static const String banner1 = "assets/images/banners/banner_1.jpg";
+  static const String banner1 = "assets/images/banners/banner_1.png";
   static const String banner2 = "assets/images/banners/banner_2.jpg";
   static const String banner3 = "assets/images/banners/banner_3.jpg";
   static const String banner4 = "assets/images/banners/banner_4.jpg";
@@ -182,5 +182,11 @@ class SHFImages {
   static const String paytm = "assets/icons/payment_methods/paytm.png";
   static const String successfulPaymentIcon = "assets/icons/payment_methods/successful_payment_icon.png";
   static const String momo = "assets/icons/payment_methods/momo.png";
+
+
+
+  static const String successful = "assets/images/user/tick.png";
+
+
 }
 

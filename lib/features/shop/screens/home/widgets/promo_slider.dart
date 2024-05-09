@@ -26,7 +26,7 @@ class SHFPromoSlider extends StatelessWidget {
 
         // No data found
         if (controller.banners.isEmpty) {
-          return const Center(child: Text('No Data Found!'));
+          return const Center(child: Text('Không tìm thấy dữ liệu'));
         } else {
           /// Record Found!
           // Display CarouselSlider with banners and page indicator

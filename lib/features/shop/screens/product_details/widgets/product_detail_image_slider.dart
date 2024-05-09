@@ -24,7 +24,7 @@ class SHFProducSHFImageslider extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = SHFHelperFunctions.isDarkMode(context);
     final controller = Get.put(ImagesController());
-    final images = controller.getAllProducSHFImages(product);
+    final images = controller.getAllProductSHFImages(product);
     return SHFCurvedEdgeWidget(
       child: Container(
         color: dark ? SHFColors.darkerGrey : SHFColors.light,

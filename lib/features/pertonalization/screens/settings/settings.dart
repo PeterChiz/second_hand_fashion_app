@@ -123,26 +123,7 @@ class SettingsScreen extends StatelessWidget {
                       subTitle: 'Tải dữ liệu lên Cloud Firebase của bạn',
                       onTap: () => Get.to(() => const UploadDataScreen()),
                     ),
-                    const SizedBox(height: SHFSizes.spaceBtwItems),
-                    SHFSettingMenuTile(
-                      icon: Iconsax.document_upload,
-                      title: 'Định vị',
-                      subTitle: 'Định vị vị trí của bạn',
-                      trailing: Switch(value: true, onChanged: (value) {}),
-                    ),
-                    SHFSettingMenuTile(
-                      icon: Iconsax.location,
-                      title: 'Chế độ an toàn',
-                      subTitle: 'Kết quả tìm kiếm an toàn cho mọi lứa tuổi',
-                      trailing: Switch(value: false, onChanged: (value) {}),
-                    ),
 
-                    SHFSettingMenuTile(
-                      icon: Iconsax.image,
-                      title: 'Chất lượng hình ảnh HD',
-                      subTitle: 'Đặt chất lượng hình ảnh để xem',
-                      trailing: Switch(value: false, onChanged: (value) {}),
-                    ),
 
                     ///Logout Button
                     const SizedBox(

@@ -225,14 +225,14 @@ class SearchScreen extends StatelessWidget {
                   Expanded(
                     child: TextFormField(
                       onChanged: (value) => searchController.minPrice.value = double.parse(value),
-                      decoration: const InputDecoration(hintText: '\$ Thấp nhất'),
+                      decoration: const InputDecoration(hintText: '\đ Thấp nhất'),
                     ),
                   ),
                   const SizedBox(width: SHFSizes.spaceBtwItems),
                   Expanded(
                     child: TextFormField(
                       onChanged: (value) => searchController.maxPrice.value = double.parse(value),
-                      decoration: const InputDecoration(hintText: '\$ Cao nhất'),
+                      decoration: const InputDecoration(hintText: '\đ Cao nhất'),
                     ),
                   ),
                 ],

@@ -91,7 +91,7 @@ class SHFProductCardVertical extends StatelessWidget {
                 children: [
                   SHFProductTitleText(title: product.title, smallSize: true),
                   const SizedBox(height: SHFSizes.spaceBtwItems / 2),
-                  SHFBrandTitleWithVerifiedIcon(title: product.brand!.name, brandTextSize: TexSHFSizes.small),
+                  SHFBrandTitleWithVerifiedIcon(title: product.brand!.name, brandTextSize: TextSizes.small),
                 ],
               ),
             ),

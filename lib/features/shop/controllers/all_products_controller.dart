@@ -4,8 +4,8 @@ import 'package:second_hand_fashion_app/utils/popups/loader.dart';
 import 'package:second_hand_fashion_app/data/repositories/product/product_repository.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 
-class AllProductController extends GetxController {
-  static AllProductController get instance => Get.find();
+class AllProductsController extends GetxController {
+  static AllProductsController get instance => Get.find();
 
   final repository = ProductRepository.instance;
   final RxString selectedSortOption = 'Tên'.obs;
@@ -59,5 +59,4 @@ class AllProductController extends GetxController {
         products.sort((a, b) => a.title.compareTo(b.title));
     }
   }
-
 }

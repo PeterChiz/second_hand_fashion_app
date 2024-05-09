@@ -14,14 +14,14 @@ class SHFBrandTitleWithVerifiedIcon extends StatelessWidget {
     this.textColor,
     this.iconColor = SHFColors.primary,
     this.textAlign = TextAlign.center,
-    this.brandTextSize = TexSHFSizes.small,
+    this.brandTextSize = TextSizes.small,
   });
 
   final String title;
   final int maxLines;
   final Color? textColor, iconColor;
   final TextAlign? textAlign;
-  final TexSHFSizes brandTextSize;
+  final TextSizes brandTextSize;
 
   @override
   Widget build(BuildContext context) {

@@ -29,8 +29,8 @@ class SHFLocalStorage {
   }
 
   /// Generic method to read data
-  T? readData<T>(String key) {
-    return _storage.read<T>(key);
+  SHF? readData<SHF>(String key) {
+    return _storage.read<SHF>(key);
   }
 
   /// Generic method to remove data

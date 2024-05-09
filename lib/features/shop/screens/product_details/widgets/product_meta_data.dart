@@ -66,7 +66,7 @@ class SHFProductMetaData extends StatelessWidget {
         const SizedBox(height: SHFSizes.spaceBtwItems / 1.5),
         Row(
           children: [
-            const SHFProductTitleText(title: 'Stock : ', smallSize: true),
+            const SHFProductTitleText(title: 'Tình trạng: ', smallSize: true),
             Text(controller.getProductStockStatus(product), style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
@@ -82,7 +82,7 @@ class SHFProductMetaData extends StatelessWidget {
               image: product.brand!.image,
               overlayColor: darkMode ? SHFColors.white : SHFColors.black,
             ),
-            SHFBrandTitleWithVerifiedIcon(title: product.brand!.name, brandTextSize: TexSHFSizes.medium),
+            SHFBrandTitleWithVerifiedIcon(title: product.brand!.name, brandTextSize: TextSizes.medium),
           ],
         ),
       ],

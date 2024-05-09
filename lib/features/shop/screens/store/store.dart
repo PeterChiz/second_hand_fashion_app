@@ -34,13 +34,13 @@ class StoreScreen extends StatelessWidget {
       child: DefaultTabController(
         length: categories.length,
         child: Scaffold(
-          /// -- Appbar -- Tutorial [Section # 3, Video # 7]
+          /// -- Appbar
           appBar: SHFAppBar(
-            title: Text('Store', style: Theme.of(context).textTheme.headlineMedium),
+            title: Text('Cửa hàng', style: Theme.of(context).textTheme.headlineMedium),
             actions: const [SHFCartCounterIcon()],
           ),
           body: NestedScrollView(
-            /// -- Header -- Tutorial [Section # 3, Video # 7]
+            /// -- Header
             headerSliverBuilder: (_, innerBoxIsScrolled) {
               return [
                 SliverAppBar(
@@ -60,11 +60,11 @@ class StoreScreen extends StatelessWidget {
                       children: [
                         /// -- Search bar
                         const SizedBox(height: SHFSizes.spaceBtwItems),
-                        const SHFSearchContainer(text: 'Search in Store', showBorder: true, showBackground: false, padding: EdgeInsets.zero),
+                        const SHFSearchContainer(text: 'TÌm kiếm trong của hàng', showBorder: true, showBackground: false, padding: EdgeInsets.zero),
                         const SizedBox(height: SHFSizes.spaceBtwSections),
 
                         /// -- Featured Brands
-                        SHFSectionHeading(title: 'Featured Brands', onPressed: () => Get.to(() => const AllBrandsScreen())),
+                        SHFSectionHeading(title: 'Thương hiệu phổ biến', onPressed: () => Get.to(() => const AllBrandsScreen())),
                         const SizedBox(height: SHFSizes.spaceBtwItems / 1.5),
 
                         /// -- Brands
@@ -76,7 +76,7 @@ class StoreScreen extends StatelessWidget {
                             // Check if there are no featured categories found
                             if (brandController.featuredBrands.isEmpty) {
                               return Center(
-                                  child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white)));
+                                  child: Text('Không tìm thấy dữ liệu', style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white)));
                             } else {
                               /// Data Found
                               return SHFGridLayout(

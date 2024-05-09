@@ -11,7 +11,7 @@ class ImagesController extends GetxController{
   Rx<String> selectedProductImage = ''.obs;
 
   /// -- Get All Images from product and Variations
-  List<String> getAllProducSHFImages(ProductModel product) {
+  List<String> getAllProductSHFImages(ProductModel product) {
     // Use Set to add unique images only
     Set<String> images = {};
 

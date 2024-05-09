@@ -5,14 +5,15 @@ import 'package:second_hand_fashion_app/common/widgets/success_screen/success_sc
 import 'package:second_hand_fashion_app/data/repositories/authentication/authentication_repository.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/controllers/address_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/controllers/product/cart_controller.dart';
-import 'package:second_hand_fashion_app/features/shop/controllers/product/checkout_controller.dart';
 import 'package:second_hand_fashion_app/navigation_menu.dart';
 import 'package:second_hand_fashion_app/utils/constants/enums.dart';
 import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/popups/full_screen_loader.dart';
 
 import '../../../../data/repositories/order/order_repository.dart';
+import '../../../../data/services/paypal/paypal.dart';
 import '../../models/order_model.dart';
+import '../checkout_controller.dart';
 
 class OrderController extends GetxController {
   static OrderController get instance => Get.find();
@@ -34,20 +35,19 @@ class OrderController extends GetxController {
     }
   }
 
-  ///Add method for order processing
+  /// Thêm phương thức xử lý đơn hàng
   void processOrder(double totalAmount) async {
     try {
-      //Start loader
-      SHFFullScreenLoader.openLoadingDialog(
-          'Đang tải đơn hàng của bạn', SHFImages.pencilAnimation);
+      // Start Loader
+      SHFFullScreenLoader.openLoadingDialog('Đang xử lý đơn đặt hàng của bạn', SHFImages.pencilAnimation);
 
-      // Get user authentication Id
+      // Nhận Id xác thực người dùng
       final userId = AuthenticationRepository.instance.getUserID;
       if (userId.isEmpty) return;
 
-      // Add Details
+      // Thêm Details
       final order = OrderModel(
-        // Generate a unique ID for the order
+        // Tạo ID duy nhất cho đơn hàng
         id: UniqueKey().toString(),
         userId: userId,
         status: OrderStatus.pending,
@@ -55,31 +55,32 @@ class OrderController extends GetxController {
         orderDate: DateTime.now(),
         paymentMethod: checkoutController.selectedPaymentMethod.value.name,
         address: addressController.selectedAddress.value,
-        // Set Date as needed
+        // Đặt ngày nếu cần
         deliveryDate: DateTime.now(),
         items: cartController.cartItems.toList(),
       );
 
-      // // Trigger payment gateway
-      // if(checkoutController.selectedPaymentMethod.value.name == PaymentMethods.paypal.name) {
-      //   await SHFPaypalService.getPayment();
-      // }
 
-      // Save the order to Firestore
+      // Cổng thanh toán kích hoạt
+      if(checkoutController.selectedPaymentMethod.value.name == PaymentMethods.paypal.name) {
+        await SHFPaypalService.getPayment();
+      }
+
+      // Lưu đơn hàng vào Firestore
       await orderRepository.saveOrder(order, userId);
 
-      //Update the cart status
+      // Cập nhật trạng thái giỏ hàng
       cartController.clearCart();
 
-      //Show Success Screen
+      // Hiển thị màn hình Thành công
       Get.off(() => SuccessScreen(
-            image: SHFImages.orderCompletedAnimation,
-            title: 'Đã thanh toán thành công!',
-            subTitle: 'Đơn hàng của bạn đã được vận chuyển',
-            onPressed: () => Get.offAll(() => const NavigationMenu()),
-          ));
+        image: SHFImages.successful,
+        title: 'Thanh toán thành công!',
+        subTitle: 'Mặt hàng của bạn sẽ được vận chuyển sớm!',
+        onPressed: () => Get.offAll(() => const NavigationMenu()),
+      ));
     } catch (e) {
-      SHFLoaders.errorSnackBar(title: 'Có lỗi!', message: e.toString());
+      SHFLoaders.errorSnackBar(title: 'Có lỗi', message: e.toString());
     }
   }
 }

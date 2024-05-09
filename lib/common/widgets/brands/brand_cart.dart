@@ -66,7 +66,7 @@ class SHFBrandCard extends StatelessWidget {
                 children: [
                   SHFBrandTitleWithVerifiedIcon(
                     title: brand.name,
-                    brandTextSize: TexSHFSizes.large,
+                    brandTextSize: TextSizes.large,
                   ),
                   Text(
                     '${brand.productsCount ?? 0} sản phẩm',

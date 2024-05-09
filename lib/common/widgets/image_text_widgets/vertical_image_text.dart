@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:second_hand_fashion_app/common/widgets/images/shf_circular_image.dart';
 
 import '../../../utils/constants/colors.dart';
@@ -9,7 +10,7 @@ import '../texts/shf_brand_title_text.dart';
 
 /// A widget that displays an image with text below it in a vertical arrangement.
 class SHFVerticalImageAndText extends StatelessWidget {
-  /// Constructor for [TVerticalImageAndText].
+  /// Constructor for [SHFVerticalImageAndText].
   const SHFVerticalImageAndText({
     super.key,
     this.onTap,
@@ -47,15 +48,17 @@ class SHFVerticalImageAndText extends StatelessWidget {
         child: Column(
           children: [
             ///Circular Icon
-            SHFCircularImage(
-              image: image,
-              fit: BoxFit.fitWidth,
-              padding: SHFSizes.sm * 1.4,
-              isNetworkImage: isNetworkImage,
-              backgroundColor: backgroundColor,
-              overlayColor: SHFHelperFunctions.isDarkMode(context)
-                  ? SHFColors.light
-                  : SHFColors.dark,
+            Flexible(
+              child: SHFCircularImage(
+                image: image,
+                fit: BoxFit.fitWidth,
+                padding: SHFSizes.sm * 1.4,
+                isNetworkImage: isNetworkImage,
+                backgroundColor: backgroundColor,
+                overlayColor: SHFHelperFunctions.isDarkMode(context)
+                    ? SHFColors.light
+                    : SHFColors.dark,
+              ),
             ),
 
             ///Text

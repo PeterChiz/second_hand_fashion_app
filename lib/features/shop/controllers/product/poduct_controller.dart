@@ -5,14 +5,14 @@ import 'package:second_hand_fashion_app/utils/constants/enums.dart';
 
 import '../../../../data/repositories/product/product_repository.dart';
 
-class ProductController extends GetxController{
+class ProductController extends GetxController {
   static ProductController get instance => Get.find();
 
-  ///Variable
   final isLoading = false.obs;
   final productRepository = Get.put(ProductRepository());
   RxList<ProductModel> featuredProducts = <ProductModel>[].obs;
 
+  /// -- Initialize Products from your backend
   @override
   void onInit() {
     fetchFeaturedProducts();
@@ -37,52 +37,41 @@ class ProductController extends GetxController{
     }
   }
 
-  Future<List<ProductModel>> fetchAllFeaturedProducts() async{
-    try{
-      //Fetch Products
-      final products = await productRepository.getFeaturedProducts();
-      return products;
-    }catch(e){
-      SHFLoaders.errorSnackBar(title: 'Có lỗi!', message: e.toString());
-      return [];
-    }
-  }
-
-  ///Nhận giá sản phẩm hoặc khoảng giá cho các biến thể
-  String getProductPrice(ProductModel product){
+  /// Get the product price or price range for variations.
+  String getProductPrice(ProductModel product) {
     double smallestPrice = double.infinity;
     double largestPrice = 0.0;
 
-    //neu khong co variation, return simple price hoac sale price
+    // If no variations exist, return the simple price or sale price
     if (product.productType == ProductType.single.toString() || product.productVariations!.isEmpty) {
       return (product.salePrice > 0.0 ? product.salePrice : product.price).toString();
     } else {
-      //tinh gia tri nho nhat va gia tri lon nhat trong so cac variations
+      // Calculate the smallest and largest prices among variations
       for (var variation in product.productVariations!) {
-        //xac dinh muc gia dung (gia sale neu co, khong thi lay gia binh thuong)
+        // Determine the price to consider (sale price if available, otherwise regular price)
         double priceToConsider = variation.salePrice > 0.0 ? variation.salePrice : variation.price;
 
-        //cap nhat gia nho nhat va lon nhat
-        if(priceToConsider < smallestPrice){
+        // Update smallest and largest prices
+        if (priceToConsider < smallestPrice) {
           smallestPrice = priceToConsider;
         }
 
-        if(priceToConsider > largestPrice){
+        if (priceToConsider > largestPrice) {
           largestPrice = priceToConsider;
         }
       }
 
-      //neu gia nha nhat va lon nhat bang nhau, tra ve gia duy nhat
-      if(smallestPrice.isEqual(largestPrice)){
+      // If smallest and largest prices are the same, return a single price
+      if (smallestPrice.isEqual(largestPrice)) {
         return largestPrice.toString();
-      }else{
-        //Nếu không,trả về một phạm vi giá
-        return '$smallestPrice - \$$largestPrice';
+      } else {
+        // Otherwise, return a price range
+        return '$smallestPrice - $largestPrice\đ';
       }
     }
   }
 
-  ///Tính phần trăm chiết khấu
+  /// -- Calculate Discount Percentage
   String? calculateSalePercentage(double originalPrice, double? salePrice) {
     if (salePrice == null || salePrice <= 0.0) return null;
     if (originalPrice <= 0) return null;
@@ -91,7 +80,7 @@ class ProductController extends GetxController{
     return percentage.toStringAsFixed(0);
   }
 
-  ///Kiểm tra tình trạng tồn kho sản phẩm
+  /// -- Check Product Stock Status
   String getProductStockStatus(ProductModel product) {
     if (product.productType == ProductType.single.toString()) {
       return product.stock > 0 ? 'Còn hàng' : 'Hết hàng';

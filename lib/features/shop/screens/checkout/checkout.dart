@@ -28,66 +28,62 @@ class CheckoutScreen extends StatelessWidget {
     final dark = SHFHelperFunctions.isDarkMode(context);
 
     return Scaffold(
-      appBar: SHFAppBar(
-        showBackArrow: true,
-        title: Text('Đánh giá đơn hàng',
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
-      ),
+      appBar: const SHFAppBar(title: Text('Đánh giá đơn hàng'), showBackArrow: true),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ///Item in Cart
+              /// -- Items in Cart
               const SHFCartItems(showAddRemoveButtons: false),
               const SizedBox(height: SHFSizes.spaceBtwSections),
 
-              ///Coupon TextField
+              /// -- Coupon TextField
               const SHFCouponCode(),
               const SizedBox(height: SHFSizes.spaceBtwSections),
 
-              ///Billing Section
+              /// -- Billing Section
               SHFRoundedContainer(
                 showBorder: true,
                 padding: const EdgeInsets.all(SHFSizes.md),
                 backgroundColor: dark ? SHFColors.black : SHFColors.white,
-                child:  Column(
-                  children: <Widget>[
-                    ///Pricing
+                child: Column(
+                  children: [
+                    /// Pricing
                     SHFBillingAmountSection(subTotal: subTotal),
                     const SizedBox(height: SHFSizes.spaceBtwItems),
 
-                    ///Driver
+                    /// Divider
                     const Divider(),
                     const SizedBox(height: SHFSizes.spaceBtwItems),
 
-                    ///Payment Method
+                    /// Payment Methods
                     const SHFBillingPaymentSection(),
-                    const SizedBox(height: SHFSizes.spaceBtwItems),
+                    const SizedBox(height: SHFSizes.spaceBtwSections),
 
-                    ///Address
+                    /// Address
                     const SHFBillingAddressSection(),
                   ],
                 ),
-              )
+              ),
+              const SizedBox(height: SHFSizes.spaceBtwSections),
             ],
           ),
         ),
       ),
 
-      ///Checkout Button
+      /// -- Checkout Button
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(SHFSizes.defaultSpace),
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-              onPressed: subTotal > 0
-                  ? () => orderController.processOrder(totalAmount)
-                  : () =>  SHFLoaders.warningSnackBar(title: 'Giỏ hàng trống', message: 'Thêm mặt hàng vào giỏ hàng để tiếp tục.'),
-              child: Text(
-                  'Thanh toán \$${totalAmount.toStringAsFixed(2)}')),
+            onPressed: subTotal > 0
+                ? () => orderController.processOrder(totalAmount)
+                : () => SHFLoaders.warningSnackBar(title: 'Giỏ hàng trống', message: 'Tiếp tục mua sắm nào!'),
+            child: Text('Thanh toán ${totalAmount.toStringAsFixed(2)}\đ'),
+          ),
         ),
       ),
     );

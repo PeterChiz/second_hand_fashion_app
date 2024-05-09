@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 
-class TCircularSvg extends StatelessWidget {
-  const TCircularSvg({
+class SHFCircularSvg extends StatelessWidget {
+  const SHFCircularSvg({
     super.key,
     this.width = 56,
     this.height = 56,

@@ -19,39 +19,24 @@ class SHFSortableProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Initialize controller for managing product sorting
-    final controller = Get.put(AllProductController());
+    final controller = Get.put(AllProductsController());
     controller.assignProducts(products);
     return Column(
       children: [
-        ///Dropdown
+        /// Dropdown
         DropdownButtonFormField(
           decoration: const InputDecoration(prefixIcon: Icon(Iconsax.sort)),
-          onChanged: (value) {
-            //Sort products based on the selected option
-            controller.sortProducts(value!);
-          },
+          onChanged: (value) => controller.sortProducts(value!),
           value: controller.selectedSortOption.value,
-          items: [
-            'Tên',
-            'Giá cao đến thấp',
-            'Giá thấp đến cao',
-            'Giảm giá',
-            'Mới nhất',
-            'Phổ biến'
-          ]
-              .map((option) =>
-                  DropdownMenuItem(value: option, child: Text(option)))
+          items: ['Tên', 'Giá cao đến thấp', 'Giá thấp đến cao', 'Giảm giá', 'Mới nhất', 'Phổ biến']
+              .map((option) => DropdownMenuItem(value: option, child: Text(option)))
               .toList(),
         ),
         const SizedBox(height: SHFSizes.spaceBtwSections),
-
-        ///Products
         Obx(
-          () => SHFGridLayout(
+              () => SHFGridLayout(
             itemCount: controller.products.length,
-            itemBuilder: (_, index) =>
-                SHFProductCardVertical(product: controller.products[index], isNetworkImage: true),
+            itemBuilder: (_, index) => SHFProductCardVertical(product: controller.products[index], isNetworkImage: true),
           ),
         ),
         SizedBox(height: SHFDeviceUtils.getBottomNavigationBarHeight() + SHFSizes.defaultSpace),

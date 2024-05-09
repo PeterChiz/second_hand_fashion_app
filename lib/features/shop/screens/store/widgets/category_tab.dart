@@ -47,7 +47,7 @@ class SHFCategoryTab extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SHFSectionHeading(
-                        title: 'You might like',
+                        title: 'Bạn có thể thích',
                         showActionButton: true,
                         onPressed: () => Get.to(AllProducts(
                           title: category.name,

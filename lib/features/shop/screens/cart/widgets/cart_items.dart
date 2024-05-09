@@ -22,58 +22,59 @@ class SHFCartItems extends StatelessWidget {
     final cartController = CartController.instance;
     final cartItems = cartController.cartItems;
     return Obx(
-      () => ListView.separated(
-        shrinkWrap: true,
-        itemCount: cartItems.length,
-        physics: const NeverScrollableScrollPhysics(),
-        separatorBuilder: (context, index) =>
-            const SizedBox(height: SHFSizes.spaceBtwSections),
-        itemBuilder: (context, index) {
-          return Obx(
-                () {
-              final item = cartItems[index];
-              return Column(
-                children: [
-                  /// -- Cart Items
-                  SHFCartItem(item: item),
-                  if (showAddRemoveButtons) const SizedBox(height: SHFSizes.spaceBtwItems),
+          () {
+        return ListView.separated(
+          shrinkWrap: true,
+          itemCount: cartItems.length,
+          physics: const NeverScrollableScrollPhysics(),
+          separatorBuilder: (context, index) => const SizedBox(height: SHFSizes.spaceBtwSections),
+          itemBuilder: (context, index) {
+            return Obx(
+                  () {
+                final item = cartItems[index];
+                return Column(
+                  children: [
+                    /// -- Cart Items
+                    SHFCartItem(item: item),
+                    if (showAddRemoveButtons) const SizedBox(height: SHFSizes.spaceBtwItems),
 
-                  /// -- Add Remove Buttons and Price Total
-                  if (showAddRemoveButtons)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        /// -- Add Remove Buttons
-                        Row(
-                          children: [
-                            // Use to add space to the left of Buttons as image space.
-                            const SizedBox(width: 70),
+                    /// -- Add Remove Buttons and Price Total
+                    if (showAddRemoveButtons)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          /// -- Add Remove Buttons
+                          Row(
+                            children: [
+                              // Use to add space to the left of Buttons as image space.
+                              const SizedBox(width: 70),
 
-                            /// Add Remove Buttons
-                            SHFProductQuantityWithAddRemoveButton(
-                              width: 32,
-                              height: 32,
-                              iconSize: SHFSizes.md,
-                              addBackgroundColor: SHFColors.primary,
-                              removeForegroundColor: SHFHelperFunctions.isDarkMode(context) ? SHFColors.white : SHFColors.black,
-                              removeBackgroundColor: SHFHelperFunctions.isDarkMode(context) ? SHFColors.darkerGrey : SHFColors.light,
-                              quantity: item.quantity,
-                              add: () => cartController.addOneToCart(item),
-                              remove: () => cartController.removeOneFromCart(item),
-                            ),
-                          ],
-                        ),
+                              /// Add Remove Buttons
+                              SHFProductQuantityWithAddRemoveButton(
+                                width: 32,
+                                height: 32,
+                                iconSize: SHFSizes.md,
+                                addBackgroundColor: SHFColors.primary,
+                                removeForegroundColor: SHFHelperFunctions.isDarkMode(context) ? SHFColors.white : SHFColors.black,
+                                removeBackgroundColor: SHFHelperFunctions.isDarkMode(context) ? SHFColors.darkerGrey : SHFColors.light,
+                                quantity: item.quantity,
+                                add: () => cartController.addOneToCart(item),
+                                remove: () => cartController.removeOneFromCart(item),
+                              ),
+                            ],
+                          ),
 
-                        /// -- Product total price
-                        SHFProductPriceText(price: (item.price * item.quantity).toStringAsFixed(1)),
-                      ],
-                    )
-                ],
-              );
-            },
-          );
-        },
-      ),
+                          /// -- Product total price
+                          SHFProductPriceText(price: (item.price * item.quantity).toStringAsFixed(1)),
+                        ],
+                      )
+                  ],
+                );
+              },
+            );
+          },
+        );
+      },
     );
   }
 }

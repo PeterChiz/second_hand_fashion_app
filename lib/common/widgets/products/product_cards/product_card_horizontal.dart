@@ -86,7 +86,7 @@ class SHFProductCardHorizontal extends StatelessWidget {
                           maxLines: 2,
                         ),
                         const SizedBox(height: SHFSizes.spaceBtwItems / 2),
-                        SHFBrandTitleWithVerifiedIcon(title: product.brand!.name, brandTextSize: TexSHFSizes.small),
+                        SHFBrandTitleWithVerifiedIcon(title: product.brand!.name, brandTextSize: TextSizes.small),
                       ],
                     ),
                   ),

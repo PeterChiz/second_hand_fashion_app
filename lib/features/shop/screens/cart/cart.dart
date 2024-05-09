@@ -17,19 +17,17 @@ class CartScreen extends StatelessWidget {
     final controller = CartController.instance;
     final cartItems = controller.cartItems;
     return Scaffold(
-      appBar: SHFAppBar(
-        showBackArrow: true,
-        title: Text('Giỏ hàng', style: Theme.of(context).textTheme.headlineSmall),
-      ),
+      /// -- AppBar
+      appBar: SHFAppBar(showBackArrow: true, title: Text('Giỏ hàng', style: Theme.of(context).textTheme.headlineSmall)),
       body: Obx(() {
-        //Nothing found widget
+        /// Khong tim thay mat hang nao
         final emptyWidget = SHFAnimationLoaderWidget(
-            text: 'Rất tiếc! Giỏ hàng trống',
-            animation: SHFImages.animalIcon,
-            showAction: true,
-            actionText: 'Mua sắm thôi nào!',
-            onActionPressed: () => Get.off(() => const NavigationMenu()),
-          );
+          text: 'Bạn chưa thêm gì vào giỏ hàng',
+          animation: SHFImages.cartAnimation,
+          showAction: true,
+          actionText: 'Mua sắm thôi nào!',
+          onActionPressed: () => Get.off(() => const NavigationMenu()),
+        );
 
         /// Cart Items
         return cartItems.isEmpty
@@ -38,13 +36,13 @@ class CartScreen extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(SHFSizes.defaultSpace),
 
-            /// -- Items in Cart
+            /// -- nhung item trong gio hang
             child: SHFCartItems(),
           ),
         );
       }),
 
-      ///Checkout Button
+      /// -- Checkout Button
       bottomNavigationBar: Obx(
             () {
           return cartItems.isNotEmpty

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SHFProductPriceText extends StatelessWidget {
   const SHFProductPriceText(
       {super.key,
-      this.currencySign = '\$',
+      this.currencySign = '\đ',
       required this.price,
       this.maxLines = 1,
       this.isLarge = false,
@@ -17,7 +17,7 @@ class SHFProductPriceText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      currencySign + price,
+       price + currencySign,
       maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
       style: isLarge

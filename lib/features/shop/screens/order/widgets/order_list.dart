@@ -22,7 +22,7 @@ class SHFOrderListItems extends StatelessWidget {
         builder: (_, snapshot) {
           ///Nothing found widget
           final emptyWidget = SHFAnimationLoaderWidget(
-            text: 'Whoops, No orders Yet!',
+            text: 'Rất tiếc, chưa có đơn đặt hàng nào!',
             animation: SHFImages.orderCompletedAnimation,
             showAction: true,
             actionText: 'Tiếp tục mua sắm',

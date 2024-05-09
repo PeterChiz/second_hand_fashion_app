@@ -127,8 +127,8 @@ class AddressController extends GetxController {
       context: context,
       builder: (_) => Container(
         padding: const EdgeInsets.all(SHFSizes.lg),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SHFSectionHeading(
                 title: 'Chọn địa chỉ'),

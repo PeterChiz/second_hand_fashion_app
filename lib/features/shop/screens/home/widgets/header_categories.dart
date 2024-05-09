@@ -24,7 +24,7 @@ class SHFHeaderCategories extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// -- Heading
-          const SHFSectionHeading(title: 'Popular Categories', textColor: SHFColors.white, showActionButton: false),
+          const SHFSectionHeading(title: 'Danh mục', textColor: SHFColors.white, showActionButton: false),
           const SizedBox(height: SHFSizes.spaceBtwItems),
 
           /// Obx widget for reactive UI updates based on the state of [categoryController].
@@ -37,7 +37,7 @@ class SHFHeaderCategories extends StatelessWidget {
 
               // Check if there are no featured categories found
               if (categoryController.featuredCategories.isEmpty) {
-                return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white)));
+                return Center(child: Text('Không tìm thấy dữ liệu!', style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white)));
               } else {
 
                 /// Data Found

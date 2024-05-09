@@ -20,25 +20,30 @@ class CategoryController extends GetxController {
     super.onInit();
   }
 
-  ///Load category data
+  /// -- Load category data
   Future<void> fetchCategories() async {
     try {
-      //Hiển thị loader trong khi tải danh mục
+      // Show loader while loading categories
       isLoading.value = true;
-      // Tìm nạp các danh mục từ nguồn dữ liệu (Firesore, API, v.v.,...)
-      final categories = await _categoryRepository.getAllCategories();
-      //Cập nhật danh sách danh mục
-      allCategories.assignAll(categories);
-      // Lọc các danh mục nổi bật
-      featuredCategories.assignAll(allCategories.where((category) => category.isFeatured && category.parentId.isEmpty).take(8).toList());
+
+      // Fetch categories from data source (Firestore, API, etc.)
+      final fetchedCategories = await _categoryRepository.getAllCategories();
+
+      // Update the categories list
+      allCategories.assignAll(fetchedCategories);
+
+      // Filter featured categories
+      featuredCategories.assignAll(allCategories.where((category) => (category.isFeatured) && category.parentId.isEmpty).take(8).toList());
+
     } catch (e) {
-      SHFLoaders.errorSnackBar(title: 'Có lỗi', message: e.toString());
+      SHFLoaders.errorSnackBar(title: 'Có lỗi!', message: e.toString());
     } finally {
       isLoading.value = false;
     }
   }
 
-  ///Tải dữ liệu danh mục đã chọn
+
+  /// -- Load selected category data
   Future<List<CategoryModel>> getSubCategories(String categoryId) async {
     // Fetch all categories where ParentId = categoryId;
     try {
@@ -50,17 +55,8 @@ class CategoryController extends GetxController {
     }
   }
 
-  ///Đặt danh mục trên các sản phẩm Danh mục phụ
-  // Future<List<ProductModel>> getCategoryProducts({required String categoryId, int limit = 4}) async {
-  //   try{
-  //     //Fetch limited (4) products against each subCategory
-  //     final products = await ProductRepository.instance.getProductsForCategory(categoryId: categoryId,limit: limit);
-  //     return products;
-  //   }catch(e){
-  //     SHFLoaders.errorSnackBar(title: 'Có lỗi', message: e.toString());
-  //     return [];
-  //   }
-  // }
+  /// Get Category or Sub-Category Products.
+  /// If you want to fetch all the products in this category SET [limit] to -1
   Future<List<ProductModel>> getCategoryProducts({required String categoryId, int limit = 4}) async {
     // Fetch limited (4) products against each subCategory;
     final products = await ProductRepository.instance.getProductsForCategory(categoryId: categoryId, limit: limit);

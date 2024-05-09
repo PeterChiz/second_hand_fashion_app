@@ -33,29 +33,26 @@ class SHFAnimationLoaderWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset(animation,
-              width: MediaQuery.of(context).size.width *
-                  0.8), //Display Lottie animation
+          Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.8), // Display Lottie animation
           const SizedBox(height: SHFSizes.defaultSpace),
-          Text(text,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center),
+          Text(
+            text,
+            style: Theme.of(context).textTheme.bodyMedium,
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: SHFSizes.defaultSpace),
           showAction
               ? SizedBox(
-                  width: 250,
-                  child: OutlinedButton(
-                      onPressed: onActionPressed,
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: SHFColors.dark),
-                      child: Text(
-                        actionText!,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium!
-                            .apply(color: SHFColors.light),
-                      )),
-                )
+            width: 250,
+            child: OutlinedButton(
+              onPressed: onActionPressed,
+              style: OutlinedButton.styleFrom(backgroundColor: SHFColors.dark),
+              child: Text(
+                actionText!,
+                style: Theme.of(context).textTheme.bodyMedium!.apply(color: SHFColors.light),
+              ),
+            ),
+          )
               : const SizedBox(),
         ],
       ),

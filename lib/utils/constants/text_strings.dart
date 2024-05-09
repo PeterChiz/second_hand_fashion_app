@@ -1,5 +1,6 @@
 
 class SHFTexts{
+
   static const String onBoardingTitle1 = "Lựa chọn phong cách thời trang của bạn";
   // static const String onBoardingTitle1 = "Choose your product";
   static const String onBoardingTitle2 = "Chọn phương thức thanh toán";
@@ -26,7 +27,7 @@ class SHFTexts{
   static const String email = "E-Mail";
   static const String password = "Mật khẩu";
   // static const String password = "Password";
-  static const String newPassword = "New Password";
+  static const String newPassword = "Mật khẩu mới";
   // static const String userName = "Username";
   static const String userName = "Tên tài khoản";
   // static const String phoneNo = "Phone Number";
@@ -41,11 +42,10 @@ class SHFTexts{
   static const String orSignUpWith = "hoặc đăng ký bằng";
   static const String iAgreeTo = "Tôi đồng ý với";
   static const String privacyPolicy = "Chính sách quyền riêng tư";
-  static const String termOfUse = "Term of use";
-  static const String verificationCode = "verificationCode";
+  // static const String verificationCode = "verificationCode";
   // static const String resendEmail = "Resend Email";
   static const String resendEmail = "Gửi lại Email";
-  static const String resendEmailIn = "Resend Email in";
+  // static const String resendEmailIn = "Gửi lại email trong";
   static const String termsOfUse = "Điều khoản sử dụng";
 
   static const String loginTitle = "Hello bạn <3";
@@ -66,18 +66,18 @@ class SHFTexts{
   static const String confirmEmail = "Xác thực địa chỉ email của bạn!";
   // static const String confirmEmailSubTitle = "Congratulation! Your Account Awaits: Verify Your Email to Start Shopping and Experience a Word of Unrivaled Deals and Personalized Offers";
   static const String confirmEmailSubTitle = "Xin chúc mừng! Tài khoản của bạn đang xác minh: Xác minh email của bạn để bắt đầu mua sắm và trải nghiệm những ưu đãi vô song và ưu đãi được cá nhân hóa";
-  static const String emailNotReceivedMessage = "Didn't get the email? Check your junk/spam or resend it";
+  // static const String emailNotReceivedMessage = "Bạn không nhận được email? Kiểm tra thư rác/thư rác hoặc gửi lại";
   // static const String yourAccountCreatedTitle = "Your account successfully created!";
   static const String yourAccountCreatedTitle = "Tài khoản của bạn đã được tạo thành công!";
   static const String yourAccountCreatedSubTitle = "Chào mừng bạn đến với Hòa Second Hand Fashion Shop: Tài khoản của bạn đã được tạo, Giải phóng niềm vui mua sắm trực tuyến liền mạch!";
 
   //Global Texts
-  static const String and = "and";
+  static const String and = "và";
   static const String shfContinue = "Tiếp tục";
   // static const String shfContinue = "Continue";
-  static const String submit = "Submit";
+  static const String submit = "Đã gửi";
   static const String skip = "Skip";
-  static const String appName = "Hòa Second Hand Fashion";
+  static const String appName = "Thời trang Hòa Second Hand";
   static const String done = "Ok";
 
   // static const String search = "Search in Store";

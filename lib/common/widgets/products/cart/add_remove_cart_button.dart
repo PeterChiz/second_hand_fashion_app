@@ -41,8 +41,7 @@ class SHFProductQuantityWithAddRemoveButton extends StatelessWidget {
           backgroundColor: removeBackgroundColor,
         ),
         const SizedBox(width: SHFSizes.spaceBtwItems),
-        Text(quantity.toString(),
-            style: Theme.of(context).textTheme.titleSmall),
+        Text(quantity.toString(), style: Theme.of(context).textTheme.titleSmall),
         const SizedBox(width: SHFSizes.spaceBtwItems),
         SHFCircularIcon(
           icon: Iconsax.add,

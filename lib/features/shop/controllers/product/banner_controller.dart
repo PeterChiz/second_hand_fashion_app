@@ -15,8 +15,8 @@ class BannerController extends GetxController{
 
   @override
   void onInit() {
-    fetchBanners();
     super.onInit();
+    fetchBanners();
   }
 
   ///Cap nhat cac dots dieu huong page

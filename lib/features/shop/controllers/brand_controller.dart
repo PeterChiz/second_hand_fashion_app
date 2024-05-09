@@ -19,7 +19,7 @@ class BrandController extends GetxController {
     super.onInit();
   }
 
-  ///Load Brands
+  /// -- Load Brands
   Future<void> getFeaturedBrands() async {
     try {
       // Show loader while loading Brands
@@ -35,7 +35,7 @@ class BrandController extends GetxController {
       featuredBrands.assignAll(allBrands.where((brand) => brand.isFeatured ?? false).take(4).toList());
 
     } catch (e) {
-     SHFLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      SHFLoaders.errorSnackBar(title: 'Có lỗi!', message: e.toString());
     } finally {
       isLoading.value = false;
     }
@@ -46,7 +46,6 @@ class BrandController extends GetxController {
     final brands = await brandRepository.getBrandsForCategory(categoryId);
     return brands;
   }
-
 
   /// Get Brand Specific Products from your data source
   Future<List<ProductModel>> getBrandProducts(String brandId, int limit) async {

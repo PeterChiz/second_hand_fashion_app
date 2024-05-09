@@ -8,13 +8,13 @@ class SHFBrandTitleText extends StatelessWidget {
       required this.title,
       this.maxLines = 1,
       this.textAlign = TextAlign.center,
-      this.brandTextSize = TexSHFSizes.small});
+      this.brandTextSize = TextSizes.small});
 
   final Color? color;
   final String title;
   final int maxLines;
   final TextAlign? textAlign;
-  final TexSHFSizes brandTextSize;
+  final TextSizes brandTextSize;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,11 @@ class SHFBrandTitleText extends StatelessWidget {
       maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
       //Check which brandSize is required and set that style.
-      style: brandTextSize == TexSHFSizes.small
+      style: brandTextSize == TextSizes.small
           ? Theme.of(context).textTheme.labelMedium!.apply(color: color)
-          : brandTextSize == TexSHFSizes.medium
+          : brandTextSize == TextSizes.medium
               ? Theme.of(context).textTheme.bodyLarge!.apply(color: color)
-              : brandTextSize == TexSHFSizes.large
+              : brandTextSize == TextSizes.large
                   ? Theme.of(context).textTheme.titleLarge!.apply(color: color)
                   : Theme.of(context).textTheme.bodyMedium!.apply(color: color),
     );
