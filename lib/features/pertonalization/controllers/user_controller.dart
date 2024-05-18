@@ -24,19 +24,19 @@ class UserController extends GetxController {
   final profileLoading = false.obs;
   final profileImageUrl = ''.obs;
   final hidePassword = false.obs;
-  final verifyEmail = TextEditingController();
-  final verifyPassword = TextEditingController();
+  final verifyEmail = TextEditingController(); // Email xác minh
+  final verifyPassword = TextEditingController(); // Mật khẩu xác minh
   final userRepository = Get.put(UserRepository());
-  GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>(); // Khóa của biểu mẫu xác minh lại
 
-  /// init user data when Home Screen appears
+  /// Khởi tạo dữ liệu người dùng khi màn hình chính xuất hiện
   @override
   void onInit() {
     fetchUserRecord();
     super.onInit();
   }
 
-  ///Tìm nạp hồ sơ người dùng
+  /// Tải dữ liệu hồ sơ người dùng
   Future<void> fetchUserRecord() async {
     try {
       profileLoading.value = true;
@@ -49,20 +49,20 @@ class UserController extends GetxController {
     }
   }
 
-  ///Lưu bản ghi người dùng từ bất kỳ nguồn đăng ký nào
+  /// Lưu hồ sơ người dùng từ bất kỳ nguồn đăng ký nào
   Future<void> saveUserRecord({UserModel? user, UserCredential? userCredentials}) async {
     try {
-      // First UPDATE Rx User and then check if user data is already stored. If not store new data
+      // Cập nhật User Rx trước và sau đó kiểm tra xem dữ liệu người dùng đã được lưu trữ chưa. Nếu chưa, lưu dữ liệu mới
       await fetchUserRecord();
 
-      // If no record already stored.
+      // Nếu không có bản ghi nào được lưu trữ.
       if (this.user.value.id.isEmpty) {
         if (userCredentials != null) {
-          // Convert Name to First and Last Name
+          // Chuyển đổi tên thành tên và họ
           final nameParts = UserModel.nameParts(userCredentials.user!.displayName ?? '');
           final customUsername = UserModel.generateUsername(userCredentials.user!.displayName ?? '');
 
-          // Map data
+          // Ánh xạ dữ liệu
           final newUser = UserModel(
             id: userCredentials.user!.uid,
             firstName: nameParts[0],
@@ -73,16 +73,16 @@ class UserController extends GetxController {
             profilePicture: userCredentials.user!.photoURL ?? '',
           );
 
-          // Save user data
+          // Lưu dữ liệu người dùng
           await userRepository.saveUserRecord(newUser);
 
-          // Assign new user to the RxUser so that we can use it through out the app.
+          // Gán người dùng mới cho RxUser để có thể sử dụng nó trong toàn bộ ứng dụng.
           this.user(newUser);
         } else if (user != null) {
-          // Save Model when user registers using Email and Password
+          // Lưu Model khi người dùng đăng ký bằng Email và Mật khẩu
           await userRepository.saveUserRecord(user);
 
-          // Assign new user to the RxUser so that we can use it through out the app.
+          // Gán người dùng mới cho RxUser để có thể sử dụng nó trong toàn bộ ứng dụng.
           this.user(user);
         }
       }
@@ -94,7 +94,7 @@ class UserController extends GetxController {
     }
   }
 
-  ///Delete Account Warning
+  /// Cảnh báo xóa tài khoản
   void deleteAccountWarningPopup() {
     Get.defaultDialog(
       contentPadding: const EdgeInsets.all(SHFSizes.md),
@@ -115,17 +115,17 @@ class UserController extends GetxController {
     );
   }
 
-  ///Delete user Account
+  /// Xóa tài khoản người dùng
   void deleteUserAccount() async {
     try {
       SHFFullScreenLoader.openLoadingDialog('Xử lý', SHFImages.docerAnimation);
 
-      ///Người dùng xác thực lại lần đầu
+      /// Người dùng xác thực lại lần đầu
       final auth = AuthenticationRepository.instance;
       final provider = auth.firebaseUser!.providerData.map((e) => e.providerId).first;
 
       if (provider.isNotEmpty) {
-        //Re Verify Auth Email
+        // Xác minh Email Auth lại
         if (provider == 'google.com') {
           await auth.signInWithGoogle();
           await auth.deleteAccount();
@@ -142,13 +142,13 @@ class UserController extends GetxController {
     }
   }
 
-  ///Xác thực lại trước khi xóa
+  /// Xác thực lại trước khi xóa
   Future<void> reAuthenticateEmailAndPasswordUser() async {
     try {
       SHFFullScreenLoader.openLoadingDialog(
           'Đang xử lý', SHFImages.docerAnimation);
 
-      //Kiểm tra kết nối internet
+      // Kiểm tra kết nối internet
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         SHFFullScreenLoader.stopLoading();
@@ -162,7 +162,8 @@ class UserController extends GetxController {
 
       await AuthenticationRepository.instance
           .reAuthenticateWithEmailAndPassword(
-              verifyEmail.text.trim(), verifyPassword.text.trim());
+          verifyEmail.text.trim(), verifyPassword.text
+          .trim());
       await AuthenticationRepository.instance.deleteAccount();
       SHFFullScreenLoader.stopLoading();
       Get.offAll(() => const LoginScreen());
@@ -172,17 +173,17 @@ class UserController extends GetxController {
     }
   }
 
-  ///upload profile image
-  uploadUserProfilePicture() async{
-    try{
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 70, maxHeight: 512,maxWidth: 512);
-      if(image != null){
+  /// Tải lên hình ảnh hồ sơ
+  uploadUserProfilePicture() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 70, maxHeight: 512, maxWidth: 512);
+      if (image != null) {
         imageUploading.value = true;
-        //upload image
+        // Tải lên hình ảnh
         final uploadedImage = await userRepository.uploadImage('Users/Images/Profile/', image);
         profileImageUrl.value = uploadedImage;
 
-        //Update user Image Record
+        // Cập nhật bản ghi Hình ảnh người dùng
         Map<String, dynamic> newImage = {'ProfilePicture': uploadedImage};
         await userRepository.updateSingleField(newImage);
 
@@ -193,13 +194,13 @@ class UserController extends GetxController {
 
         SHFLoaders.successSnackBar(title: 'Chúc mừng', message: 'Ảnh đại diện của bạn đã được cập nhật thành công');
       }
-    }catch(e){
+    } catch (e) {
       imageUploading.value = false;
       SHFLoaders.errorSnackBar(title: 'Có lỗi', message: 'Có gì đó bị lỗi $e');
     }
   }
 
-  /// Logout Loader Function
+  /// Hàm thoát
   logout() {
     try {
       Get.defaultDialog(
@@ -214,7 +215,7 @@ class UserController extends GetxController {
           onPressed: () async {
             onClose();
 
-            /// On Confirmation show any loader until user Logged Out.
+            /// Xác nhận hiển thị bất kỳ loader nào cho đến khi người dùng đăng xuất.
             Get.defaultDialog(
               title: '',
               barrierDismissible: false,

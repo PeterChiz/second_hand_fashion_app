@@ -11,62 +11,62 @@ import '../../../utils/helpers/helper_functions.dart';
 import '../custom_shapes/containers/rounded_container.dart';
 import 'brand_cart.dart';
 
-/// A widget showcasing a brand with its top 3 product images.
+/// Một widget giới thiệu một thương hiệu với 3 hình ảnh sản phẩm hàng đầu của nó.
 class SHFBrandShowcase extends StatelessWidget {
-  /// Default constructor for the TBrandShowcase.
+  /// Constructor mặc định cho SHFBrandShowcase.
   ///
-  /// Parameters:
-  ///   - brand: The brand model to display.
-  ///   - images: The list of top 3 product images for the brand.
-  const SHFBrandShowcase({
-    super.key,
-    required this.images,
-    required this.brand,
-  });
+  /// Tham số:
+  ///- brand: Mô hình thương hiệu để hiển thị.
+  ///- images: Danh sách 3 hình ảnh sản phẩm hàng đầu cho thương hiệu.
+  const SHFBrandShowcase({super.key, required this.brand, required this.images});
 
-  final List<String> images;
   final BrandModel brand;
+  final List<String> images;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.to(BrandScreen(brand: brand)),
       child: SHFRoundedContainer(
+        margin: const EdgeInsets.only(bottom: SHFSizes.spaceBtwItems),
         showBorder: true,
         borderColor: SHFColors.darkGrey,
         backgroundColor: Colors.transparent,
-        padding: const EdgeInsets.all(SHFSizes.md),
-        margin: const EdgeInsets.only(bottom: SHFSizes.spaceBtwItems),
         child: Column(
           children: [
-            ///Brand voi so luong product
+            /// Thương hiệu với số lượng sản phẩm
             SHFBrandCard(showBorder: false, brand: brand),
             const SizedBox(height: SHFSizes.spaceBtwItems / 2),
 
-            ///3 anh top brand
-            Row(children: images.map((e) => brandTopProductImageWidget(e, context)).toList()),
+            /// Hình ảnh 3 sản phẩm hàng đầu của thương hiệu
+            Row(
+                children: images
+                    .map((e) => brandTopProductImageWidget(e, context))
+                    .toList()),
           ],
         ),
       ),
     );
   }
 
+  /// Widget để hiển thị hình ảnh sản phẩm hàng đầu cho thương hiệu.
   Widget brandTopProductImageWidget(String image, context) {
     return Expanded(
       child: SHFRoundedContainer(
-          height: 100,
-          padding: const EdgeInsets.all(SHFSizes.md),
-          margin: const EdgeInsets.only(right: SHFSizes.sm),
-          backgroundColor: SHFHelperFunctions.isDarkMode(context)
-              ? SHFColors.darkerGrey
-              : SHFColors.light,
-          child: CachedNetworkImage(
-            fit: BoxFit.contain,
-            imageUrl: image,
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                const SHFShimmerEffect(width: 100, height: 100),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          )),
+        height: 100,
+        padding: const EdgeInsets.all(SHFSizes.md),
+        margin: const EdgeInsets.only(right: SHFSizes.sm),
+        backgroundColor: SHFHelperFunctions.isDarkMode(context)
+            ? SHFColors.darkerGrey
+            : SHFColors.light,
+        child: CachedNetworkImage(
+          fit: BoxFit.contain,
+          imageUrl: image,
+          progressIndicatorBuilder: (context, url, downloadProgress) =>
+          const SHFShimmerEffect(width: 100, height: 100),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ),
+      ),
     );
   }
 }

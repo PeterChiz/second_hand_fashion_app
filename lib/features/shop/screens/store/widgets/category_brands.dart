@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:second_hand_fashion_app/common/widgets/brands/brand_show_case.dart';
 import 'package:second_hand_fashion_app/common/widgets/shimmers/boxes_shimmer.dart';
@@ -22,7 +21,7 @@ class CategoryBrands extends StatelessWidget {
     return FutureBuilder(
       future: BrandController.instance.getBrandsForCategory(category.id),
       builder: (_, snapshot) {
-        /// Handle Loader, No Record, OR Error Message
+        /// Xử lý hiển thị Loader, Không có bản ghi hoặc thông báo lỗi
         const loader = Column(
           children: [
             SHFListTileShimmer(),
@@ -31,10 +30,11 @@ class CategoryBrands extends StatelessWidget {
             SizedBox(height: SHFSizes.spaceBtwItems),
           ],
         );
-        final widget = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);
+        final widget = SHFCloudHelperFunctions.checkMultiRecordState(
+            snapshot: snapshot, loader: loader);
         if (widget != null) return widget;
 
-        /// Record Found!
+        /// Bản ghi được tìm thấy!
         final brands = snapshot.data!;
         return ListView.builder(
           shrinkWrap: true,
@@ -43,15 +43,16 @@ class CategoryBrands extends StatelessWidget {
           itemBuilder: (_, index) {
             final brand = brands[index];
 
-            /// Load Brand Products
+            /// Tải Sản phẩm Thương hiệu
             return FutureBuilder(
               future: controller.getBrandProducts(brand.id, 3),
               builder: (_, snapshot) {
-                /// Handle Loader, No Record, OR Error Message
-                final widget = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);
+                /// Xử lý hiển thị Loader, Không có bản ghi hoặc thông báo lỗi
+                final widget = SHFCloudHelperFunctions.checkMultiRecordState(
+                    snapshot: snapshot, loader: loader);
                 if (widget != null) return widget;
 
-                /// Record Found!
+                /// Bản ghi được tìm thấy!
                 final products = snapshot.data!;
                 return SHFBrandShowcase(
                   brand: brand,

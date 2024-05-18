@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../features/shop/controllers/product/poduct_controller.dart';
+import '../../../../../features/shop/controllers/product/product_controller.dart';
 import '../../../../../features/shop/models/product_model.dart';
 import '../../../../../utils/constants/enums.dart';
 import '../../../../../utils/constants/sizes.dart';
@@ -17,7 +17,7 @@ class PricingWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// Actual Price if sale price not null
+          /// Giá thực nếu giá khuyến mãi không null
           if (product.productType == ProductType.single.toString() && product.salePrice > 0)
             Padding(
               padding: const EdgeInsets.only(left: SHFSizes.sm),
@@ -27,7 +27,7 @@ class PricingWidget extends StatelessWidget {
               ),
             ),
 
-          /// Price, Show sale price as main price if sale exist.
+          /// Giá, Hiển thị giá khuyến mãi là giá chính nếu có giá khuyến mãi.
           Padding(
             padding: const EdgeInsets.only(left: SHFSizes.sm),
             child: SHFProductPriceText(price: ProductController.instance.getProductPrice(product)),

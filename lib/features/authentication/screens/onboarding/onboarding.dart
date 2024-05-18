@@ -8,19 +8,19 @@ import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/constants/text_strings.dart';
 import '../../controllers/onboarding/onboarding_controller.dart';
 
-//giao diện lúc mới vào app
+// giao diện lúc mới vào app
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Controller for managing onboarding logic and state.
+    // Controller quản lý logic và trạng thái onboarding.
     final controller = Get.put(OnBoardingController());
 
     return Scaffold(
       body: Stack(
         children: [
-          ///Horizontal Scrollable Pages
+          /// Các trang cuộn ngang
           PageView(
             controller: controller.pageController,
             onPageChanged: controller.updatePageIndicator,
@@ -42,16 +42,14 @@ class OnBoardingScreen extends StatelessWidget {
               ),
             ],
           ),
-          ///Skip button
+          /// Nút bỏ qua
           const SHFOnBoardingSkipButton(),
-          ///Dot Navigation SmoothPageIndicator
+          /// Điều hướng bằng dấu chấm SmoothPageIndicator
           const SHFOnBoardingDotNavigation(),
-          ///Circular
+          /// Nút tiếp theo hình tròn
           const SHFOnboardingNextButton(),
         ],
       ),
     );
   }
 }
-
-

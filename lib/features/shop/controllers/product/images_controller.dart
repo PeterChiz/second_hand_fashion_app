@@ -7,25 +7,25 @@ import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 class ImagesController extends GetxController{
   static ImagesController get instance => Get.find();
 
-  ///Variable
+  /// Biến
   Rx<String> selectedProductImage = ''.obs;
 
-  /// -- Get All Images from product and Variations
-  List<String> getAllProductSHFImages(ProductModel product) {
-    // Use Set to add unique images only
+  /// -- Lấy tất cả hình ảnh từ sản phẩm và các biến thể
+  List<String> getAllProductImages(ProductModel product) {
+    // Sử dụng Set để chỉ thêm hình ảnh duy nhất
     Set<String> images = {};
 
-    // Load thumbnail image
+    // Tải hình ảnh thu nhỏ
     images.add(product.thumbnail);
-    // Assign Thumbnail as Selected Image
+    // Gán hình thu nhỏ là hình ảnh được chọn
     selectedProductImage.value = product.thumbnail;
 
-    // Get all images from the Product Model if not null.
+    // Lấy tất cả hình ảnh từ mô hình Sản phẩm nếu không null.
     if (product.images != null) {
       images.addAll(product.images!);
     }
 
-    // Get all images from the Product Variations if not null.
+    // Lấy tất cả hình ảnh từ các Biến thể Sản phẩm nếu không null.
     if (product.productVariations != null || product.productVariations!.isNotEmpty) {
       images.addAll(product.productVariations!.map((variation) => variation.image));
     }
@@ -33,7 +33,7 @@ class ImagesController extends GetxController{
     return images.toList();
   }
 
-  /// -- Show Image Popup
+  /// -- Hiển thị Hình ảnh phóng to
   void showEnlargedImage(String image) {
     Get.to(
       fullscreenDialog: true,

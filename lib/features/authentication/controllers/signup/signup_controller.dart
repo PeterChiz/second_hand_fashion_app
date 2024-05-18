@@ -77,7 +77,7 @@ class SignupController extends GetxController {
 
       //Hiển thị thông báo thành công
       SHFLoaders.successSnackBar(title: 'Chúc mừng', message: 'Tài khoản của bạn đã được tạo! Xác minh email để tiếp tục.');
-      //Move to Verify Email Screen
+      //Di chuyển đến Verify Email Screen
       Get.to(() => const VerifyEmailScreen());
     } catch (e) {
       //Remove Loader

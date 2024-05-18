@@ -4,9 +4,9 @@ import '../../../utils/formatters/formatter.dart';
 import '../../shop/models/cart_model.dart';
 import 'address_model.dart';
 
-/// Model class representing user data.
+/// Lớp mô hình đại diện cho dữ liệu người dùng.
 class UserModel {
-  // Keep those values final which you do not want to update
+  // Giữ những giá trị final mà bạn không muốn cập nhật
   final String id;
   String firstName;
   String lastName;
@@ -17,7 +17,7 @@ class UserModel {
   final CartModel? cart;
   final List<AddressModel>? addresses;
 
-  /// Constructor for UserModel.
+  /// Constructor cho UserModel.
   UserModel({
     required this.id,
     required this.firstName,
@@ -30,30 +30,30 @@ class UserModel {
     this.addresses,
   });
 
-  /// Helper function to get the full name.
+  /// Hàm trợ giúp để lấy tên đầy đủ.
   String get fullName => '$lastName $firstName';
 
-  /// Helper function to format phone number.
+  /// Hàm trợ giúp để định dạng số điện thoại.
   String get formattedPhoneNo => SHFFormatter.formatPhoneNumber(phoneNumber);
 
-  /// Static function to split full name into first and last name.
+  /// Hàm tĩnh để tách tên đầy đủ thành họ và tên.
   static List<String> nameParts(fullName) => fullName.split(" ");
 
-  /// Static function to generate a username from the full name.
+  /// Hàm tĩnh để tạo tên người dùng từ tên đầy đủ.
   static String generateUsername(fullName) {
     List<String> nameParts = fullName.split(" ");
     String lastName = nameParts.length > 1 ? nameParts[1].toLowerCase() : "";
     String firstName = nameParts[0].toLowerCase();
 
-    String camelCaseUsername = "$lastName$firstName"; // Combine first and last name
-    String usernameWithPrefix = "cwt_$camelCaseUsername"; // Add "cwt_" prefix
+    String camelCaseUsername = "$lastName$firstName"; // Kết hợp họ và tên
+    String usernameWithPrefix = "cwt_$camelCaseUsername"; // Thêm tiền tố "cwt_"
     return usernameWithPrefix;
   }
 
-  /// Static function to create an empty user model.
+  /// Hàm tĩnh để tạo một mô hình người dùng trống.
   static UserModel empty() => UserModel(id: '', firstName: '', lastName: '', username: '', email: '', phoneNumber: '', profilePicture: '');
 
-  /// Convert model to JSON structure for storing data in Firebase.
+  /// Chuyển đổi mô hình thành cấu trúc JSON để lưu trữ dữ liệu trong Firebase.
   Map<String, dynamic> toJson() {
     return {
       'LastName': lastName,
@@ -65,7 +65,7 @@ class UserModel {
     };
   }
 
-  /// Factory method to create a UserModel from a Firebase document snapshot.
+  /// Phương thức factory để tạo một UserModel từ một snapshot tài liệu Firebase.
   factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     if (document.data() != null) {
       final data = document.data()!;

@@ -13,13 +13,13 @@ class VerifyEmailController extends GetxController {
 
   @override
   void onInit() {
-    /// Send Email Whenever Verify Screen appears & Set Timer for auto redirect.
+    /// Gửi Email Bất cứ khi nào Màn hình Xác minh xuất hiện & Đặt Hẹn giờ để tự động chuyển hướng.
     sendEmailVerification();
     setTimerForAutoRedirect();
     super.onInit();
   }
 
-  /// Send Email Verification link
+  /// Gửi liên kết Xác minh Email
   sendEmailVerification() async {
     try {
       await AuthenticationRepository.instance.sendEmailVerification();
@@ -35,14 +35,14 @@ class VerifyEmailController extends GetxController {
   setTimerForAutoRedirect() {
     Timer.periodic(
       const Duration(seconds: 1),
-      (timer) async {
+          (timer) async {
         await FirebaseAuth.instance.currentUser?.reload();
         final user = FirebaseAuth.instance.currentUser;
         if (user?.emailVerified ?? false) {
           timer.cancel();
           Get.off(
-            () => SuccessScreen(
-              image: SHFImages.successfullyRegisterAnimation,
+                () => SuccessScreen(
+              image: SHFImages.successful,
               title: SHFTexts.yourAccountCreatedTitle,
               subTitle: SHFTexts.yourAccountCreatedSubTitle,
               onPressed: () => AuthenticationRepository.instance
@@ -59,8 +59,8 @@ class VerifyEmailController extends GetxController {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null && currentUser.emailVerified) {
       Get.off(
-        () => SuccessScreen(
-          image: SHFImages.successfullyRegisterAnimation,
+            () => SuccessScreen(
+          image: SHFImages.successful,
           title: SHFTexts.yourAccountCreatedTitle,
           subTitle: SHFTexts.yourAccountCreatedSubTitle,
           onPressed: () => AuthenticationRepository.instance

@@ -19,10 +19,10 @@ class CartController extends GetxController {
     loadCartItems();
   }
 
-  /// This function converts a ProductModel to a CartItemModel
+  /// Hàm này chuyển đổi một ProductModel thành một CartItemModel
   CartItemModel convertToCartItem(ProductModel product, int quantity) {
     if (product.productType == ProductType.single.toString()) {
-      // Reset Variation in case of single product type.
+      // Thiết lập lại Biến thể trong trường hợp loại sản phẩm đơn
       variationController.resetSelectedAttributes();
     }
     final variation = variationController.selectedVariation.value;
@@ -30,11 +30,11 @@ class CartController extends GetxController {
         variationController.selectedVariation.value.id.isNotEmpty;
     final price = isVariation
         ? variation.salePrice > 0.0
-            ? variation.salePrice
-            : variation.price
+        ? variation.salePrice
+        : variation.price
         : product.salePrice > 0.0
-            ? product.salePrice
-            : product.price;
+        ? product.salePrice
+        : product.price;
     return CartItemModel(
       productId: product.id,
       title: product.title,
@@ -48,20 +48,20 @@ class CartController extends GetxController {
   }
 
   void addToCart(ProductModel product) {
-    // Quantity Check
+    // Kiểm tra Số lượng
     if (productQuantityInCart.value < 1) {
       SHFLoaders.customToast(message: 'Chọn số lượng');
       return;
     }
 
-    // Variation Selected?
+    // Biến thể đã được chọn?
     if (product.productType == ProductType.variable.toString() &&
         variationController.selectedVariation.value.id.isEmpty) {
       SHFLoaders.customToast(message: 'Chọn mặt hàng');
       return;
     }
 
-    // Out of Stock
+    // Hết hàng
     if (product.productType == ProductType.variable.toString()) {
       if (variationController.selectedVariation.value.stock < 1) {
         SHFLoaders.warningSnackBar(
@@ -76,17 +76,17 @@ class CartController extends GetxController {
       }
     }
 
-    // Convert the ProductModel to a CartItemModel with the given quantity
+    // Chuyển đổi ProductModel thành CartItemModel với số lượng đã cho
     final selectedCartItem =
-        convertToCartItem(product, productQuantityInCart.value);
+    convertToCartItem(product, productQuantityInCart.value);
 
-    // Check if already added in the Cart
+    // Kiểm tra xem đã được thêm vào Giỏ hàng chưa
     int index = cartItems.indexWhere((cartItem) =>
-        cartItem.productId == selectedCartItem.productId &&
+    cartItem.productId == selectedCartItem.productId &&
         cartItem.variationId == selectedCartItem.variationId);
 
     if (index >= 0) {
-      // This quantity is already added or Updated/Removed from the design (Cart)(-)
+      // Số lượng này đã được thêm hoặc Cập nhật/Xóa từ thiết kế (Giỏ hàng)(-)
       cartItems[index].quantity = selectedCartItem.quantity;
     } else {
       cartItems.add(selectedCartItem);
@@ -99,7 +99,7 @@ class CartController extends GetxController {
 
   void addOneToCart(CartItemModel item) {
     int index = cartItems.indexWhere((cartItem) =>
-        cartItem.productId == item.productId &&
+    cartItem.productId == item.productId &&
         cartItem.variationId == item.variationId);
 
     if (index >= 0) {
@@ -113,14 +113,14 @@ class CartController extends GetxController {
 
   void removeOneFromCart(CartItemModel item) {
     int index = cartItems.indexWhere((cartItem) =>
-        cartItem.productId == item.productId &&
+    cartItem.productId == item.productId &&
         cartItem.variationId == item.variationId);
 
     if (index >= 0) {
       if (cartItems[index].quantity > 1) {
         cartItems[index].quantity -= 1;
       } else {
-        // Show dialog before completely removing
+        // Hiển thị hộp thoại trước khi loại bỏ hoàn toàn
         cartItems[index].quantity == 1
             ? removeFromCartDialog(index)
             : cartItems.removeAt(index);
@@ -134,7 +134,7 @@ class CartController extends GetxController {
       title: 'Xóa sản phẩm',
       middleText: 'Bạn có chắc chắn muốn loại bỏ sản phẩm này?',
       onConfirm: () {
-        // Remove the item from the cart
+        // Loại bỏ mục khỏi giỏ hàng
         cartItems.removeAt(index);
         updateCart();
         SHFLoaders.customToast(message: 'Sản phẩm đã được xóa khỏi giỏ hàng.');
@@ -152,7 +152,7 @@ class CartController extends GetxController {
 
   void loadCartItems() async {
     final cartItemStrings =
-        SHFLocalStorage.instance().readData<List<dynamic>>('cartItems');
+    SHFLocalStorage.instance().readData<List<dynamic>>('cartItems');
     if (cartItemStrings != null) {
       cartItems.assignAll(cartItemStrings
           .map((item) => CartItemModel.fromJson(item as Map<String, dynamic>)));
@@ -178,14 +178,15 @@ class CartController extends GetxController {
     SHFLocalStorage.instance().saveData('cartItems', cartItemStrings);
   }
 
-  /// -- Initialize already added Item's Count in the cart.
+  /// -- Khởi tạo Số lượng sản phẩm đã thêm sẵn trong giỏ hàng.
   void updateAlreadyAddedProductCount(ProductModel product) {
-    // If product has no variations then calculate cartEntries and display total number.
-    // Else make default entries to 0 and show cartEntries when variation is selected.
+    // Nếu sản phẩm không có biến thể thì tính toán cartEntries và hiển thị số lượng tổng.
+    // Ngược lại, đặt mặc định các mục thành 0 và
+    // hiển thị cartEntries khi biến thể được chọn.
     if (product.productType == ProductType.single.toString()) {
       productQuantityInCart.value = getProductQuantityInCart(product.id);
     } else {
-      // Get selected Variation if any...
+      // Lấy Biến thể đã chọn nếu có...
       final variationId = variationController.selectedVariation.value.id;
       if (variationId.isNotEmpty) {
         productQuantityInCart.value =
@@ -205,7 +206,7 @@ class CartController extends GetxController {
 
   int getVariationQuantityInCart(String productId, String variationId) {
     final foundItem = cartItems.firstWhere(
-      (item) => item.productId == productId && item.variationId == variationId,
+          (item) => item.productId == productId && item.variationId == variationId,
       orElse: () => CartItemModel.empty(),
     );
 

@@ -9,10 +9,11 @@ import '../../../../utils/constants/image_strings.dart';
 import '../../../../utils/helpers/network_manager.dart';
 import '../../../../utils/popups/full_screen_loader.dart';
 
+/// Biến điều khiển cho việc đăng nhập.
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
 
-  /// Variables
+  /// Các biến
   final hidePassword = true.obs;
   final rememberMe = false.obs;
   final localStorage = GetStorage();
@@ -28,13 +29,13 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-  /// -- Email and Password SignIn
+  /// -- Đăng nhập bằng Email và Mật khẩu
   Future<void> emailAndPasswordSignIn() async {
     try {
-      // Start Loading
+      // Bắt đầu tải
       SHFFullScreenLoader.openLoadingDialog('Đang đăng nhập', SHFImages.docerAnimation);
 
-      //kiem tra ket noi
+      // kiểm tra kết nối
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         SHFFullScreenLoader.stopLoading();
@@ -42,58 +43,58 @@ class LoginController extends GetxController {
         return;
       }
 
-      // Form Validation
+      // Xác thực biểu mẫu
       if (!loginFormKey.currentState!.validate()) {
         SHFFullScreenLoader.stopLoading();
         return;
       }
 
-      // Save Data if Remember Me is selected
+      // Lưu dữ liệu nếu Chọn Remember Me
       if (rememberMe.value) {
         localStorage.write('REMEMBER_ME_EMAIL', email.text.trim());
         localStorage.write('REMEMBER_ME_PASSWORD', password.text.trim());
       }
 
-      // Login user using EMail & Password Authentication
+      // Đăng nhập người dùng bằng Xác thực Email & Mật khẩu
       final userCredentials = await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
-      // Assign user data to RxUser of UserController to use in app
+      // Gán dữ liệu người dùng cho RxUser của UserController để sử dụng trong ứng dụng
       await userController.fetchUserRecord();
 
-      // Remove Loader
+      // Gỡ bỏ tải
       SHFFullScreenLoader.stopLoading();
 
-      // Redirect
+      // Chuyển hướng
       await AuthenticationRepository.instance.screenRedirect(userCredentials.user);
     } catch (e) {
       SHFFullScreenLoader.stopLoading();
-      SHFLoaders.errorSnackBar(title: 'Oh Snap', message: e.toString());
+      SHFLoaders.errorSnackBar(title: 'Có lỗi', message: e.toString());
     }
   }
 
-  /// Google SignIn Authentication
+  /// Xác thực Đăng nhập Google
   Future<void> googleSignIn() async {
     try {
-      // Start Loading
+      // Bắt đầu tải
       SHFFullScreenLoader.openLoadingDialog('Đang đăng nhập', SHFImages.docerAnimation);
 
-      // Check Internet Connectivity
+      // Kiểm tra kết nối Internet
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         SHFFullScreenLoader.stopLoading();
         return;
       }
 
-      // Google Authentication
+      // Xác thực Google
       final userCredentials = await AuthenticationRepository.instance.signInWithGoogle();
 
-      // Save Authenticated user data in the Firebase Firestore
+      // Lưu dữ liệu người dùng đã xác thực trong Firebase Firestore
       await userController.saveUserRecord(userCredentials: userCredentials);
 
-      // Remove Loader
+      // Gỡ bỏ tải
       SHFFullScreenLoader.stopLoading();
 
-      // Redirect
+      // Chuyển hướng
       await AuthenticationRepository.instance.screenRedirect(userCredentials?.user);
     } catch (e) {
       SHFFullScreenLoader.stopLoading();

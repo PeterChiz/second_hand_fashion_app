@@ -8,9 +8,9 @@ import '../../../utils/constants/sizes.dart';
 import '../../../utils/helpers/helper_functions.dart';
 import '../texts/shf_brand_title_text.dart';
 
-/// A widget that displays an image with text below it in a vertical arrangement.
+/// Một widget hiển thị hình ảnh với văn bản phía dưới trong một sắp xếp dọc.
 class SHFVerticalImageAndText extends StatelessWidget {
-  /// Constructor for [SHFVerticalImageAndText].
+  /// Constructor cho [SHFVerticalImageAndText].
   const SHFVerticalImageAndText({
     super.key,
     this.onTap,
@@ -21,22 +21,22 @@ class SHFVerticalImageAndText extends StatelessWidget {
     this.textColor = SHFColors.white,
   });
 
-  /// The image asset path or URL.
+  /// Đường dẫn tài nguyên hình ảnh hoặc URL.
   final String image;
 
-  /// The text to be displayed below the image.
+  /// Văn bản sẽ được hiển thị phía dưới hình ảnh.
   final String title;
 
-  /// The color of the text.
+  /// Màu của văn bản.
   final Color textColor;
 
-  /// Flag indicating whether the image is loaded from the network.
+  /// Cờ chỉ định liệu hình ảnh có được tải từ mạng hay không.
   final bool isNetworkImage;
 
-  /// The background color of the widget.
+  /// Màu nền của widget.
   final Color? backgroundColor;
 
-  /// Callback function when the widget is tapped.
+  /// Hàm gọi lại khi widget được chạm vào.
   final void Function()? onTap;
 
   @override
@@ -47,7 +47,7 @@ class SHFVerticalImageAndText extends StatelessWidget {
         padding: const EdgeInsets.only(right: SHFSizes.spaceBtwItems),
         child: Column(
           children: [
-            ///Circular Icon
+            /// Biểu tượng tròn
             Flexible(
               child: SHFCircularImage(
                 image: image,
@@ -61,7 +61,7 @@ class SHFVerticalImageAndText extends StatelessWidget {
               ),
             ),
 
-            ///Text
+            /// Văn bản
             const SizedBox(height: SHFSizes.spaceBtwItems / 2),
             SizedBox(width: 55, child: SHFBrandTitleText(title: title, color: textColor)),
           ],
@@ -70,3 +70,4 @@ class SHFVerticalImageAndText extends StatelessWidget {
     );
   }
 }
+

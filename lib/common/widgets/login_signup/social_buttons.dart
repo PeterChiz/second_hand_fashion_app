@@ -32,22 +32,6 @@ class SHFSocialButtons extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: SHFSizes.spaceBtwItems),
-        /// Facebook Button ... chua lam dc
-        Container(
-          padding: const EdgeInsets.all(SHFSizes.xs),
-          decoration: BoxDecoration(
-              border: Border.all(color: SHFColors.grey),
-              borderRadius: BorderRadius.circular(100)),
-          child: IconButton(
-            onPressed: () => controller.googleSignIn(),
-            icon: const Image(
-              width: SHFSizes.iconMd + 4,
-              height: SHFSizes.iconMd + 4,
-              image: AssetImage(SHFImages.facebook),
-            ),
-          ),
-        ),
       ],
     );
   }

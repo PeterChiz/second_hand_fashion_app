@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/colors.dart';
 
-/// A circular container widget with optional child, border, and styling.
+/// Một widget container tròn có thể chứa child tùy chọn, border và các kiểu dáng.
 class SHFCircularContainer extends StatelessWidget {
-  /// Create a circular container.
+  /// Tạo một container tròn.
   ///
-  /// Parameters:
-  ///   - child: The optional child widget to be placed inside the container.
-  ///   - margin: The margin around the container.
-  ///   - padding: The padding inside the container.
-  ///   - width: The width of the container.
-  ///   - height: The height of the container.
-  ///   - radius: The radius of the circular border.
-  ///   - showBorder: Whether to show a border around the container.
-  ///   - backgroundColor: The background color of the container.
-  ///   - borderColor: The color of the border (if [showBorder] is true).
+  /// Tham số:
+  ///   - child: Widget child tùy chọn để đặt bên trong container.
+  ///   - margin: Phần lề xung quanh container.
+  ///   - padding: Phần padding bên trong container.
+  ///   - width: Chiều rộng của container.
+  ///   - height: Chiều cao của container.
+  ///   - radius: Bán kính của viền tròn.
+  ///   - showBorder: Cho biết liệu có hiển thị border xung quanh container không.
+  ///   - backgroundColor: Màu nền của container.
+  ///   - borderColor: Màu của border (nếu [showBorder] là true).
   const SHFCircularContainer({
     super.key,
     this.child,
@@ -55,3 +55,4 @@ class SHFCircularContainer extends StatelessWidget {
     );
   }
 }
+

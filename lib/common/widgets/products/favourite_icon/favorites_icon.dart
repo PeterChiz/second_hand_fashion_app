@@ -6,10 +6,10 @@ import 'package:second_hand_fashion_app/features/shop/controllers/product/favori
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 
 class SHFFavoritesIcon extends StatelessWidget {
-  /// A custom Icon widget which handles its own logic to add or remove products from the Wishlist.
-  /// You just have to call this widget on your design and pass a product id.
+  /// Widget biểu tượng tùy chỉnh xử lý logic của riêng mình để thêm hoặc xóa sản phẩm khỏi danh sách yêu thích.
+  /// Bạn chỉ cần gọi widget này trong thiết kế của bạn và truyền vào một id sản phẩm.
   ///
-  /// It will auto do the logic defined in this widget.
+  /// Nó sẽ tự động thực hiện logic được xác định trong widget này.
   const SHFFavoritesIcon({super.key, required this.productId});
 
   final String productId;
@@ -24,3 +24,4 @@ class SHFFavoritesIcon extends StatelessWidget {
     ));
   }
 }
+

@@ -7,20 +7,20 @@ import 'package:second_hand_fashion_app/utils/device/device_utility.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
 class SHFAppBar extends StatelessWidget implements PreferredSizeWidget {
-  /// Custom appbar for achieving a desired design goal.
-  /// - Set [title] for a custom title.
-  /// - [showBackArrow] to toggle the visibility of the back arrow.
-  /// - [leadingIcon] for a custom leading icon.
-  /// - [leadingOnPressed] callback for the leading icon press event.
-  /// - [actions] for adding a list of action widgets.
-  /// - Horizontal padding of the appbar can be customized inside this widget.
+  /// Thanh ứng dụng tùy chỉnh để đạt được một mục tiêu thiết kế mong muốn.
+  /// - Đặt [title] cho một tiêu đề tùy chỉnh.
+  /// - [showBackArrow] để chuyển đổi hiển thị mũi tên quay lại.
+  /// - [leadingIcon] cho một biểu tượng dẫn đầu tùy chỉnh.
+  /// - [leadingOnPressed] gọi lại cho sự kiện nhấn biểu tượng dẫn đầu.
+  /// - [actions] để thêm một danh sách các tiện ích hành động.
+  /// - Lề ngang của thanh ứng dụng có thể được tùy chỉnh bên trong tiện ích này.
   const SHFAppBar(
       {super.key,
-      this.title,
-      this.showBackArrow = false,
-      this.leadingIcon,
-      this.actions,
-      this.leadingOnPressed});
+        this.title,
+        this.showBackArrow = false,
+        this.leadingIcon,
+        this.actions,
+        this.leadingOnPressed});
 
   final Widget? title;
   final bool showBackArrow;
@@ -37,18 +37,17 @@ class SHFAppBar extends StatelessWidget implements PreferredSizeWidget {
           automaticallyImplyLeading: false,
           leading: showBackArrow
               ? IconButton(
-                  onPressed: () => Get.back(),
-                  icon: Icon(Iconsax.arrow_left, color: dark ? SHFColors.white : SHFColors.dark,))
+              onPressed: () => Get.back(),
+              icon: Icon(Iconsax.arrow_left, color: dark ? SHFColors.white : SHFColors.dark,))
               : leadingIcon != null
-                  ? IconButton(
-                      onPressed: leadingOnPressed, icon: Icon(leadingIcon))
-                  : null,
+              ? IconButton(
+              onPressed: leadingOnPressed, icon: Icon(leadingIcon))
+              : null,
           title: title,
           actions: actions,
         ));
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(SHFDeviceUtils.getAppBarHeight());
 }

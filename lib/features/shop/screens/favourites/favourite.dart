@@ -23,7 +23,7 @@ class FavouriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      // Intercept the back button press and redirect to Home Screen
+      // Chặn việc nhấn nút quay lại và chuyển hướng đến Màn hình chính
       onPopInvoked: (value) async => Get.offAll(const NavigationMenu()),
       child: Scaffold(
         appBar: SHFAppBar(
@@ -43,10 +43,10 @@ class FavouriteScreen extends StatelessWidget {
                     builder: (_, snapshot) {
                       /// Nothing Found Widget
                       final emptyWidget = SHFAnimationLoaderWidget(
-                        text: 'Rất tiếc! Danh sách yêu thích trống...',
+                        text: 'Rất tiết, danh sách yêu thích trống...',
                         animation: SHFImages.pencilAnimation,
                         showAction: true,
-                        actionText: 'Hãy thêm sản phẩm yêu thích',
+                        actionText: 'Thêm sản phẩm yêu thích',
                         onActionPressed: () => Get.off(() => const NavigationMenu()),
                       );
                       const loader = SHFVerticalProductShimmer(itemCount: 6);

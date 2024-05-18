@@ -20,7 +20,7 @@ class ResetPasswordScreen extends StatelessWidget {
     final controller = Get.put(ForgetPasswordController());
 
     return Scaffold(
-      /// Appbar to go back OR close all screens and Goto LoginScreen()
+      /// Thanhs ứng dụng để quay lại HOẶC đóng tất cả các màn hình và điều hướng đến Màn hình Đăng nhập
       appBar: SHFAppBar(
         actions: [
           IconButton(
@@ -33,36 +33,22 @@ class ResetPasswordScreen extends StatelessWidget {
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
             children: [
-              ///Image
+              /// Hình ảnh
               Image(
                 image: const AssetImage(SHFImages.deliveredEmailIllustration),
                 width: SHFHelperFunctions.screenWidth() * 0.6,
               ),
               const SizedBox(height: SHFSizes.spaceBtwSections),
 
-              ///Email, Title & SubTitle
+              /// Email, Tiêu đề & Phụ đề
               Text(email, style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.center),
               const SizedBox(height: SHFSizes.spaceBtwItems,),
               Text(SHFTexts.changeYourPasswordTitle, style: Theme.of(context).textTheme.headlineMedium,textAlign: TextAlign.center,),
               const SizedBox(height: SHFSizes.spaceBtwItems,),
               Text(SHFTexts.changeYourPasswordSubTitle, style: Theme.of(context).textTheme.headlineMedium,textAlign: TextAlign.center,),
               const SizedBox(height: SHFSizes.spaceBtwSections,),
-              // Text(SHFTexts.changeYourPasswordTitle,
-              //     style: Theme.of(context).textTheme.headlineMedium,
-              //     textAlign: TextAlign.center),
-              // const SizedBox(height: SHFSizes.spaceBtwItems),
-              // Text('chibui@gmail.com',
-              //     textAlign: TextAlign.center,
-              //     style: Theme.of(context).textTheme.labelLarge),
-              // const SizedBox(height: SHFSizes.spaceBtwItems),
-              // Text(
-              //   SHFTexts.changeYourPasswordSubTitle,
-              //   textAlign: TextAlign.center,
-              //   style: Theme.of(context).textTheme.labelMedium,
-              // ),
-              // const SizedBox(height: SHFSizes.spaceBtwSections),
 
-              ///Buttons
+              /// Nút
               SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(

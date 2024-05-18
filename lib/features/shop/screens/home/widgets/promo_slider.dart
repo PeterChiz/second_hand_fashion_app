@@ -9,57 +9,64 @@ import '../../../../../common/widgets/custom_shapes/containers/circular_containe
 import '../../../../../common/widgets/images/shf_rounded_image.dart';
 import '../../../../../utils/constants/sizes.dart';
 
-/// Widget to display a promo slider using GetX state management.
+/// Widget để hiển thị trình chiếu khuyến mãi sử dụng quản lý trạng thái GetX.
 class SHFPromoSlider extends StatelessWidget {
-  const SHFPromoSlider({super.key});
+  const SHFPromoSlider({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // Get instance of BannerController using GetX
+    // Lấy instance của BannerController sử dụng GetX
     final controller = Get.put(BannerController());
 
-    // Use Obx widget to automatically rebuild the UI when banners state changes
+    // Sử dụng widget Obx để tự động xây dựng lại giao diện khi trạng thái của banner thay đổi
     return Obx(
-          () {
+      () {
         // Loader
-        if (controller.bannersLoading.value) return const SHFShimmerEffect(width: double.infinity, height: 190);
+        if (controller.bannersLoading.value)
+          return const SHFShimmerEffect(width: double.infinity, height: 190);
 
-        // No data found
+        // Không tìm thấy dữ liệu
         if (controller.banners.isEmpty) {
           return const Center(child: Text('Không tìm thấy dữ liệu'));
         } else {
-          /// Record Found!
-          // Display CarouselSlider with banners and page indicator
+          /// Tìm thấy bản ghi!
+          // Hiển thị CarouselSlider với các banner và chỉ số trang
           return Column(
             children: [
               CarouselSlider(
                 options: CarouselOptions(
                   viewportFraction: 1,
-                  onPageChanged: (index, _) => controller.updatePageIndicator(index),
+                  onPageChanged: (index, _) =>
+                      controller.updatePageIndicator(index),
                 ),
                 items: controller.banners
                     .map(
                       (banner) => SHFRoundedImage(
-                    imageUrl: banner.imageUrl,
-                    isNetworkImage: true,
-                    onPressed: () => Get.toNamed(banner.targetScreen),
-                  ),
-                )
+                        imageUrl: banner.imageUrl,
+                        isNetworkImage: true,
+                        onPressed: () => Get.toNamed(banner.targetScreen),
+                      ),
+                    )
                     .toList(),
               ),
               const SizedBox(height: SHFSizes.spaceBtwItems),
               Center(
                 child: Obx(
-                      () => Row(
+                  () => Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Display page indicators based on the number of banners
+                      // Hiển thị chỉ số trang dựa trên số lượng banner
                       for (int i = 0; i < controller.banners.length; i++)
                         SHFCircularContainer(
                           width: 20,
                           height: 4,
                           margin: const EdgeInsets.only(right: 10),
-                          backgroundColor: controller.carousalCurrentIndex.value == i ? SHFColors.primary : SHFColors.grey,
+                          backgroundColor:
+                              controller.carousalCurrentIndex.value == i
+                                  ? SHFColors.primary
+                                  : SHFColors.grey,
                         ),
                     ],
                   ),

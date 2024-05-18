@@ -7,7 +7,6 @@ import 'brand_model.dart';
 class ProductModel {
   String id;
   int stock;
-  String? sku;
   double price;
   String title;
   DateTime? date;
@@ -25,7 +24,6 @@ class ProductModel {
   ProductModel(
       {required this.id,
       required this.stock,
-      this.sku,
       required this.price,
       required this.title,
       this.date,
@@ -47,7 +45,6 @@ class ProductModel {
   ///Json Format
   toJson() {
     return {
-      'SKU': sku,
       'Title': title,
       'Stock': stock,
       'Price': price,
@@ -74,7 +71,6 @@ class ProductModel {
     final data = document.data()!;
     return ProductModel(
       id: document.id,
-      sku: data['SKU'],
       title: data['Title'],
       stock: data['Stock'] ?? 0,
       isFeatured: data['IsFeatured'] ?? false,
@@ -101,7 +97,6 @@ class ProductModel {
     final data = document.data() as Map<String, dynamic>;
     return ProductModel(
       id: document.id,
-      sku: data['SKU'] ?? '',
       title: data['Title'] ?? '',
       stock: data['Stock'] ?? 0,
       isFeatured: data['IsFeatured'] ?? false,

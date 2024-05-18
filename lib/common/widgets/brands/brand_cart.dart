@@ -9,19 +9,19 @@ import '../custom_shapes/containers/rounded_container.dart';
 import '../images/shf_circular_image.dart';
 import '../texts/shf_brand_title_text_with_verified_icon.dart';
 
-/// A card widget representing a brand.
+/// Widget thẻ biểu diễn một thương hiệu.
 class SHFBrandCard extends StatelessWidget {
-  /// Default constructor for the TBrandCard.
+  /// Hàm tạo mặc định cho SHFBrandCard.
   ///
-  /// Parameters:
-  ///   - brand: The brand model to display.
-  ///   - showBorder: A flag indicating whether to show a border around the card.
-  ///   - onTap: Callback function when the card is tapped.
+  /// Tham số:
+  ///   - brand: Thương hiệu để hiển thị.
+  ///   - showBorder: Một cờ chỉ ra liệu có hiển thị viền xung quanh thẻ hay không.
+  ///   - onTap: Hàm gọi lại khi thẻ được chạm.
   const SHFBrandCard({
     super.key,
+    required this.brand,
     required this.showBorder,
     this.onTap,
-    required this.brand,
   });
 
   final BrandModel brand;
@@ -30,10 +30,11 @@ class SHFBrandCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = SHFHelperFunctions.isDarkMode(context);
+
     return GestureDetector(
       onTap: onTap,
-
-      ///Container Design
+      /// Thiết kế Container
       child: SHFRoundedContainer(
         showBorder: showBorder,
         backgroundColor: Colors.transparent,
@@ -41,44 +42,33 @@ class SHFBrandCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ///Icon
+            /// -- Icon
             Flexible(
               child: SHFCircularImage(
-                isNetworkImage: true,
                 image: brand.image,
+                isNetworkImage: true,
                 backgroundColor: Colors.transparent,
-                overlayColor: SHFHelperFunctions.isDarkMode(context)
-                    ? SHFColors.white
-                    : SHFColors.black,
+                overlayColor: isDark ? SHFColors.white : SHFColors.black,
               ),
             ),
-            const SizedBox(
-              height: SHFSizes.spaceBtwItems / 2,
-            ),
+            const SizedBox(width: SHFSizes.spaceBtwItems / 2),
 
-            ///Text
-            // [Expanded] & Colum [MainAxisSize.min] rất quan trọng
-            // dùng để giữ phần tử ở giữa theo chiều dọc và cũng để giữ văn bản bên trong các ranh giới
+            /// -- Texts
+            // [Expanded] & Column [MainAxisSize.min] là quan trọng để giữ các phần tử ở trung tâm dọc và cũng
+            // để giữ văn bản trong ranh giới.
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SHFBrandTitleWithVerifiedIcon(
-                    title: brand.name,
-                    brandTextSize: TextSizes.large,
-                  ),
-                  Text(
-                    '${brand.productsCount ?? 0} sản phẩm',
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
+                  SHFBrandTitleWithVerifiedIcon(title: brand.name, brandTextSize: TextSizes.large),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 }
+

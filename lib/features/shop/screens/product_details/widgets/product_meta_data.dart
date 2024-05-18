@@ -3,7 +3,7 @@ import 'package:second_hand_fashion_app/common/widgets/images/shf_circular_image
 import 'package:second_hand_fashion_app/common/widgets/texts/shf_product_price_text.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/shf_product_title_text.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/shf_brand_title_text_with_verified_icon.dart';
-import 'package:second_hand_fashion_app/features/shop/controllers/product/poduct_controller.dart';
+import 'package:second_hand_fashion_app/features/shop/controllers/product/product_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 import 'package:second_hand_fashion_app/utils/constants/enums.dart';
 import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
@@ -23,42 +23,55 @@ class SHFProductMetaData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = ProductController.instance;
-    final salePercentage = ProductController.instance.calculateSalePercentage(product.price, product.salePrice);
+    final salePercentage = ProductController.instance
+        .calculateSalePercentage(product.price, product.salePrice);
     final darkMode = SHFHelperFunctions.isDarkMode(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        /// Price & Sale Price
+        /// Giá & Giá khuyến mãi
         Row(
           children: [
-            /// -- Sale Tag
+            /// -- Nhãn Giảm giá
             if (salePercentage != null)
               Row(
                 children: [
                   SHFRoundedContainer(
                     backgroundColor: SHFColors.secondary,
                     radius: SHFSizes.sm,
-                    padding: const EdgeInsets.symmetric(horizontal: SHFSizes.sm, vertical: SHFSizes.xs),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: SHFSizes.sm, vertical: SHFSizes.xs),
                     child: Text('$salePercentage%',
-                        style: Theme.of(context).textTheme.labelLarge!.apply(color: SHFColors.black)),
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge!
+                            .apply(color: SHFColors.black)),
                   ),
                   const SizedBox(width: SHFSizes.spaceBtwItems)
                 ],
               ),
 
-
-            // Actual Price if sale price not null.
-            if ((product.productVariations == null || product.productVariations!.isEmpty) && product.salePrice> 0.0)
+            // Giá thực nếu giá khuyến mãi không null.
+            if ((product.productVariations == null ||
+                    product.productVariations!.isEmpty) &&
+                product.salePrice > 0.0)
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(product.price.toString(), style: Theme.of(context).textTheme.titleSmall!.apply(decoration: TextDecoration.lineThrough),),
+                  Text(
+                    product.price.toString(),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .apply(decoration: TextDecoration.lineThrough),
+                  ),
                   const SizedBox(width: SHFSizes.spaceBtwItems)
                 ],
               ),
 
-            // Price, Show sale price as main price if sale exist.
-            SHFProductPriceText(price: controller.getProductPrice(product), isLarge: true),
+            // Giá, Hiển thị giá khuyến mãi là giá chính nếu có khuyến mãi.
+            SHFProductPriceText(
+                price: controller.getProductPrice(product), isLarge: true),
           ],
         ),
         const SizedBox(height: SHFSizes.spaceBtwItems / 1.5),
@@ -67,12 +80,13 @@ class SHFProductMetaData extends StatelessWidget {
         Row(
           children: [
             const SHFProductTitleText(title: 'Tình trạng: ', smallSize: true),
-            Text(controller.getProductStockStatus(product), style: Theme.of(context).textTheme.titleMedium),
+            Text(controller.getProductStockStatus(product),
+                style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
         const SizedBox(height: SHFSizes.spaceBtwItems / 2),
 
-        /// Brand
+        /// Thương hiệu
         Row(
           children: [
             SHFCircularImage(
@@ -82,7 +96,8 @@ class SHFProductMetaData extends StatelessWidget {
               image: product.brand!.image,
               overlayColor: darkMode ? SHFColors.white : SHFColors.black,
             ),
-            SHFBrandTitleWithVerifiedIcon(title: product.brand!.name, brandTextSize: TextSizes.medium),
+            SHFBrandTitleWithVerifiedIcon(
+                title: product.brand!.name, brandTextSize: TextSizes.medium),
           ],
         ),
       ],

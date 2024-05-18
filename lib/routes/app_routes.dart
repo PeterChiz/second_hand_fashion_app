@@ -11,7 +11,6 @@ import 'package:second_hand_fashion_app/features/shop/screens/cart/cart.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/checkout/checkout.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/home/home.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/order/order.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/product_reviews/product_reviews.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/store/store.dart';
 import 'package:second_hand_fashion_app/routes/routes.dart';
 
@@ -23,7 +22,6 @@ class AppRoutes{
     GetPage(name: SHFRoutes.store, page: () => const StoreScreen()),
     GetPage(name: SHFRoutes.favourites, page: () => const FavouriteScreen()),
     GetPage(name: SHFRoutes.settings, page: () => const SettingsScreen()),
-    GetPage(name: SHFRoutes.productReviews, page: () => const ProductReviewsScreen()),
     GetPage(name: SHFRoutes.order, page: () => const OrderScreen()),
     GetPage(name: SHFRoutes.checkout, page: () => const CheckoutScreen()),
     GetPage(name: SHFRoutes.cart, page: () => const CartScreen()),

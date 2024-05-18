@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:readmore/readmore.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
@@ -13,7 +12,6 @@ import 'package:second_hand_fashion_app/features/shop/screens/product_details/wi
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/device/device_utility.dart';
 import '../checkout/checkout.dart';
-import '../product_reviews/product_reviews.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key, required this.product});
@@ -27,63 +25,49 @@ class ProductDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// 1 - Product Image Slider
-            SHFProducSHFImageslider(product: product),
+            /// 1 - Trình chiếu ảnh sản phẩm
+            SHFProductImageSlider(product: product),
 
-            /// 2 - Product Details
+            /// 2 - Chi tiết sản phẩm
             Container(
               padding: const EdgeInsets.only(right: SHFSizes.defaultSpace, left: SHFSizes.defaultSpace, bottom: SHFSizes.defaultSpace),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  /// - Rating & Share
+                  /// - Đánh giá & Chia sẻ
                   const SHFRatingAndShare(),
 
-                  /// - Price, Title, Stock, & Brand
+                  /// - Giá, Tiêu đề, Kho hàng, & Thương hiệu
                   SHFProductMetaData(product: product),
                   const SizedBox(height: SHFSizes.spaceBtwSections / 2),
 
-                  /// -- Attributes
-                  // If Product has no variations do not show attributes as well.
+                  /// -- Thuộc tính
+                  // Nếu sản phẩm không có biến thể thì cũng không hiển thị thuộc tính.
                   if (product.productVariations != null && product.productVariations!.isNotEmpty) SHFProductAttributes(product: product),
                   if (product.productVariations != null && product.productVariations!.isNotEmpty) const SizedBox(height: SHFSizes.spaceBtwSections),
 
-                  /// -- Checkout Button
+                  /// -- Nút Thanh toán
                   SizedBox(
                     width: SHFDeviceUtils.getScreenWidth(context),
                     child: ElevatedButton(child: const Text('Thanh toán'), onPressed: () => Get.to(() => const CheckoutScreen())),
                   ),
                   const SizedBox(height: SHFSizes.spaceBtwSections),
 
-                  /// - Description
+                  /// - Mô tả
                   const SHFSectionHeading(title: 'Mô tả', showActionButton: false),
                   const SizedBox(height: SHFSizes.spaceBtwItems),
-                  // Read more package
+                  // Gói Read more
                   ReadMoreText(
                     product.description!,
                     trimLines: 2,
                     colorClickableText: Colors.pink,
                     trimMode: TrimMode.Line,
-                    trimCollapsedText: ' Chi tiết',
-                    trimExpandedText: ' Thu nhỏ',
+                    trimCollapsedText: ' Xem thêm',
+                    trimExpandedText: ' Thu gọn',
                     moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                     lessStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                   ),
                   const SizedBox(height: SHFSizes.spaceBtwSections),
-
-                  /// - Reviews
-                  const Divider(),
-                  const SizedBox(height: SHFSizes.spaceBtwItems),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SHFSectionHeading(title: 'Reviews (199)', showActionButton: false),
-                      IconButton(
-                        icon: const Icon(Iconsax.arrow_right_3, size: 18),
-                        onPressed: () => Get.to(() => const ProductReviewsScreen(), fullscreenDialog: true),
-                      )
-                    ],
-                  ),
                 ],
               ),
             ),

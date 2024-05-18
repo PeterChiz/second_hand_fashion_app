@@ -106,17 +106,6 @@ class ProfileScreen extends StatelessWidget {
                   onPressed: () {},
                   title: 'Số điện thoại',
                   value: controller.user.value.phoneNumber),
-              ///chua them
-              SHFProfileMenu(
-                onPressed: () {},
-                title: 'Giới tính',
-                value: 'Male',
-              ),
-              SHFProfileMenu(
-                onPressed: () {},
-                title: 'Năm sinh',
-                value: '20, Oct, 2002',
-              ),
 
               const Divider(),
               const SizedBox(height: SHFSizes.spaceBtwItems),

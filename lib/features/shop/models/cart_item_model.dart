@@ -19,10 +19,10 @@ class CartItemModel {
     this.selectedVariation,
   });
 
-  ///Empty cart
+  /// Mô hình giỏ hàng rỗng
   static CartItemModel empty() => CartItemModel(productId: '', quantity: 0);
 
-  ///Convert a CartItem to a json map
+  /// Chuyển đổi một CartItem thành một bản đồ JSON
   Map<String, dynamic> toJson() {
     return {
       'productId': productId,
@@ -36,7 +36,7 @@ class CartItemModel {
     };
   }
 
-  ///
+  /// Tạo một đối tượng CartItem từ dữ liệu JSON
   factory CartItemModel.fromJson(Map<String, dynamic> json) {
     return CartItemModel(
       productId: json['productId'],

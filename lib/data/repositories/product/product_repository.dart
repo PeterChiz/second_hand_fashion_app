@@ -1,33 +1,31 @@
-import 'dart:io';
-
-import 'package:path/path.dart' as path;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import '../../../data/repositories/brands/brand_repository.dart';
-import '../../../data/services/cloud_storage/firebase_storage_service.dart';
 import '../../../features/shop/models/product_model.dart';
-import '../../../utils/constants/enums.dart';
 import '../../../utils/exceptions/firebase_exception.dart';
 import '../../../utils/exceptions/platform_exceptions.dart';
 
-
-/// Repository for managing product-related data and operations.
+/// Kho dữ liệu cho việc quản lý dữ liệu và các thao tác liên quan đến sản phẩm.
 class ProductRepository extends GetxController {
   static ProductRepository get instance => Get.find();
 
-  /// Firestore instance for database interactions.
+  /// Firestore instance để tương tác với cơ sở dữ liệu.
   final _db = FirebaseFirestore.instance;
 
-  /* ---------------------------- FUNCTIONS ---------------------------------*/
+  /* ---------------------------- CÁC HÀM ---------------------------------*/
 
-  /// Get limited featured products.
+  /// Nhận sản phẩm nổi bật có giới hạn.
   Future<List<ProductModel>> getFeaturedProducts() async {
     try {
-      final snapshot = await _db.collection('Products').where('IsFeatured', isEqualTo: true).limit(4).get();
-      return snapshot.docs.map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot)).toList();
+      final snapshot = await _db
+          .collection('Products')
+          .where('IsFeatured', isEqualTo: true)
+          .limit(4)
+          .get();
+      return snapshot.docs
+          .map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot))
+          .toList();
     } on FirebaseException catch (e) {
       throw SHFFirebaseException(e.code).message;
     } on PlatformException catch (e) {
@@ -37,17 +35,24 @@ class ProductRepository extends GetxController {
     }
   }
 
-  /// Get all featured products using Stream.
+  /// Nhận tất cả sản phẩm nổi bật sử dụng Stream.
   Future<List<ProductModel>> getAllFeaturedProducts() async {
-    final snapshot = await _db.collection('Products').where('IsFeatured', isEqualTo: true).get();
-    return snapshot.docs.map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot)).toList();
+    final snapshot = await _db
+        .collection('Products')
+        .where('IsFeatured', isEqualTo: true)
+        .get();
+    return snapshot.docs
+        .map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot))
+        .toList();
   }
 
-  /// Get Products based on the Brand
+  /// Nhận sản phẩm dựa trên Thương hiệu
   Future<List<ProductModel>> fetchProductsByQuery(Query query) async {
     try {
       final querySnapshot = await query.get();
-      final List<ProductModel> productList = querySnapshot.docs.map((doc) => ProductModel.fromQuerySnapshot(doc)).toList();
+      final List<ProductModel> productList = querySnapshot.docs
+          .map((doc) => ProductModel.fromQuerySnapshot(doc))
+          .toList();
       return productList;
     } on FirebaseException catch (e) {
       throw SHFFirebaseException(e.code).message;
@@ -58,38 +63,60 @@ class ProductRepository extends GetxController {
     }
   }
 
-  /// Get favorite products based on a list of product IDs.
-  Future<List<ProductModel>> getFavouriteProducts(List<String> productIds) async {
+  /// Nhận sản phẩm yêu thích dựa trên danh sách ID sản phẩm.
+  Future<List<ProductModel>> getFavouriteProducts(
+      List<String> productIds) async {
     try {
-      final snapshot = await _db.collection('Products').where(FieldPath.documentId, whereIn: productIds).get();
-      return snapshot.docs.map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot)).toList();
+      final snapshot = await _db
+          .collection('Products')
+          .where(FieldPath.documentId, whereIn: productIds)
+          .get();
+      return snapshot.docs
+          .map((querySnapshot) => ProductModel.fromSnapshot(querySnapshot))
+          .toList();
     } on FirebaseException catch (e) {
       throw SHFFirebaseException(e.code).message;
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      throw 'Có lỗi gì đó, vui lòng thử lại!';
     }
   }
 
-  /// Fetches products for a specific category.
-  /// If the limit is -1, retrieves all products for the category; otherwise, limits the result based on the provided limit.
-  /// Returns a list of [ProductModel] objects.
-  Future<List<ProductModel>> getProductsForCategory({required String categoryId, int limit = 4}) async {
+  /// Lấy sản phẩm cho một danh mục cụ thể.
+  /// Nếu giới hạn là -1, lấy tất cả sản phẩm cho danh mục; nếu không, giới hạn kết quả dựa trên giới hạn đã cung cấp.
+  /// Trả về danh sách các đối tượng [ProductModel].
+  Future<List<ProductModel>> getProductsForCategory(
+      {required String categoryId, int limit = 4}) async {
     try {
-      // Query to get all documents where productId matches the provided categoryId & Fetch limited or unlimited based on limit
+      // Truy vấn để nhận tất cả tài liệu nơi productId khớp với categoryId đã cung cấp
+      // & Lấy có giới hạn hoặc không giới hạn dựa trên limit
       QuerySnapshot productCategoryQuery = limit == -1
-          ? await _db.collection('ProductCategory').where('categoryId', isEqualTo: categoryId).get()
-          : await _db.collection('ProductCategory').where('categoryId', isEqualTo: categoryId).limit(limit).get();
+          ? await _db
+              .collection('ProductCategory')
+              .where('categoryId', isEqualTo: categoryId)
+              .get()
+          : await _db
+              .collection('ProductCategory')
+              .where('categoryId', isEqualTo: categoryId)
+              .limit(limit)
+              .get();
 
-      // Extract productIds from the documents
-      List<String> productIds = productCategoryQuery.docs.map((doc) => doc['productId'] as String).toList();
+      // Trích xuất productIds từ các tài liệu
+      List<String> productIds = productCategoryQuery.docs
+          .map((doc) => doc['productId'] as String)
+          .toList();
 
-      // Query to get all documents where the brandId is in the list of brandIds, FieldPath.documentId to query documents in Collection
-      final productsQuery = await _db.collection('Products').where(FieldPath.documentId, whereIn: productIds).get();
+      // Truy vấn để nhận tất cả tài liệu nơi brandId nằm trong danh sách brandIds, FieldPath.documentId để truy vấn tài liệu trong Collection
+      final productsQuery = await _db
+          .collection('Products')
+          .where(FieldPath.documentId, whereIn: productIds)
+          .get();
 
-      // Extract brand names or other relevant data from the documents
-      List<ProductModel> products = productsQuery.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
+      // Trích xuất tên thương hiệu hoặc các dữ liệu liên quan khác từ các tài liệu
+      List<ProductModel> products = productsQuery.docs
+          .map((doc) => ProductModel.fromSnapshot(doc))
+          .toList();
 
       return products;
     } on FirebaseException catch (e) {
@@ -101,18 +128,28 @@ class ProductRepository extends GetxController {
     }
   }
 
-  /// Fetches products for a specific brand.
-  /// If the limit is -1, retrieves all products for the brand; otherwise, limits the result based on the provided limit.
-  /// Returns a list of [ProductModel] objects.
-  Future<List<ProductModel>> getProductsForBrand(String brandId, int limit) async {
+  /// Lấy sản phẩm cho một thương hiệu cụ thể.
+  /// Nếu giới hạn là -1, lấy tất cả sản phẩm cho thương hiệu; nếu không, giới hạn kết quả dựa trên giới hạn đã cung cấp.
+  /// Trả về danh sách các đối tượng [ProductModel].
+  Future<List<ProductModel>> getProductsForBrand(
+      String brandId, int limit) async {
     try {
-      // Query to get all documents where productId matches the provided categoryId & Fetch limited or unlimited based on limit
+      // Truy vấn để nhận tất cả tài liệu nơi productId khớp với categoryId đã cung cấp & Lấy có giới hạn hoặc không giới hạn dựa trên limit
       QuerySnapshot<Map<String, dynamic>> querySnapshot = limit == -1
-          ? await _db.collection('Products').where('Brand.Id', isEqualTo: brandId).get()
-          : await _db.collection('Products').where('Brand.Id', isEqualTo: brandId).limit(limit).get();
+          ? await _db
+              .collection('Products')
+              .where('Brand.Id', isEqualTo: brandId)
+              .get()
+          : await _db
+              .collection('Products')
+              .where('Brand.Id', isEqualTo: brandId)
+              .limit(limit)
+              .get();
 
-      // Map Products
-      final products = querySnapshot.docs.map((doc) => ProductModel.fromSnapshot(doc)).toList();
+      // Lập bản đồ sản phẩm
+      final products = querySnapshot.docs
+          .map((doc) => ProductModel.fromSnapshot(doc))
+          .toList();
 
       return products;
     } on FirebaseException catch (e) {
@@ -124,124 +161,34 @@ class ProductRepository extends GetxController {
     }
   }
 
-  Future<List<ProductModel>> searchProducts(String query, {String? categoryId, String? brandId, double? minPrice, double? maxPrice}) async {
+  Future<List<ProductModel>> searchProducts(String query) async {
     try {
-      // Reference to the 'products' collection in Firestore
-      CollectionReference productsCollection = FirebaseFirestore.instance.collection('Products');
+      // Tham chiếu đến 'products' collection trong Firestore
+      CollectionReference productsCollection =
+          FirebaseFirestore.instance.collection('Products');
 
-      // Start with a basic query to search for products where the name contains the query
+      // Bắt đầu với một truy vấn cơ bản để tìm kiếm các sản phẩm nơi tên chứa truy vấn
       Query queryRef = productsCollection;
 
-      // Apply the search filter
-      if (query.isNotEmpty) {
-        queryRef = queryRef.where('Title', isGreaterThanOrEqualTo: query);
-      }
-
-      // Apply filters
-      if (categoryId != null) {
-        queryRef = queryRef.where('CategoryId', isEqualTo: categoryId);
-      }
-
-      if (brandId != null) {
-        queryRef = queryRef.where('Brand.Id', isEqualTo: brandId);
-      }
-
-      if (minPrice != null) {
-        queryRef = queryRef.where('Price', isGreaterThanOrEqualTo: minPrice);
-      }
-
-      if (maxPrice != null) {
-        queryRef = queryRef.where('Price', isLessThanOrEqualTo: maxPrice);
-      }
-
-      // Execute the query
+      // Thực hiện truy vấn
       QuerySnapshot querySnapshot = await queryRef.get();
 
-      // Map the documents to ProductModel objects
-      final products = querySnapshot.docs.map((doc) => ProductModel.fromQuerySnapshot(doc)).toList();
+      // Lọc kết quả dựa trên truy vấn tìm kiếm
+      final filteredResults = querySnapshot.docs
+          .map((doc) => ProductModel.fromQuerySnapshot(doc))
+          .toList()
+          .where((product) {
+        return product.title.toLowerCase().contains(query.toLowerCase()) ||
+            product.brand!.name.toLowerCase().contains(query.toLowerCase());
+      }).toList();
 
-      return products;
+      return filteredResults;
     } on FirebaseException catch (e) {
       throw SHFFirebaseException(e.code).message;
     } on PlatformException catch (e) {
       throw SHFPlatformException(e.code).message;
     } catch (e) {
       throw 'Có lỗi gì đó, vui lòng thử lại!';
-    }
-  }
-
-  /// Upload dummy data to the Cloud Firebase.
-  Future<void> uploadDummyData(List<ProductModel> products) async {
-    try {
-      // Upload all the products along with their images
-      final storage = Get.put(SHFFirebaseStorageService());
-
-      // Get Product Brand
-      final brandRepository = Get.put(BrandRepository());
-
-      // Loop through each product
-      for (var product in products) {
-        // Extract the selected brand
-        final brand = await brandRepository.getSingleBrand(product.brand!.id);
-
-        // Upload Brand image if Brand Not found
-        if (brand == null || brand.image.isEmpty) {
-          throw 'Không tìm thấy thương hiệu nào. Vui lòng tải lên thương hiệu trước.';
-        } else {
-          product.brand!.image = brand.image;
-        }
-
-        // Get image data link from local assets
-        final thumbnail = await storage.getImageDataFromAssets(product.thumbnail);
-
-        // Upload image and get its URL
-        final url = await storage.uploadImageData('Products', thumbnail, path.basename(product.thumbnail));
-
-        // Assign URL to product.thumbnail attribute
-        product.thumbnail = url;
-
-        // Product list of images
-        if (product.images != null && product.images!.isNotEmpty) {
-          List<String> imagesUrl = [];
-          for (var image in product.images!) {
-            // Get image data link from local assets
-            final assetImage = await storage.getImageDataFromAssets(image);
-
-            // Upload image and get its URL
-            final url = await storage.uploadImageData('Products', assetImage, path.basename(image));
-
-            // Assign URL to product.thumbnail attribute
-            imagesUrl.add(url);
-          }
-          product.images!.clear();
-          product.images!.addAll(imagesUrl);
-        }
-
-        // Upload Variation Images
-        if (product.productType == ProductType.variable.toString()) {
-          for (var variation in product.productVariations!) {
-            // Get image data link from local assets
-            final assetImage = await storage.getImageDataFromAssets(variation.image);
-
-            // Upload image and get its URL
-            final url = await storage.uploadImageData('Products', assetImage, path.basename(variation.image));
-
-            // Assign URL to variation.image attribute
-            variation.image = url;
-          }
-        }
-
-        // Store product in Firestore
-        await _db.collection("Products").doc(product.id).set(product.toJson());
-      }
-    } on FirebaseException catch (e) {
-      throw e.message!;
-    } on SocketException catch (e) {
-      throw e.message;
-    } on PlatformException catch (e) {
-      throw e.message!;
-    } catch (e) {
-      throw e.toString();
     }
   }
 }

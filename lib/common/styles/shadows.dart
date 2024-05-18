@@ -8,5 +8,4 @@ class SHFShadowStyle{
     spreadRadius: 7,
     offset: const Offset(0, 2),
   );
-
 }

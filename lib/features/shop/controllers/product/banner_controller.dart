@@ -24,17 +24,17 @@ class BannerController extends GetxController{
     carousalCurrentIndex.value = index;
   }
 
-  ///Fetch Banners
+  ///Tim Banners
   Future<void> fetchBanners() async {
     try {
       // Start Loading
       bannersLoading.value = true;
 
-      // Fetch Banners
+      // Tim Banners
       final bannerRepo = Get.put(BannerRepository());
       final banners = await bannerRepo.fetchBanners();
 
-      // Assign banners
+      // lay banners
       this.banners.assignAll(banners);
     } catch (e) {
       SHFLoaders.errorSnackBar(title: 'Có lỗi!', message: e.toString());

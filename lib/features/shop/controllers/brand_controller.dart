@@ -19,19 +19,19 @@ class BrandController extends GetxController {
     super.onInit();
   }
 
-  /// -- Load Brands
+  /// -- Tải Thương hiệu
   Future<void> getFeaturedBrands() async {
     try {
-      // Show loader while loading Brands
+      // Hiển thị loader trong khi tải Thương hiệu
       isLoading.value = true;
 
-      // Fetch Brands from your data source (Firestore, API, etc.)
+      // Lấy Thương hiệu từ nguồn dữ liệu của bạn (Firestore, API, vv.)
       final fetchedCategories = await brandRepository.getAllBrands();
 
-      // Update the brands list
+      // Cập nhật danh sách thương hiệu
       allBrands.assignAll(fetchedCategories);
 
-      // Update the featured brands list
+      // Cập nhật danh sách thương hiệu nổi bật
       featuredBrands.assignAll(allBrands.where((brand) => brand.isFeatured ?? false).take(4).toList());
 
     } catch (e) {
@@ -41,13 +41,13 @@ class BrandController extends GetxController {
     }
   }
 
-  /// -- Get Brands For Category
+  /// -- Lấy Thương hiệu Cho Danh mục
   Future<List<BrandModel>> getBrandsForCategory(String categoryId) async {
     final brands = await brandRepository.getBrandsForCategory(categoryId);
     return brands;
   }
 
-  /// Get Brand Specific Products from your data source
+  /// Lấy Sản phẩm Cụ thể của Thương hiệu từ nguồn dữ liệu của bạn
   Future<List<ProductModel>> getBrandProducts(String brandId, int limit) async {
     final products = await ProductRepository.instance.getProductsForBrand(brandId, limit);
     return products;

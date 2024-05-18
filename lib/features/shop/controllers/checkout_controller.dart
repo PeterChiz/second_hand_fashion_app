@@ -33,12 +33,9 @@ class CheckoutController extends GetxController {
               const SizedBox(height: SHFSizes.spaceBtwSections),
               SHFPaymentTile(paymentMethod: PaymentMethodModel(name: PaymentMethods.momo.name, image: SHFImages.momo)),
               const SizedBox(height: SHFSizes.spaceBtwItems/2),
-
               SHFPaymentTile(paymentMethod: PaymentMethodModel(name: 'VISA', image: SHFImages.visa)),
               const SizedBox(height: SHFSizes.spaceBtwItems/2),
               SHFPaymentTile(paymentMethod: PaymentMethodModel(name: 'Master Card', image: SHFImages.masterCard)),
-              const SizedBox(height: SHFSizes.spaceBtwItems/2),
-              SHFPaymentTile(paymentMethod: PaymentMethodModel(name: 'Paytm', image: SHFImages.paytm)),
               const SizedBox(height: SHFSizes.spaceBtwItems/2),
               SHFPaymentTile(paymentMethod: PaymentMethodModel(name: 'Thanh toán khi nhận hàng', image: SHFImages.successfulPaymentIcon)),
               const SizedBox(height: SHFSizes.spaceBtwItems/2),

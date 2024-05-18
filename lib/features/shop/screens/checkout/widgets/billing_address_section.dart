@@ -7,52 +7,59 @@ import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import '../../../../pertonalization/models/address_model.dart';
 
 class SHFBillingAddressSection extends StatelessWidget {
-  const SHFBillingAddressSection({super.key});
+  const SHFBillingAddressSection({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final addressController = AddressController.instance;
 
     return Obx(
-          () => Column(
+      () => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Display shipping address heading with a change button.
+          // Hiển thị tiêu đề địa chỉ giao hàng với nút thay đổi.
           SHFSectionHeading(
             title: 'Địa chỉ nhận hàng',
             buttonTitle: 'Thay đổi',
             showActionButton: true,
             onPressed: () => addressController.selectNewAddressPopup(context),
           ),
-          // Check if an address is selected, if true, display address details; otherwise, prompt to select an address.
+          // Kiểm tra nếu có địa chỉ được chọn, nếu đúng, hiển thị chi tiết địa chỉ; nếu không, yêu cầu chọn địa chỉ.
           addressController.selectedAddress.value.id.isNotEmpty
-              ? _buildAddressDetails(context, addressController.selectedAddress.value)
-              : Text('Chọn địa chỉ', style: Theme.of(context).textTheme.bodyMedium),
+              ? _buildAddressDetails(
+                  context, addressController.selectedAddress.value)
+              : Text('Chọn địa chỉ',
+                  style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );
   }
 
-  /// Build address details widget.
-  Widget _buildAddressDetails(BuildContext context, AddressModel selectedAddress) {
+  /// Xây dựng widget chi tiết địa chỉ.
+  Widget _buildAddressDetails(
+      BuildContext context, AddressModel selectedAddress) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Display the name of the selected address.
-        Text(selectedAddress.name, style: Theme.of(context).textTheme.bodyLarge),
+        // Hiển thị tên của địa chỉ được chọn.
+        Text(selectedAddress.name,
+            style: Theme.of(context).textTheme.bodyLarge),
         const SizedBox(height: SHFSizes.spaceBtwItems / 2),
         Row(
           children: [
-            // Display a phone icon followed by the formatted phone number.
+            // Hiển thị biểu tượng điện thoại sau đó là số điện thoại được định dạng.
             const Icon(Icons.phone, color: Colors.grey, size: 16),
             const SizedBox(width: SHFSizes.spaceBtwItems),
-            Text(selectedAddress.formattedPhoneNo, style: Theme.of(context).textTheme.bodyMedium),
+            Text(selectedAddress.formattedPhoneNo,
+                style: Theme.of(context).textTheme.bodyMedium),
           ],
         ),
         const SizedBox(height: SHFSizes.spaceBtwItems / 2),
         Row(
           children: [
-            // Display a location history icon followed by the address.
+            // Hiển thị biểu tượng địa điểm sau đó là địa chỉ.
             const Icon(Icons.location_history, color: Colors.grey, size: 16),
             const SizedBox(width: SHFSizes.spaceBtwItems),
             Expanded(

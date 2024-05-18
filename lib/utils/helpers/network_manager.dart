@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/utils/popups/loader.dart';
 
-///Manager the network connectivity status and provides methods to check and handle connectivity changes
+/// Quản lý trạng thái kết nối mạng và cung cấp các phương thức để kiểm tra và xử lý thay đổi kết nối
 class NetworkManager extends GetxController {
   static NetworkManager get instance => Get.find();
 
@@ -13,14 +13,14 @@ class NetworkManager extends GetxController {
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   final Rx<ConnectivityResult> _connectionStatus = ConnectivityResult.none.obs;
 
-  ///Initialize the network manager and set up a stream to continually check the connection status
+  /// Khởi tạo quản lý mạng và thiết lập một luồng để liên tục kiểm tra trạng thái kết nối
   @override
   void onInit() {
     super.onInit();
     _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
 
-  ///Cập nhật trạng thái kết nối dựa trên những thay đổi về kết nối và hiển thị cửa sổ bật lên có liên quan khi không có kết nối internet
+  /// Cập nhật trạng thái kết nối dựa trên sự thay đổi về kết nối và hiển thị cửa sổ bật lên liên quan khi không có kết nối internet
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
     _connectionStatus.value = result;
     if (_connectionStatus.value == ConnectivityResult.none) {
@@ -28,8 +28,8 @@ class NetworkManager extends GetxController {
     }
   }
 
-  ///Check the internet connection status
-  ///Return 'true' if connected, 'false' otherwise
+  /// Kiểm tra trạng thái kết nối internet
+  /// Trả về 'true' nếu đã kết nối, 'false' nếu ngược lại
   Future<bool> isConnected() async {
     try {
       final result = await _connectivity.checkConnectivity();
@@ -43,7 +43,7 @@ class NetworkManager extends GetxController {
     }
   }
 
-  /// Dispose or close the active connectivity stream
+  /// Hủy hoặc đóng luồng kết nối hoạt động
   @override
   void onClose() {
     super.onClose();

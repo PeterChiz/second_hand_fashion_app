@@ -10,15 +10,15 @@ class GeneralBinding extends Bindings {
 
   @override
   void dependencies(){
-    /// -- Core
+    /// Thành phần chính để chạy app khi kết nối mạng
     Get.put(NetworkManager());
 
-    /// -- Product
+    /// Dữ liệu sản phẩm
     Get.put(CheckoutController());
     Get.put(VariationController());
     Get.put(ImagesController());
 
-    /// -- Other
+    /// Dữ liệu địa chỉ
     Get.put(AddressController());
   }
 }

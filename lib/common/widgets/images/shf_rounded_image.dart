@@ -39,22 +39,20 @@ class SHFRoundedImage extends StatelessWidget {
         width: width,
         height: height,
         padding: padding,
-        decoration: BoxDecoration(
-            border: border,
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(borderRadius)),
+        decoration: BoxDecoration(border: border, color: backgroundColor, borderRadius: BorderRadius.circular(borderRadius)),
         child: ClipRRect(
-            borderRadius: applyImageRadius ? BorderRadius.circular(borderRadius) : BorderRadius.zero,
-            child: isNetworkImage ? CachedNetworkImage(
-              fit: fit,
-              imageUrl: imageUrl,
-              progressIndicatorBuilder: (context, url, downloadProgress) => SHFShimmerEffect(width: width ?? double.infinity, height: height ?? 158),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            )
-                : Image(
-              fit: fit,
-              image: AssetImage(imageUrl),
-            ),
+          borderRadius: applyImageRadius ? BorderRadius.circular(borderRadius) : BorderRadius.zero,
+          child: isNetworkImage
+              ? CachedNetworkImage(
+            fit: fit,
+            imageUrl: imageUrl,
+            progressIndicatorBuilder: (context, url, downloadProgress) => SHFShimmerEffect(width: width ?? double.infinity, height: height ?? 158),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          )
+              : Image(
+            fit: fit,
+            image: AssetImage(imageUrl),
+          ),
         ),
       ),
     );

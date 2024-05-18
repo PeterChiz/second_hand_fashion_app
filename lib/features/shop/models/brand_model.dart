@@ -1,22 +1,26 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class BrandModel{
+class BrandModel {
   String id;
   String name;
   String image;
   bool? isFeatured;
   int? productsCount;
 
-  BrandModel(
-  {required this.id, required this.name, required this.image, this.isFeatured, this.productsCount});
+  BrandModel({
+    required this.id,
+    required this.name,
+    required this.image,
+    this.isFeatured,
+    this.productsCount,
+  });
 
-  ///Empty Helper Function
+  /// Hàm trợ giúp trả về một đối tượng BrandModel rỗng
   static BrandModel empty() => BrandModel(id: '', name: '', image: '');
 
-  ///Convert model to Json structure so that you can store data in Firebase
-  toJson(){
-    return{
+  /// Chuyển đổi model thành cấu trúc Json để lưu dữ liệu vào Firebase
+  toJson() {
+    return {
       'Id': id,
       'Name': name,
       'Image': image,
@@ -25,25 +29,25 @@ class BrandModel{
     };
   }
 
-  ///Map Json oriented document snapshot from Firebase to UserModel
-  factory BrandModel.fromJson(Map<String, dynamic> document){
+  /// Ánh xạ dữ liệu từ cấu trúc Json thành đối tượng BrandModel
+  factory BrandModel.fromJson(Map<String, dynamic> document) {
     final data = document;
-    if(data.isEmpty) return BrandModel.empty();
+    if (data.isEmpty) return BrandModel.empty();
     return BrandModel(
-        id: data['Id'] ?? '',
-        name: data['Name'] ?? '',
-        image: data['Image'] ?? '',
-        isFeatured: data['IsFeatured'] ?? false,
-        productsCount: int.parse((data['ProductsCount'] ?? 0).toString()),
+      id: data['Id'] ?? '',
+      name: data['Name'] ?? '',
+      image: data['Image'] ?? '',
+      isFeatured: data['IsFeatured'] ?? false,
+      productsCount: int.parse((data['ProductsCount'] ?? 0).toString()),
     );
   }
 
-  ///
-  factory BrandModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>>  document){
-    if(document.data() != null){
+  /// Ánh xạ từ dữ liệu snapshot từ Firebase thành đối tượng BrandModel
+  factory BrandModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> document) {
+    if (document.data() != null) {
       final data = document.data()!;
 
-      //anh xa json vao model
       return BrandModel(
         id: document.id,
         name: data['Name'] ?? '',
@@ -51,9 +55,8 @@ class BrandModel{
         isFeatured: data['IsFeatured'] ?? false,
         productsCount: data['ProductsCount'] ?? '',
       );
-    }else{
+    } else {
       return BrandModel.empty();
     }
-
   }
 }

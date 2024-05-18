@@ -6,10 +6,10 @@ import 'package:second_hand_fashion_app/features/pertonalization/models/address_
 class AddressRepository extends GetxController{
   static AddressRepository get instance => Get.find();
 
-  /// Variables
+  /// Biến
   final _db = FirebaseFirestore.instance;
 
-  /// Get all order related to current User
+  /// Lấy tất cả các đơn hàng liên quan đến Người dùng hiện tại
   Future<List<AddressModel>> fetchUserAddresses() async{
     try{
       final userId = AuthenticationRepository.instance.firebaseUser!.uid;
@@ -22,7 +22,7 @@ class AddressRepository extends GetxController{
     }
   }
 
-  /// Store new user order
+  /// Lưu đơn hàng mới của người dùng
   Future<String> addAddress(AddressModel address, String userId) async{
     try{
       final currentAddress = await _db.collection('Users').doc(userId).collection('Addresses').add(address.toJson());
@@ -32,7 +32,7 @@ class AddressRepository extends GetxController{
     }
   }
 
-  ///Clear the 'Selected' field for all the addresses
+  /// Xóa trường 'Đã chọn' cho tất cả các địa chỉ
   Future<void> updateSelectedField (String userId, String addressId, bool selected) async{
     try{
       await _db.collection('Users').doc(userId).collection('Addresses').doc(addressId).update({'SelectedAddress': selected});
@@ -40,6 +40,4 @@ class AddressRepository extends GetxController{
       throw 'Không thể cập nhật lựa chọn địa chỉ của bạn. Vui lòng thử lại sau';
     }
   }
-
-
 }

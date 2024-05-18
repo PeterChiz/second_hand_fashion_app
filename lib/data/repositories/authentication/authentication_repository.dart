@@ -193,7 +193,6 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  ///[FacebookAuthentication] - Facebook
 
 //----------------./end Federated identity & social sign-in-------------------//
 
@@ -216,7 +215,7 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  ///DELETE USER - Remove user Auth and Firestore Account
+  ///DELETE USER - Xóa user Auth và Firestore Account
   Future<void> deleteAccount() async {
     try {
       await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);

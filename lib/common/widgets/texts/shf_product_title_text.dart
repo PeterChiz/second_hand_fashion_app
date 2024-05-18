@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SHFProductTitleText extends StatelessWidget {
-  const SHFProductTitleText(
-      {super.key,
-      required this.title,
-       this.smallSize = false,
-       this.maxLines = 2,
-      this.textAlign = TextAlign.left
-      });
+  const SHFProductTitleText({super.key, required this.title, this.smallSize = false, this.maxLines = 2, this.textAlign = TextAlign.left});
 
   final String title;
   final bool smallSize;
@@ -18,9 +12,7 @@ class SHFProductTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: smallSize
-          ? Theme.of(context).textTheme.labelLarge
-          : Theme.of(context).textTheme.titleSmall,
+      style: !smallSize ? Theme.of(context).textTheme.titleSmall : Theme.of(context).textTheme.labelLarge,
       overflow: TextOverflow.ellipsis,
       maxLines: maxLines,
       textAlign: textAlign,

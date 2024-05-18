@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:second_hand_fashion_app/common/widgets/texts/shf_product_price_text.dart';
-import 'package:second_hand_fashion_app/common/widgets/texts/shf_product_title_text.dart';
-import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
-import 'package:second_hand_fashion_app/features/shop/controllers/product/variation_controller.dart';
-import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
-import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
-
 import '../../../../../common/widgets/chips/rounded_choice_chip.dart';
+import '../../../../../common/widgets/texts/section_heading.dart';
+
+import '../../../../../common/widgets/texts/shf_product_price_text.dart';
+import '../../../../../common/widgets/texts/shf_product_title_text.dart';
+import '../../../../../utils/constants/sizes.dart';
+import '../../../controllers/product/variation_controller.dart';
+import '../../../models/product_model.dart';
 
 class SHFProductAttributes extends StatelessWidget {
   const SHFProductAttributes({super.key, required this.product});
@@ -21,24 +21,24 @@ class SHFProductAttributes extends StatelessWidget {
     return Obx(
           () => Column(
         children: [
-          /// -- Selected Attribute Pricing & Description
-          // Display variation price and stock when some variation is selected.
+          /// -- Giá trị và Mô tả thuộc tính đã chọn
+          // Hiển thị giá biến thể và tồn kho khi một số biến thể được chọn.
           if (controller.selectedVariation.value.id.isNotEmpty)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    const SHFSectionHeading(title: 'Mặt hàng: ', showActionButton: false),
+                    const SHFSectionHeading(title: 'Biến thể: ', showActionButton: false),
                     const SizedBox(width: SHFSizes.spaceBtwItems),
 
-                    /// Price
+                    /// Giá
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            // Actual Price if sale price not null.
+                            // Giá thực nếu giá giảm không rỗng.
                             const SHFProductTitleText(title: 'Giá : ', smallSize: true),
                             if (controller.selectedVariation.value.salePrice > 0)
                               Row(
@@ -52,7 +52,7 @@ class SHFProductAttributes extends StatelessWidget {
                                   const SizedBox(width: SHFSizes.spaceBtwItems)
                                 ],
                               ),
-                            // Sale Price if sale price not null Else Simple Price.
+                            // Giá giảm nếu giá giảm không rỗng Ngược lại Giá đơn giản.
                             SHFProductPriceText(
                               price: controller.selectedVariation.value.salePrice > 0
                                   ? controller.selectedVariation.value.salePrice.toString()
@@ -61,7 +61,7 @@ class SHFProductAttributes extends StatelessWidget {
                           ],
                         ),
 
-                        /// Stock
+                        /// Tồn kho
                         Row(
                           children: [
                             const SHFProductTitleText(title: 'Số lượng : ', smallSize: true),
@@ -73,7 +73,7 @@ class SHFProductAttributes extends StatelessWidget {
                   ],
                 ),
 
-                /// Description
+                /// Mô tả
                 SHFProductTitleText(
                   title: controller.selectedVariation.value.description.toString(),
                   smallSize: true,
@@ -83,12 +83,12 @@ class SHFProductAttributes extends StatelessWidget {
             ),
           const SizedBox(height: SHFSizes.spaceBtwItems),
 
-          /// -- Attributes
+          /// -- Thuộc tính
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: product.productAttributes!
                 .map((attribute) => Column(
-              // attribute = Product Single Attribute [Name: Color, Values: [Green, Blue, Orange]]
+              // attribute = Thuộc tính Đơn sản phẩm [Tên: Màu sắc, Giá trị: [Xanh, Xanh dương, Cam]]
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SHFSectionHeading(title: attribute.name ?? '', showActionButton: false),
@@ -98,13 +98,13 @@ class SHFProductAttributes extends StatelessWidget {
                     spacing: 8,
                     runSpacing: 8,
                     children: attribute.values!.map((attributeValue) {
-                      // attributeValue = Single Attribute Value [Green]
+                      // attributeValue = Giá trị Thuộc tính Đơn [Xanh]
                       final isSelected = controller.selectedAttributes[attribute.name] == attributeValue;
                       final available = controller
                           .getAttributesAvailabilityInVariation(product.productVariations!, attribute.name!)
                           .contains(attributeValue);
 
-                      /// Attribute Chip
+                      /// Chip Thuộc tính
                       return SHFChoiceChip(
                         text: attributeValue,
                         selected: isSelected,

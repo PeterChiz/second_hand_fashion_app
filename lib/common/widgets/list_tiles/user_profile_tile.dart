@@ -7,6 +7,7 @@ import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/image_strings.dart';
 import '../images/shf_circular_image.dart';
 
+
 class SHFUserProfileTile extends StatelessWidget {
   SHFUserProfileTile({
     super.key,
@@ -20,30 +21,12 @@ class SHFUserProfileTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       final isNetworkImage = controller.user.value.profilePicture.isNotEmpty;
-      final image = isNetworkImage
-          ? controller.user.value.profilePicture
-          : SHFImages.user;
-
+      final image = isNetworkImage ? controller.user.value.profilePicture : SHFImages.user;
       return ListTile(
-        leading: SHFCircularImage(
-            padding: 0,
-            image: image,
-            width: 50,
-            height: 50,
-            isNetworkImage: isNetworkImage),
-        title: Text(controller.user.value.fullName,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .apply(color: SHFColors.white)),
-        subtitle: Text(controller.user.value.email,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .apply(color: SHFColors.white)),
-        trailing: IconButton(
-            onPressed: onPressed,
-            icon: const Icon(Iconsax.edit, color: SHFColors.white)),
+        leading: SHFCircularImage(padding: 0, image: image, width: 50, height: 50, isNetworkImage: isNetworkImage),
+        title: Text(controller.user.value.fullName, style: Theme.of(context).textTheme.headlineSmall!.apply(color: SHFColors.white)),
+        subtitle: Text(controller.user.value.email, style: Theme.of(context).textTheme.bodyMedium!.apply(color: SHFColors.white)),
+        trailing: IconButton(onPressed: onPressed, icon: const Icon(Iconsax.edit, color: SHFColors.white)),
       );
     });
   }

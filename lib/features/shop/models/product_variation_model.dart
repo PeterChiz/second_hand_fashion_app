@@ -1,6 +1,5 @@
 class ProductVariationModel {
   final String id;
-  String sku;
   String image;
   String? description;
   double price;
@@ -8,21 +7,21 @@ class ProductVariationModel {
   int stock;
   Map<String, String> attributeValues;
 
-  ProductVariationModel(
-      {required this.id,
-      this.sku = '',
-      this.image = '',
-      this.description = '',
-      this.price = 0.0,
-      this.salePrice = 0.0,
-      this.stock = 0,
-      required this.attributeValues});
+  ProductVariationModel({
+    required this.id,
+    this.image = '',
+    this.description,
+    this.price = 0.0,
+    this.salePrice = 0.0,
+    this.stock = 0,
+    required this.attributeValues,
+  });
 
-  ///Create Empty func for clean code
+  /// Tạo hàm empty để làm mã sạch
   static ProductVariationModel empty() =>
       ProductVariationModel(id: '', attributeValues: {});
 
-  ///Json format
+  /// Định dạng JSON
   toJson() {
     return {
       'Id': id,
@@ -30,20 +29,18 @@ class ProductVariationModel {
       'Description': description,
       'Price': price,
       'SalePrice': salePrice,
-      'SKU': sku,
       'Stock': stock,
       'AttributeValues': attributeValues,
     };
   }
 
-  ///Map Json oriented document snapshot from Firebase to Model
+  /// Ánh xạ từ tài liệu dạng JSON từ Firebase thành Model
   factory ProductVariationModel.fromJson(Map<String, dynamic> document) {
     final data = document;
     if (data.isEmpty) return ProductVariationModel.empty();
     return ProductVariationModel(
       id: data['Id'] ?? '',
       price: double.parse((data['Price'] ?? 0.0).toString()),
-      sku: data['SKU'] ?? 0,
       stock: data['Stock'] ?? 0,
       salePrice: double.parse(((data['SalePrice'] ?? 0.0).toString())),
       image: data['Image'] ?? '',

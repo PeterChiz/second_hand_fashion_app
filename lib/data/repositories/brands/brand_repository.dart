@@ -4,18 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/features/shop/models/brand_model.dart';
-import 'package:path/path.dart' as path;
 
-import '../../../features/shop/models/brand_category_model.dart';
-import '../../services/cloud_storage/firebase_storage_service.dart';
 
 class BrandRepository extends GetxController{
   static BrandRepository get instance => Get.find();
 
-  ///Variable
+  ///Biến
   final _db = FirebaseFirestore.instance;
 
-  ///Get all categories
+  ///Nhận tất cả thương hiệu
   Future<List<BrandModel>> getAllBrands() async{
     try {
       final snapshot = await _db.collection('Brands').get();
@@ -32,53 +29,20 @@ class BrandRepository extends GetxController{
     }
   }
 
-  /// Get all categories
-  Future<BrandModel?> getSingleBrand(String id) async {
-    try {
-      final snapshot = await _db.collection("Brands").where('Id', isEqualTo: id).get();
-      final result = snapshot.docs.map((e) => BrandModel.fromSnapshot(e)).toList();
-      return result.firstOrNull;
-    } on FirebaseException catch (e) {
-      throw e.message!;
-    } on SocketException catch (e) {
-      throw e.message;
-    } on PlatformException catch (e) {
-      throw e.message!;
-    } catch (e) {
-      throw 'Something Went Wrong! Please try again.';
-    }
-  }
 
-  /// Get Featured categories
-  Future<List<BrandModel>> getFeaturedBrands() async {
-    try {
-      final snapshot = await _db.collection("Brands").where('IsFeatured', isEqualTo: true).limit(4).get();
-      final result = snapshot.docs.map((e) => BrandModel.fromSnapshot(e)).toList();
-      return result;
-    } on FirebaseException catch (e) {
-      throw e.message!;
-    } on SocketException catch (e) {
-      throw e.message;
-    } on PlatformException catch (e) {
-      throw e.message!;
-    } catch (e) {
-      throw 'Something Went Wrong! Please try again.';
-    }
-  }
-
-  ///Get Brands for category
+  ///Nhận thương hiệu theo danh mục
   Future<List<BrandModel>> getBrandsForCategory(String categoryId) async{
     try {
-      //Query to get all document where categoryId matches the provided categoryId
+      //Truy vấn để nhận tất cả tài liệu nơi categoryId khớp với categoryId đã cung cấp
       QuerySnapshot brandCategoryQuery = await _db.collection('BrandCategory').where('categoryId', isEqualTo: categoryId).get();
 
-      //Extract brands from the documents
+      //Trích xuất thương hiệu từ các tài liệu
       List<String> brandIds = brandCategoryQuery.docs.map((doc) => doc['brandId'] as String).toList();
 
-      //Query to get all document where the brandId is in the list of brandIds, FieldPath.documentId to query documents in Collection
+      //Truy vấn để nhận tất cả tài liệu nơi brandId nằm trong danh sách brandIds, FieldPath.documentId để truy vấn tài liệu trong Collection
       final brandsQuery = await _db.collection('Brands').where(FieldPath.documentId, whereIn: brandIds).limit(2).get();
 
-      //Extract brands name or other relevant data from the documents
+      //Trích xuất tên thương hiệu hoặc các dữ liệu liên quan khác từ các tài liệu
       List<BrandModel> brands = brandsQuery.docs.map((doc) => BrandModel.fromSnapshot(doc)).toList();
 
       return brands;
@@ -91,59 +55,6 @@ class BrandRepository extends GetxController{
       throw e.message!;
     } catch (e) {
       throw 'Đã xảy ra lỗi khi nạp Banners';
-    }
-  }
-
-  /// Upload Categories to the Cloud Firebase
-  Future<void> uploadDummyData(List<BrandModel> brands) async {
-    try {
-      // Upload all the Categories along with their Images
-      final storage = Get.put(SHFFirebaseStorageService());
-
-      // Loop through each brand
-      for (var brand in brands) {
-
-        // Get ImageData link from the local assets
-        final file = await storage.getImageDataFromAssets(brand.image);
-
-        // Upload Image and Get its URL
-        final url = await storage.uploadImageData('Brands', file, path.basename(brand.name));
-
-        // Assign URL to Brand.image attribute
-        brand.image = url;
-
-        // Store Brand in Firestore
-        await _db.collection("Brands").doc(brand.id).set(brand.toJson());
-      }
-
-    } on FirebaseException catch (e) {
-      throw e.message!;
-    } on SocketException catch (e) {
-      throw e.message;
-    } on PlatformException catch (e) {
-      throw e.message!;
-    } catch (e) {
-      throw e.toString();
-    }
-  }
-
-
-  /// Upload BrandCategory to the Cloud Firebase
-  Future<void> uploadBrandCategoryDummyData(List<BrandCategoryModel> brandCategory) async {
-    try {
-      // Loop through each category
-      for (var entry in brandCategory) {
-        // Store Category in Firestore
-        await _db.collection("BrandCategory").doc().set(entry.toJson());
-      }
-    } on FirebaseException catch (e) {
-      throw e.message!;
-    } on SocketException catch (e) {
-      throw e.message;
-    } on PlatformException catch (e) {
-      throw e.message!;
-    } catch (e) {
-      throw e.toString();
     }
   }
 }

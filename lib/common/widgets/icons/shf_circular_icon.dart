@@ -4,13 +4,13 @@ import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
 import '../../../utils/constants/colors.dart';
 
+/// Một widget biểu tượng tròn tùy chỉnh với màu nền.
+///
+/// Các thuộc tính bao gồm:
+/// Container [width], [height], & [backgroundColor].
+///
+/// Kích thước của biểu tượng [size], [color] & [onPressed]
 class SHFCircularIcon extends StatelessWidget {
-  /// A custom Circular Icon widget with a background color.
-  ///
-  /// Properties are:
-  /// Container [width], [height], & [backgroundColor].
-  ///
-  /// Icon's [size], [color] & [onPressed]
   const SHFCircularIcon({
     super.key,
     required this.icon,
@@ -37,8 +37,8 @@ class SHFCircularIcon extends StatelessWidget {
         color: backgroundColor != null
             ? backgroundColor!
             : SHFHelperFunctions.isDarkMode(context)
-                ? SHFColors.black.withOpacity(0.9)
-                : SHFColors.white.withOpacity(0.9),
+            ? SHFColors.black.withOpacity(0.9)
+            : SHFColors.white.withOpacity(0.9),
         borderRadius: BorderRadius.circular(100),
       ),
       child: IconButton(

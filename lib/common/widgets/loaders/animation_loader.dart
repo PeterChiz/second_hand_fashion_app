@@ -3,11 +3,11 @@ import 'package:lottie/lottie.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 
-///A widget for displaying an animated loading indicator with optional text and action button
+/// Widget để hiển thị một chỉ báo tải động với văn bản tùy chọn và nút hành động
 class SHFAnimationLoaderWidget extends StatelessWidget {
-  ///Hàm tạo mặc định cho SHFAnimationLoaderWidget
+  /// Constructor mặc định cho SHFAnimationLoaderWidget
   ///
-  /// Thông số:
+  /// Tham số:
   /// text: Văn bản sẽ hiển thị bên dưới ảnh động
   /// animation: Đường dẫn tới file ảnh động Lottie
   /// showAction: Có hiển thị nút hành động hay không
@@ -33,7 +33,7 @@ class SHFAnimationLoaderWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.8), // Display Lottie animation
+          Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.8), // Hiển thị animation Lottie
           const SizedBox(height: SHFSizes.defaultSpace),
           Text(
             text,
@@ -59,3 +59,4 @@ class SHFAnimationLoaderWidget extends StatelessWidget {
     );
   }
 }
+

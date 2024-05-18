@@ -20,17 +20,14 @@ class AddressController extends GetxController {
   final name = TextEditingController();
   final phoneNumber = TextEditingController();
   final street = TextEditingController();
-  final postalCode = TextEditingController();
   final city = TextEditingController();
-  final state = TextEditingController();
-  final country = TextEditingController();
   GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
 
   RxBool refreshData = true.obs;
   final addressRepository = Get.put(AddressRepository());
   final Rx<AddressModel> selectedAddress = AddressModel.empty().obs;
 
-  ///Fetch all user specific addresses
+  /// Lấy tất cả các địa chỉ của người dùng
   Future<List<AddressModel>> getAllUserAddresses() async {
     try {
       final addresses = await addressRepository.fetchUserAddresses();
@@ -45,16 +42,16 @@ class AddressController extends GetxController {
 
   Future selectAddress(AddressModel newSelectedAddress) async {
     try {
-      // Clear the "selected" field
+      // Xóa trường "selected"
       if(selectedAddress.value.id.isNotEmpty){
         await addressRepository.updateSelectedField(AuthenticationRepository.instance.getUserID, selectedAddress.value.id, false);
       }
 
-      // Assign selected address
+      // Gán địa chỉ đã chọn
       newSelectedAddress.selectedAddress = true;
       selectedAddress.value = newSelectedAddress;
 
-      // Set the "selected" field to true for the newly selected address
+      // Đặt trường "selected" thành true cho địa chỉ mới được chọn
       await addressRepository.updateSelectedField(AuthenticationRepository.instance.getUserID, selectedAddress.value.id, true);
     } catch (e) {
       SHFLoaders.errorSnackBar(
@@ -65,63 +62,60 @@ class AddressController extends GetxController {
   ///Thêm địa chỉ mới
   Future addNewAddress() async {
     try {
-      // Start Loading
+      // Bắt đầu Loading
       SHFFullScreenLoader.openLoadingDialog('Đang lưu trữ địa chỉ...', SHFImages.docerAnimation);
 
-      // Check Internet Connectivity
+      // Kiểm tra kết nối Internet
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         SHFFullScreenLoader.stopLoading();
         return;
       }
 
-      // Form Validation
+      // Kiểm tra Validation của Form
       if (!addressFormKey.currentState!.validate()) {
         SHFFullScreenLoader.stopLoading();
         return;
       }
 
-      // Save Address Data
+      // Lưu dữ liệu Địa chỉ
       final address = AddressModel(
         id: '',
         name: name.text.trim(),
         phoneNumber: phoneNumber.text.trim(),
         street: street.text.trim(),
         city: city.text.trim(),
-        state: state.text.trim(),
-        postalCode: postalCode.text.trim(),
-        country: country.text.trim(),
         selectedAddress: true,
       );
       final id = await addressRepository.addAddress(address, AuthenticationRepository.instance.getUserID);
 
-      // Update Selected Address status
+      // Cập nhật trạng thái Địa chỉ đã chọn
       address.id = id;
       await selectAddress(address);
 
-      // Remove Loader
+      // Loại bỏ Loader
       SHFFullScreenLoader.stopLoading();
 
-      // Show Success Message
+      // Hiển thị Thông báo Thành công
       SHFLoaders.successSnackBar(title: 'Chúc mừng', message: 'Địa chỉ của bạn đã được lưu thành công');
 
-      // Refresh Addresses Data
+      // Làm mới Dữ liệu Địa chỉ
       refreshData.toggle();
 
-      // Reset fields
+      // Đặt lại các trường
       resetFormFields();
 
-      // Redirect
+      // Chuyển hướng
       Navigator.of(Get.context!).pop();
     } catch (e) {
-      //Remove loader
+      // Loại bỏ loader
       SHFFullScreenLoader.stopLoading();
       SHFLoaders.errorSnackBar(
           title: 'Không tìm thấy địa chỉ', message: e.toString());
     }
   }
 
-  ///Show addresses ModalBottomSheet at Checkout
+  /// Hiển thị ModalBottomSheet chọn Địa chỉ khi thanh toán
   Future<dynamic> selectNewAddressPopup(BuildContext context) {
     return showModalBottomSheet(
       context: context,
@@ -135,7 +129,7 @@ class AddressController extends GetxController {
             FutureBuilder(
               future: getAllUserAddresses(),
               builder: (_, snapshot) {
-                /// Helper Function: Handle Loader, No Record, OR ERROR Message
+                /// Helper Function: Xử lý Loader, Không có Bản ghi, hoặc Thông báo LỖI
                 final response = SHFCloudHelperFunctions.checkMultiRecordState(
                     snapshot: snapshot);
                 if (response != null) return response;
@@ -164,15 +158,12 @@ class AddressController extends GetxController {
     );
   }
 
-  ///Function to reset form fields
+  ///Hàm để đặt lại các trường form
   void resetFormFields() {
     name.clear();
     phoneNumber.clear();
     street.clear();
-    postalCode.clear();
     city.clear();
-    state.clear();
-    country.clear();
     addressFormKey.currentState?.reset();
   }
 }

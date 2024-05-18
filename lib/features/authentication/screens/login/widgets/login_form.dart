@@ -80,7 +80,7 @@ class SHFLoginForm extends StatelessWidget {
             ),
             const SizedBox(height: SHFSizes.spaceBtwSections),
 
-            ///Sign In Button
+            ///Nút đăng nhập
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -89,7 +89,7 @@ class SHFLoginForm extends StatelessWidget {
             ),
             const SizedBox(height: SHFSizes.spaceBtwItems),
 
-            ///Create account button
+            ///Nút tạo tài khoản
             SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(

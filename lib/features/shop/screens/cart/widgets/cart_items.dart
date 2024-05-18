@@ -34,22 +34,22 @@ class SHFCartItems extends StatelessWidget {
                 final item = cartItems[index];
                 return Column(
                   children: [
-                    /// -- Cart Items
+                    /// -- Các mặt hàng trong giỏ hàng
                     SHFCartItem(item: item),
                     if (showAddRemoveButtons) const SizedBox(height: SHFSizes.spaceBtwItems),
 
-                    /// -- Add Remove Buttons and Price Total
+                    /// -- Nút Thêm và Bớt và Tổng giá
                     if (showAddRemoveButtons)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          /// -- Add Remove Buttons
+                          /// -- Nút Thêm và Bớt
                           Row(
                             children: [
-                              // Use to add space to the left of Buttons as image space.
+                              // Sử dụng để thêm không gian bên trái của nút làm hình ảnh.
                               const SizedBox(width: 70),
 
-                              /// Add Remove Buttons
+                              /// Nút Thêm và Bớt
                               SHFProductQuantityWithAddRemoveButton(
                                 width: 32,
                                 height: 32,
@@ -64,8 +64,8 @@ class SHFCartItems extends StatelessWidget {
                             ],
                           ),
 
-                          /// -- Product total price
-                          SHFProductPriceText(price: (item.price * item.quantity).toStringAsFixed(1)),
+                          /// -- Tổng giá sản phẩm
+                          SHFProductPriceText(price: (item.price * item.quantity).toStringAsFixed(0)),
                         ],
                       )
                   ],

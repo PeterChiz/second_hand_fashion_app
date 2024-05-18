@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/appbar/appbar.dart';
-import 'package:second_hand_fashion_app/features/shop/screens/home/widgets/header_search_container.dart';
 import 'package:second_hand_fashion_app/common/widgets/layouts/grid_layout.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/cart/cart_menu_icon.dart';
 import 'package:second_hand_fashion_app/common/widgets/shimmers/brands_shimmer.dart';
@@ -20,7 +19,9 @@ import '../brand/all_brands.dart';
 import '../brand/brand.dart';
 
 class StoreScreen extends StatelessWidget {
-  const StoreScreen({super.key});
+  const StoreScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +30,15 @@ class StoreScreen extends StatelessWidget {
     final dark = SHFHelperFunctions.isDarkMode(context);
     return PopScope(
       canPop: false,
-      // Intercept the back button press and redirect to Home Screen
+      // Chặn việc nhấn nút quay lại và chuyển hướng về Màn hình Trang chủ
       onPopInvoked: (value) async => Get.offAll(const NavigationMenu()),
       child: DefaultTabController(
         length: categories.length,
         child: Scaffold(
           /// -- Appbar
           appBar: SHFAppBar(
-            title: Text('Cửa hàng', style: Theme.of(context).textTheme.headlineMedium),
+            title: Text('Cửa hàng',
+                style: Theme.of(context).textTheme.headlineMedium),
             actions: const [SHFCartCounterIcon()],
           ),
           body: NestedScrollView(
@@ -46,48 +48,52 @@ class StoreScreen extends StatelessWidget {
                 SliverAppBar(
                   pinned: true,
                   floating: true,
-                  // Space between Appbar and TabBar. WithIn this height we have added [Search bar] and [Featured brands]
-                  expandedHeight: 440,
+                  // Khoảng cách giữa Appbar và TabBar. Trong chiều cao này, chúng tôi đã thêm [thanh tìm kiếm] và [thương hiệu nổi bật]
+                  expandedHeight: 350,
                   automaticallyImplyLeading: false,
                   backgroundColor: dark ? SHFColors.black : SHFColors.white,
 
-                  /// -- Search & Featured Store
+                  /// -- Thương hiệu Nổi bật
                   flexibleSpace: Padding(
                     padding: const EdgeInsets.all(SHFSizes.defaultSpace),
                     child: ListView(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
-                        /// -- Search bar
-                        const SizedBox(height: SHFSizes.spaceBtwItems),
-                        const SHFSearchContainer(text: 'TÌm kiếm trong của hàng', showBorder: true, showBackground: false, padding: EdgeInsets.zero),
-                        const SizedBox(height: SHFSizes.spaceBtwSections),
-
-                        /// -- Featured Brands
-                        SHFSectionHeading(title: 'Thương hiệu phổ biến', onPressed: () => Get.to(() => const AllBrandsScreen())),
+                        /// -- Thương Hiệu Nổi Bật
+                        SHFSectionHeading(
+                            title: 'Thương hiệu phổ biến',
+                            onPressed: () =>
+                                Get.to(() => const AllBrandsScreen())),
                         const SizedBox(height: SHFSizes.spaceBtwItems / 1.5),
 
-                        /// -- Brands
+                        /// -- Thương hiệu
                         Obx(
-                              () {
-                            // Check if categories are still loading
+                          () {
+                            // Kiểm tra xem danh mục đang được tải
                             if (brandController.isLoading.value) return const SHFBrandsShimmer();
 
-                            // Check if there are no featured categories found
+                            // Kiểm tra xem có danh mục nổi bật nào không
                             if (brandController.featuredBrands.isEmpty) {
                               return Center(
-                                  child: Text('Không tìm thấy dữ liệu', style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white)));
+                                  child: Text('Không tìm thấy dữ liệu',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .apply(color: Colors.white)));
                             } else {
-                              /// Data Found
+                              /// Dữ liệu được tìm thấy
                               return SHFGridLayout(
                                 itemCount: 4,
                                 mainAxisExtent: 80,
                                 itemBuilder: (_, index) {
-                                  final brand = brandController.featuredBrands[index];
+                                  final brand =
+                                      brandController.featuredBrands[index];
                                   return SHFBrandCard(
                                     brand: brand,
                                     showBorder: true,
-                                    onTap: () => Get.to(() => BrandScreen(brand: brand)),
+                                    onTap: () =>
+                                        Get.to(() => BrandScreen(brand: brand)),
                                   );
                                 },
                               );
@@ -100,14 +106,19 @@ class StoreScreen extends StatelessWidget {
                   ),
 
                   /// -- TABS
-                  bottom: SHFTabBar(tabs: categories.map((e) => Tab(child: Text(e.name))).toList()),
+                  bottom: SHFTabBar(
+                      tabs: categories
+                          .map((e) => Tab(child: Text(e.name)))
+                          .toList()),
                 )
               ];
             },
 
             /// -- TabBar Views
             body: TabBarView(
-              children: categories.map((category) => SHFCategoryTab(category: category)).toList(),
+              children: categories
+                  .map((category) => SHFCategoryTab(category: category))
+                  .toList(),
             ),
           ),
         ),

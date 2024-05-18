@@ -22,14 +22,14 @@ class AttributeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
 
-    // Pass the variations to check which attributes are available and stock is not 0
+    // Truyền các biến thể để kiểm tra các thuộc tính nào có sẵn và số lượng tồn không phải là 0
     final availableVariationValues = variations
         .where((variation) =>
-    // Check Empty / Out of Stock Attributes
-    variation.attributeValues[attribute.name] != null &&
-        variation.attributeValues[attribute.name]!.isNotEmpty &&
-        variation.stock > 0)
-    // Fetch all non-empty attributes of variations
+            // Kiểm tra các thuộc tính trống / hết hàng
+            variation.attributeValues[attribute.name] != null &&
+            variation.attributeValues[attribute.name]!.isNotEmpty &&
+            variation.stock > 0)
+        // Lấy tất cả các thuộc tính không trống của các biến thể
         .map((variation) => variation.attributeValues[attribute.name])
         .toSet();
 
@@ -53,11 +53,28 @@ class AttributeWidget extends StatelessWidget {
                   if (selected && isAvailable) onValueSelected(value);
                 },
                 selectedColor: SHFColors.primary,
-                labelStyle: TextStyle(color: isSelected ? Colors.white : (isAvailable ? isDark ? SHFColors.white : SHFColors.dark : isDark ? Colors.white30 :Colors.grey)),
+                labelStyle: TextStyle(
+                    color: isSelected
+                        ? Colors.white
+                        : (isAvailable
+                            ? isDark
+                                ? SHFColors.white
+                                : SHFColors.dark
+                            : isDark
+                                ? Colors.white30
+                                : Colors.grey)),
                 elevation: isSelected ? 5.0 : 0.0,
-                backgroundColor: isSelected ? SHFColors.primary : (isAvailable ? Colors.transparent : isDark ? SHFColors.dark : Colors.grey.shade200),
-                iconTheme: IconThemeData(color: isSelected ? Colors.white : Colors.black, size: 18),
-                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
+                backgroundColor: isSelected
+                    ? SHFColors.primary
+                    : (isAvailable
+                        ? Colors.transparent
+                        : isDark
+                            ? SHFColors.dark
+                            : Colors.grey.shade200),
+                iconTheme: IconThemeData(
+                    color: isSelected ? Colors.white : Colors.black, size: 18),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
               ),
             );
           }).toList(),

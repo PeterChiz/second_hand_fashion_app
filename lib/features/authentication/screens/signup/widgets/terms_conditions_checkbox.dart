@@ -18,7 +18,6 @@ class SHFTermAndConditionCheckBox extends StatelessWidget {
     final controller = SignupController.instance;
     return Row(
       children: [
-        /// CHECKBOX => Wrap in a Sized box to remove extra padding
         SizedBox(
           width: 24,
           height: 24,

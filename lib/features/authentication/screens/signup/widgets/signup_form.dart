@@ -53,17 +53,6 @@ class SHFSignupForm extends StatelessWidget {
           ),
           const SizedBox(height: SHFSizes.spaceBtwInputFields),
 
-          /// username
-          // TextFormField(
-          //   validator: (value) =>
-          //       SHFValidator.validationEmptyText('Tên tài khoản', value),
-          //   controller: controller.userName,
-          //   expands: false,
-          //   decoration: const InputDecoration(
-          //       labelText: SHFTexts.userName,
-          //       prefixIcon: Icon(Iconsax.user_edit)),
-          // ),
-          // const SizedBox(height: SHFSizes.spaceBtwInputFields),
           TextFormField(
             controller: controller.username,
             validator: SHFValidator.validateUsername,

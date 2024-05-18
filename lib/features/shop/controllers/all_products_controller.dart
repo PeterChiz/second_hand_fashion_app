@@ -13,7 +13,7 @@ class AllProductsController extends GetxController {
 
   Future<List<ProductModel>> fetchProductsByQuery(Query? query) async {
     try {
-      if(query == null) return [];
+      if (query == null) return [];
       return await repository.fetchProductsByQuery(query);
     } catch (e) {
       SHFLoaders.errorSnackBar(title: 'Có lỗi!', message: e.toString());
@@ -22,7 +22,7 @@ class AllProductsController extends GetxController {
   }
 
   void assignProducts(List<ProductModel> products) {
-    // Assign products to the 'products' list
+    // Gán các sản phẩm vào danh sách 'products'
     this.products.assignAll(products);
     sortProducts('Tên');
   }
@@ -55,7 +55,7 @@ class AllProductsController extends GetxController {
         });
         break;
       default:
-      // Default sorting option: Name
+      // Tùy chọn sắp xếp mặc định: Tên
         products.sort((a, b) => a.title.compareTo(b.title));
     }
   }

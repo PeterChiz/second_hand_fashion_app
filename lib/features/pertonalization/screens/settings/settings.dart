@@ -7,7 +7,6 @@ import 'package:second_hand_fashion_app/common/widgets/list_tiles/setting_menu_t
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/screens/address/address.dart';
 import 'package:second_hand_fashion_app/features/pertonalization/screens/profile/profile.dart';
-import 'package:second_hand_fashion_app/features/pertonalization/screens/settings/upload_data.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/order/order.dart';
 import 'package:second_hand_fashion_app/navigation_menu.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
@@ -89,39 +88,6 @@ class SettingsScreen extends StatelessWidget {
                       title: 'Đơn hàng của tôi',
                       subTitle: 'Đơn hàng đang thực hiện và đã hoàn thành',
                       onTap: () => Get.to(() => const OrderScreen()),
-                    ),
-                    const SHFSettingMenuTile(
-                      icon: Iconsax.bank,
-                      title: 'Tài khoản ngân hàng',
-                      subTitle: 'Rút số dư về tài khoản ngân hàng đã đăng ký',
-                    ),
-                    const SHFSettingMenuTile(
-                      icon: Iconsax.discount_shape,
-                      title: 'Phiếu giảm giá của tôi',
-                      subTitle: 'Danh sách tất cả các phiếu giảm giá',
-                    ),
-                    SHFSettingMenuTile(
-                        icon: Iconsax.notification,
-                        title: 'Thông báo',
-                        subTitle: 'Đặt bất kỳ loại tin nhắn thông báo nào',
-                        onTap: () {}),
-                    const SHFSettingMenuTile(
-                      icon: Iconsax.security_card,
-                      title: 'Tài khoản chính',
-                      subTitle:
-                          'Quản lý việc sử dụng dữ liệu và tài khoản được kết nối',
-                    ),
-
-                    ///AppSetting
-                    const SizedBox(height: SHFSizes.spaceBtwSections),
-                    const SHFSectionHeading(
-                        title: 'Thiết lập tài khoản', showActionButton: false),
-                    const SizedBox(height: SHFSizes.spaceBtwItems),
-                    SHFSettingMenuTile(
-                      icon: Iconsax.document_upload,
-                      title: 'Load Data',
-                      subTitle: 'Tải dữ liệu lên Cloud Firebase của bạn',
-                      onTap: () => Get.to(() => const UploadDataScreen()),
                     ),
 
 

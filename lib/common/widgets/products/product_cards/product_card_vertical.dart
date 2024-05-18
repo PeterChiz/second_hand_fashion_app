@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/styles/shadows.dart';
 import 'package:second_hand_fashion_app/common/widgets/custom_shapes/containers/rounded_container.dart';
@@ -8,7 +10,7 @@ import 'package:second_hand_fashion_app/common/widgets/products/product_cards/wi
 import 'package:second_hand_fashion_app/common/widgets/products/product_cards/widgets/product_card_pricing_widget.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/product_cards/widgets/product_sale_tag.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/shf_product_title_text.dart';
-import 'package:second_hand_fashion_app/features/shop/controllers/product/poduct_controller.dart';
+import 'package:second_hand_fashion_app/features/shop/controllers/product/product_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/models/product_model.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/product_details/product_detail.dart';
 import 'package:second_hand_fashion_app/utils/constants/colors.dart';
@@ -28,27 +30,26 @@ class SHFProductCardVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productController = ProductController.instance;
-    final dark = SHFHelperFunctions.isDarkMode(context);
     final salePercentage = productController.calculateSalePercentage(
         product.price, product.salePrice);
+    final dark = SHFHelperFunctions.isDarkMode(context);
 
-    ///Container với side paddings, color, edges, radius and shadow.
     return GestureDetector(
       onTap: () => Get.to(() => ProductDetailScreen(product: product)),
 
-      /// Container with side paddings, color, edges, radius and shadow.
+      /// Container có các lề bên, màu sắc, viền, bo góc và bóng.
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),
         decoration: BoxDecoration(
           boxShadow: [SHFShadowStyle.verticalProductShadow],
           borderRadius: BorderRadius.circular(SHFSizes.productImageRadius),
-          color: dark ? SHFColors.darkGrey : SHFColors.white,
+          color: dark ? SHFColors.darkerGrey : SHFColors.white,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// Thumbnail, Wishlist Button, Discount Tag
+            /// Hình ảnh nhỏ, Nút Yêu thích, Thẻ Giảm giá
             SHFRoundedContainer(
               height: 180,
               width: 180,
@@ -56,34 +57,29 @@ class SHFProductCardVertical extends StatelessWidget {
               backgroundColor: dark ? SHFColors.dark : SHFColors.light,
               child: Stack(
                 children: [
-                  ///Thumbnail Image
+                  /// -- Hình ảnh nhỏ
                   Center(
-                    child: SHFRoundedImage(
-                      applyImageRadius: true,
-                      isNetworkImage: isNetworkImage,
-                      imageUrl: product.thumbnail,
-                    ),
-                  ),
+                      child: SHFRoundedImage(
+                          imageUrl: product.thumbnail,
+                          applyImageRadius: true,
+                          isNetworkImage: isNetworkImage)),
 
-                  /// -- Sale Tag
-                  if (salePercentage != null) ProductSaleTagWidget(salePercentage: salePercentage),
+                  /// -- Thẻ Giảm giá
+                  if (salePercentage != null)
+                    ProductSaleTagWidget(salePercentage: salePercentage),
 
-                  ///Favourite Icon Button
+                  /// -- Nút biểu tượng Yêu thích
                   Positioned(
                     top: 0,
                     right: 0,
-                    child: SHFFavoritesIcon(
-                      productId: product.id,
-                    ),
-                  )
+                    child: SHFFavoritesIcon(productId: product.id),
+                  ),
                 ],
               ),
             ),
-            const SizedBox(
-              height: SHFSizes.spaceBtwItems / 2,
-            ),
+            const SizedBox(height: SHFSizes.spaceBtwItems / 2),
 
-            ///Details
+            /// -- Chi tiết
             Padding(
               padding: const EdgeInsets.only(left: SHFSizes.sm),
               child: Column(
@@ -91,24 +87,24 @@ class SHFProductCardVertical extends StatelessWidget {
                 children: [
                   SHFProductTitleText(title: product.title, smallSize: true),
                   const SizedBox(height: SHFSizes.spaceBtwItems / 2),
-                  SHFBrandTitleWithVerifiedIcon(title: product.brand!.name, brandTextSize: TextSizes.small),
+                  SHFBrandTitleWithVerifiedIcon(
+                      title: product.brand!.name,
+                      brandTextSize: TextSizes.small),
                 ],
               ),
             ),
-            //Thêm Spacer() vào đây để giữ nguyên chiều cao của mỗi Box trong trường hợp 1 hoặc 2 dòng Heading
-            /// Price & Add to cart button
-            /// Use Spacer() to utilize all the space and set the price and cart button at the bottom.
-            /// This usually happens when Product title is in single line or 2 lines (Max)
-            const Spacer(),
 
-            ///Price Row
+            /// Giá & Nút Thêm vào giỏ hàng
+            /// Sử dụng Spacer() để tận dụng toàn bộ không gian và đặt giá và nút giỏ hàng ở phía dưới.
+            /// Điều này thường xảy ra khi Tiêu đề Sản phẩm chỉ có một dòng hoặc 2 dòng (Tối đa)
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                /// Pricing
+                /// Giá cả
                 PricingWidget(product: product),
 
-                /// Add to cart
+                /// Thêm vào giỏ hàng
                 ProductCardAddToCartButton(product: product),
               ],
             ),

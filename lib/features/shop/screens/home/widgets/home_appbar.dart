@@ -10,8 +10,7 @@ import '../../../../../utils/constants/text_strings.dart';
 import '../../../../pertonalization/screens/profile/profile.dart';
 
 class SHFHomeAppBar extends StatelessWidget {
-  const SHFHomeAppBar({
-    super.key,
+  const SHFHomeAppBar({super.key,
   });
 
   @override
@@ -30,20 +29,20 @@ class SHFHomeAppBar extends StatelessWidget {
                     .apply(color: SHFColors.grey)),
             Obx(
                   () {
-                // Check if user Profile is still loading
+                // Kiểm tra xem thông tin hồ sơ của người dùng có đang được tải không
                 if (userController.profileLoading.value) {
-                  // Display a shimmer loader while user profile is being loaded
+                  // Hiển thị một shimmer loader trong khi thông tin hồ sơ của người dùng đang được tải
                   return const SHFShimmerEffect(width: 80, height: 15);
                 } else {
-                  // Check if there are no record found
+                  // Kiểm tra xem có bản ghi nào được tìm thấy không
                   if (userController.user.value.id.isEmpty) {
-                    // Display a message when no data is found
+                    // Hiển thị một thông báo khi không tìm thấy dữ liệu
                     return Text(
                       'Tên của bạn',
                       style: Theme.of(context).textTheme.headlineSmall!.apply(color: SHFColors.white),
                     );
                   } else {
-                    // Display User Name
+                    // Hiển thị tên người dùng
                     return Text(
                       userController.user.value.fullName,
                       style: Theme.of(context).textTheme.headlineSmall!.apply(color: SHFColors.white),

@@ -19,10 +19,10 @@ class VerifyEmailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(VerifyEmailController());
     return Scaffold(
-      /// Appbar close icon will first Logout the user & then redirect back to Login Screen()
-      /// Reason: We will store the data when user enters the Register Button on Previous screen.
-      /// Whenever the user opens the app, we will check if email is verified or not.
-      /// If not verified we will always show this Verification screen.
+      /// Thanh ứng dụng sẽ đóng màn hình và sau đó chuyển hướng đến Màn hình Đăng nhập
+      /// Lý do: lưu dữ liệu khi người dùng nhấn nút Đăng ký trên Màn hình trước đó.
+      /// Mỗi khi người dùng mở ứng dụng, sẽ kiểm tra xem email đã được xác minh chưa.
+      /// Nếu chưa được xác minh, sẽ luôn hiển thị màn hình Xác minh này.
       appBar: SHFAppBar(
         actions: [
           IconButton(
@@ -31,19 +31,19 @@ class VerifyEmailScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        //Phần đệm để tạo không gian mặc định bằng nhau ở tất cả các cạnh trong tất cả màn hình.
+        // Phần đệm để tạo không gian mặc định bằng nhau ở tất cả các cạnh trong tất cả các màn hình.
         child: Padding(
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
             children: [
-              ///Image
+              /// Hình ảnh
               Image(
                 image: const AssetImage(SHFImages.deliveredEmailIllustration),
                 width: SHFHelperFunctions.screenWidth() * 0.6,
               ),
               const SizedBox(height: SHFSizes.spaceBtwSections),
 
-              ///Title & SubTitle
+              /// Tiêu đề & Phụ đề
               Text(
                 SHFTexts.confirmEmail,
                 style: Theme.of(context).textTheme.headlineMedium,
@@ -63,7 +63,7 @@ class VerifyEmailScreen extends StatelessWidget {
               ),
               const SizedBox(height: SHFSizes.spaceBtwSections),
 
-              ///Buttons
+              /// Nút
               SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -74,7 +74,7 @@ class VerifyEmailScreen extends StatelessWidget {
                 height: SHFSizes.spaceBtwItems,
               ),
 
-              /// Resend Email, You can also add timer
+              /// Gửi lại Email
               SizedBox(
                   width: double.infinity,
                   child: TextButton(

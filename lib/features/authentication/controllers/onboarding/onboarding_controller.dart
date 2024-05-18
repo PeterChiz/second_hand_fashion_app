@@ -7,24 +7,25 @@ import '../../screens/login/login.dart';
 class OnBoardingController extends GetxController{
   static OnBoardingController get instance => Get.find();
 
-  /// Variables
+  /// Biến
   Rx<int> currentPageIndex = 0.obs;
   final pageController = PageController();
 
-  /// Update Current Index when Page Scroll
+  /// Cập nhật Chỉ số Trang Hiện tại khi Trang Cuộn
   void updatePageIndicator(index) => currentPageIndex.value = index;
 
-  /// Jump to the specific dot selected page.
+  /// Chuyển đến trang cụ thể được chọn bằng dấu chấm.
   void dotNavigationClick(index) {
     currentPageIndex.value == index;
     pageController.jumpToPage(index);
   }
 
-  /// Update Current Index & jump to next page
+  /// Cập nhật Chỉ số Trang Hiện tại & chuyển đến trang tiếp theo
   void nextPage() {
-    // If its the last index then goto Login Screen.
-    // Here you can define your LocalStorage to set OnBoarding bool isFirstTime = false.
-    // So, that where ever app launches, app will check if isFirstTime = true, show onBoarding else show Login or Dashboard.
+    // Nếu đây là chỉ số cuối cùng thì chuyển đến Màn hình Đăng nhập.
+    // Ở đây có thể xác định LocalStorage để đặt OnBoarding bool isFirstTime = false.
+    // Vì vậy, bất cứ khi nào ứng dụng khởi chạy, ứng dụng sẽ kiểm tra nếu isFirstTime = true,
+    // hiển thị onBoarding khác hiển thị Đăng nhập hoặc Dashboard.
     if (currentPageIndex.value == 2) {
 
       final userStorage = GetStorage();
@@ -33,12 +34,11 @@ class OnBoardingController extends GetxController{
       Get.to(() => const LoginScreen());
     } else {
       int page = currentPageIndex.value + 1;
-      // You can also use .animateToPage() Give duration and Curve
       pageController.jumpToPage(page);
     }
   }
 
-  /// Update Current Index & jump to the last Page
+  /// Cập nhật Chỉ số Trang Hiện tại & chuyển đến Trang cuối cùng
   void skipPage() {
     currentPageIndex.value = 2;
     pageController.jumpToPage(2);

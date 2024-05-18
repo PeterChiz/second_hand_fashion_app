@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/appbar/appbar.dart';
-import 'package:second_hand_fashion_app/common/widgets/images/shf_rounded_image.dart';
 import 'package:second_hand_fashion_app/common/widgets/shimmers/horizontal_product_shimmer.dart';
 import 'package:second_hand_fashion_app/common/widgets/texts/section_heading.dart';
 import 'package:second_hand_fashion_app/features/shop/controllers/category_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/models/category_model.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/all_products/all_products.dart';
-import 'package:second_hand_fashion_app/utils/constants/image_strings.dart';
 import 'package:second_hand_fashion_app/utils/constants/sizes.dart';
 import 'package:second_hand_fashion_app/utils/helpers/cloud_helper_functions.dart';
 
@@ -16,7 +14,7 @@ import '../../../../data/repositories/product/product_repository.dart';
 
 
 class SubCategoriesScreen extends StatelessWidget {
-  const SubCategoriesScreen({super.key, required this.category});
+  const SubCategoriesScreen({super.key,  required this.category});
 
   final CategoryModel category;
 
@@ -30,20 +28,17 @@ class SubCategoriesScreen extends StatelessWidget {
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
             children: [
-              /// Banner
-              const SHFRoundedImage(width: double.infinity, imageUrl: SHFImages.promoBanner3, applyImageRadius: true),
-              const SizedBox(height: SHFSizes.spaceBtwSections),
 
-              /// Sub Categories
+              /// Danh mục Con
               FutureBuilder(
                 future: controller.getSubCategories(category.id),
                 builder: (_, snapshot) {
-                  /// Handle Loader, No Record, OR Error Message
+                  /// Xử lý Tiến trình Tải, Không có Bản ghi, HOẶC Thông báo Lỗi
                   const loader = SHFHorizontalProductShimmer();
                   final widget = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);
                   if (widget != null) return widget;
 
-                  /// Record found.
+                  /// Bản ghi được tìm thấy.
                   final subCategories = snapshot.data!;
                   return ListView.builder(
                     shrinkWrap: true,
@@ -52,19 +47,19 @@ class SubCategoriesScreen extends StatelessWidget {
                     itemBuilder: (_, index) {
                       final subCategory = subCategories[index];
 
-                      /// Fetch Category Products
+                      /// Lấy Sản phẩm của Danh mục
                       return FutureBuilder(
                         future: controller.getCategoryProducts(categoryId: subCategory.id),
                         builder: (_, snapshot) {
-                          /// Handle Loader, No Record, OR Error Message
+                          /// Xử lý Tiến trình Tải, Không có Bản ghi, HOẶC Thông báo Lỗi
                           final widget = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);
                           if (widget != null) return widget;
 
-                          /// Congratulations 🎊 Record found.
+                          /// Chúc mừng
                           final products = snapshot.data!;
                           return Column(
                             children: [
-                              /// Sub Category Heading
+                              /// Tiêu đề Danh mục Con
                               SHFSectionHeading(
                                 title: subCategory.name,
                                 showActionButton: true,
@@ -75,7 +70,7 @@ class SubCategoriesScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: SHFSizes.spaceBtwItems / 2),
 
-                              /// Sub Category Products
+                              /// Sản phẩm Danh mục Con
                               SizedBox(
                                 height: 120,
                                 child: ListView.separated(

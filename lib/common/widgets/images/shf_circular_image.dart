@@ -33,11 +33,8 @@ class SHFCircularImage extends StatelessWidget {
       height: height,
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        //Nếu màu nền của hình ảnh là null thì chuyển nó sang thiết kế màu chế độ sáng và chế độ tối.
-        color: backgroundColor ??
-            (SHFHelperFunctions.isDarkMode(context)
-                ? SHFColors.black
-                : SHFColors.white),
+        // Nếu màu nền hình ảnh là null thì chuyển sang thiết kế màu sáng và tối.
+        color: backgroundColor ?? (SHFHelperFunctions.isDarkMode(context) ? SHFColors.black : SHFColors.white),
         borderRadius: BorderRadius.circular(100),
       ),
       child: ClipRRect(
@@ -45,20 +42,20 @@ class SHFCircularImage extends StatelessWidget {
         child: Center(
           child: isNetworkImage
               ? CachedNetworkImage(
-                  imageUrl: image,
-                  fit: fit,
-                  color: overlayColor,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      const SHFShimmerEffect(width: 55, height: 55, radius: 55,),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                )
+            fit: fit,
+            color: overlayColor,
+            imageUrl: image,
+            progressIndicatorBuilder: (context, url, downloadProgress) => const SHFShimmerEffect(width: 55, height: 55),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          )
               : Image(
-                  fit: fit,
-                  image: AssetImage(image),
-                  color: overlayColor,
-                ),
+            fit: fit,
+            image: AssetImage(image),
+            color: overlayColor,
+          ),
         ),
       ),
     );
   }
 }
+

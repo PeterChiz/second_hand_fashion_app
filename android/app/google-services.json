@@ -7,6 +7,42 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1088264323064:android:1deabeb15fe35785eb600d",
+        "android_client_info": {
+          "package_name": "com.hoashopsi.second_hand_fashion_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1088264323064-aqh3ljimnrn1tpuofpiuldkcqttse2im.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUdkcAoVuY14QgS0Zda76-n402gQjZtBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1088264323064-aqh3ljimnrn1tpuofpiuldkcqttse2im.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1088264323064-60grc77o186ricv396tdj5cb8g4i8gdd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hoashopsi.secondHandFashionAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1088264323064:android:b73f6ac517e37755eb600d",
         "android_client_info": {
           "package_name": "com.hoashopsi.second_hand_fashion_app"
@@ -39,10 +75,10 @@
               "client_type": 3
             },
             {
-              "client_id": "1088264323064-epq3lnu943bh19k96hntjfesf8qu28af.apps.googleusercontent.com",
+              "client_id": "1088264323064-60grc77o186ricv396tdj5cb8g4i8gdd.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.hoashopsi.secondHandFashionApp"
+                "bundle_id": "com.hoashopsi.secondHandFashionAdmin"
               }
             }
           ]

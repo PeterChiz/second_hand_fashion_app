@@ -33,11 +33,11 @@ class SHFFullScreenLoader{
         ))
     );
   }
-  ///Stop the currently open loading dialog
+  ///Dừng hộp thoại tải hiện đang mở
   ///Method nay khong tra ve bat cu gi
 
   static stopLoading(){
-    Navigator.of(Get.overlayContext!).pop(); //Close the dialog using the Navigator
+    Navigator.of(Get.overlayContext!).pop(); //Đóng hộp thoại bằng Navigator
   }
 }
 

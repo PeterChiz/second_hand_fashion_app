@@ -13,24 +13,25 @@ import '../../../../common/widgets/products/product_cards/product_card_vertical.
 import '../../../../utils/device/device_utility.dart';
 import '../../models/product_model.dart';
 
-/// Represents a screen that displays a list of products with the option for custom sorting and filtering.
+/// Đại diện cho một màn hình hiển thị danh sách sản phẩm với tùy chọn sắp xếp và lọc tùy chỉnh.
 class AllProducts extends StatelessWidget {
-  const AllProducts({super.key, required this.title, this.query, this.futureMethod});
+  const AllProducts(
+      {super.key, required this.title, this.query, this.futureMethod});
 
-  /// The title of the screen.
+  /// Tiêu đề của màn hình.
   final String title;
 
-  /// Represents a query to fetch products from the database.
-  /// Use the [query] parameter to apply custom sorting or filtering criteria.
+  /// Đại diện cho một truy vấn để lấy sản phẩm từ cơ sở dữ liệu.
+  /// Sử dụng tham số [query] để áp dụng các tiêu chí sắp xếp hoặc lọc tùy chỉnh.
   final Query? query;
 
-  /// Represents a function to fetch products as a future.
-  /// If you use this [futureMethod] function, it does not allow custom sorting or filtering from the database.
+  /// Đại diện cho một hàm để lấy sản phẩm dưới dạng tương lai.
+  /// Nếu bạn sử dụng hàm [futureMethod] này, nó không cho phép sắp xếp hoặc lọc tùy chỉnh từ cơ sở dữ liệu.
   final Future<List<ProductModel>>? futureMethod;
 
   @override
   Widget build(BuildContext context) {
-    // Initialize controller for managing product fetching
+    // Khởi tạo controller để quản lý việc lấy sản phẩm
     final controller = Get.put(AllProductsController());
 
     return Scaffold(
@@ -41,14 +42,15 @@ class AllProducts extends StatelessWidget {
           child: FutureBuilder(
             future: futureMethod ?? controller.fetchProductsByQuery(query),
             builder: (_, snapshot) {
-              // Check the state of the FutureBuilder snapshot
+              // Kiểm tra trạng thái của snapshot trong FutureBuilder
               const loader = SHFVerticalProductShimmer();
-              final widget = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);
+              final widget = SHFCloudHelperFunctions.checkMultiRecordState(
+                  snapshot: snapshot, loader: loader);
 
-              // Return appropriate widget based on snapshot state
+              // Trả về widget phù hợp dựa trên trạng thái snapshot
               if (widget != null) return widget;
 
-              // Products found!
+              // Sản phẩm được tìm thấy!
               final products = snapshot.data!;
               return SHFSortableProductList(products: products);
             },
@@ -59,41 +61,49 @@ class AllProducts extends StatelessWidget {
   }
 }
 
-/// Represents a sortable list of products that can be filtered and sorted.
+/// Đại diện cho một danh sách sản phẩm có thể được sắp xếp và lọc.
 ///
-/// You can also perform sorting directly from the database using [ProductRepository.filterProducts].
+/// Có thể thực hiện sắp xếp trực tiếp từ cơ sở dữ liệu bằng cách sử dụng [ProductRepository.filterProducts].
 class SHFSortableProductList extends StatelessWidget {
   const SHFSortableProductList({
     super.key,
     required this.products,
   });
 
-  /// The list of products to be displayed.
+  /// Danh sách sản phẩm để hiển thị.
   final List<ProductModel> products;
 
   @override
   Widget build(BuildContext context) {
-    // Initialize controller for managing product sorting
+    // Khởi tạo controller để quản lý việc sắp xếp sản phẩm
     final controller = Get.put(AllProductsController());
-    // Assign the products to the controller
+    // Gán các sản phẩm cho controller
     controller.assignProducts(products);
 
     return Column(
       children: [
-        /// -- Sort & Filter Section
+        /// -- Phần Sắp xếp & Lọc
         Row(
           children: [
             Obx(
-                  () => Expanded(
+              () => Expanded(
                 child: DropdownButtonFormField(
                   isExpanded: true,
-                  decoration: const InputDecoration(prefixIcon: Icon(Iconsax.sort)),
+                  decoration:
+                      const InputDecoration(prefixIcon: Icon(Iconsax.sort)),
                   value: controller.selectedSortOption.value,
                   onChanged: (value) {
-                    // Sort products based on the selected option
+                    // Sắp xếp sản phẩm dựa trên tùy chọn được chọn
                     controller.sortProducts(value!);
                   },
-                  items: ['Tên', 'Giá cao đến thấp', 'Giá thấp đến cao', 'Giảm giá', 'Mới nhất', 'Phổ biến'].map((option) {
+                  items: [
+                    'Tên',
+                    'Giá cao đến thấp',
+                    'Giá thấp đến cao',
+                    'Giảm giá',
+                    'Mới nhất',
+                    'Phổ biến'
+                  ].map((option) {
                     return DropdownMenuItem<String>(
                       value: option,
                       child: Text(option),
@@ -106,16 +116,19 @@ class SHFSortableProductList extends StatelessWidget {
         ),
         const SizedBox(height: SHFSizes.spaceBtwSections),
 
-        /// Product Grid Section
+        /// Phần Lưới Sản phẩm
         Obx(
-              () => SHFGridLayout(
+          () => SHFGridLayout(
             itemCount: controller.products.length,
-            itemBuilder: (_, index) => SHFProductCardVertical(product: controller.products[index], isNetworkImage: true),
+            itemBuilder: (_, index) => SHFProductCardVertical(
+                product: controller.products[index], isNetworkImage: true),
           ),
         ),
 
-        /// Bottom spacing to accommodate the navigation bar
-        SizedBox(height: SHFDeviceUtils.getBottomNavigationBarHeight() + SHFSizes.defaultSpace),
+        /// Khoảng trắng dưới cùng để thích nghi với thanh điều hướng dưới cùng
+        SizedBox(
+            height: SHFDeviceUtils.getBottomNavigationBarHeight() +
+                SHFSizes.defaultSpace),
       ],
     );
   }

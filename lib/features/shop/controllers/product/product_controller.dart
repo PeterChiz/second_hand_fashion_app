@@ -12,23 +12,23 @@ class ProductController extends GetxController {
   final productRepository = Get.put(ProductRepository());
   RxList<ProductModel> featuredProducts = <ProductModel>[].obs;
 
-  /// -- Initialize Products from your backend
+  /// -- Khởi tạo Sản phẩm từ backend của bạn
   @override
   void onInit() {
     fetchFeaturedProducts();
     super.onInit();
   }
 
-  /// Fetch Products using Stream so, any change can immediately take effect.
+  /// Lấy Sản phẩm sử dụng Stream để bất kỳ thay đổi nào cũng có thể có hiệu lực ngay lập tức.
   void fetchFeaturedProducts() async {
     try {
-      // Show loader while loading Products
+      // Hiển thị loader trong khi tải Sản phẩm
       isLoading.value = true;
 
-      // Fetch Products
+      // Lấy Sản phẩm
       final products = await productRepository.getFeaturedProducts();
 
-      // Assign Products
+      // Gán Sản phẩm
       featuredProducts.assignAll(products);
     } catch (e) {
       SHFLoaders.errorSnackBar(title: 'Có lỗi!', message: e.toString());
@@ -37,21 +37,21 @@ class ProductController extends GetxController {
     }
   }
 
-  /// Get the product price or price range for variations.
+  /// Lấy giá Sản phẩm hoặc dải giá cho các biến thể.
   String getProductPrice(ProductModel product) {
     double smallestPrice = double.infinity;
     double largestPrice = 0.0;
 
-    // If no variations exist, return the simple price or sale price
+    // Nếu không có biến thể tồn tại, trả về giá đơn giản hoặc giá giảm giá
     if (product.productType == ProductType.single.toString() || product.productVariations!.isEmpty) {
       return (product.salePrice > 0.0 ? product.salePrice : product.price).toString();
     } else {
-      // Calculate the smallest and largest prices among variations
+      // Tính toán giá nhỏ nhất và lớn nhất trong các biến thể
       for (var variation in product.productVariations!) {
-        // Determine the price to consider (sale price if available, otherwise regular price)
+        // Xác định giá cần xem xét (giá giảm giá nếu có, nếu không, giá thường)
         double priceToConsider = variation.salePrice > 0.0 ? variation.salePrice : variation.price;
 
-        // Update smallest and largest prices
+        // Cập nhật giá nhỏ nhất và lớn nhất
         if (priceToConsider < smallestPrice) {
           smallestPrice = priceToConsider;
         }
@@ -61,17 +61,17 @@ class ProductController extends GetxController {
         }
       }
 
-      // If smallest and largest prices are the same, return a single price
+      // Nếu giá nhỏ nhất và lớn nhất giống nhau, trả về một giá duy nhất
       if (smallestPrice.isEqual(largestPrice)) {
         return largestPrice.toString();
       } else {
-        // Otherwise, return a price range
-        return '$smallestPrice - $largestPrice\đ';
+        // Ngược lại, trả về một dải giá
+        return '$smallestPrice\đ - $largestPrice';
       }
     }
   }
 
-  /// -- Calculate Discount Percentage
+  /// -- Tính toán Phần trăm Giảm giá
   String? calculateSalePercentage(double originalPrice, double? salePrice) {
     if (salePrice == null || salePrice <= 0.0) return null;
     if (originalPrice <= 0) return null;
@@ -80,7 +80,7 @@ class ProductController extends GetxController {
     return percentage.toStringAsFixed(0);
   }
 
-  /// -- Check Product Stock Status
+  /// -- Kiểm tra Trạng thái Kho hàng của Sản phẩm
   String getProductStockStatus(ProductModel product) {
     if (product.productType == ProductType.single.toString()) {
       return product.stock > 0 ? 'Còn hàng' : 'Hết hàng';

@@ -20,19 +20,19 @@ class CategoryController extends GetxController {
     super.onInit();
   }
 
-  /// -- Load category data
+  /// -- Tải dữ liệu danh mục
   Future<void> fetchCategories() async {
     try {
-      // Show loader while loading categories
+      // Hiển thị loader trong khi tải danh mục
       isLoading.value = true;
 
-      // Fetch categories from data source (Firestore, API, etc.)
+      // Lấy danh mục từ nguồn dữ liệu (Firestore, API, vv.)
       final fetchedCategories = await _categoryRepository.getAllCategories();
 
-      // Update the categories list
+      // Cập nhật danh sách các danh mục
       allCategories.assignAll(fetchedCategories);
 
-      // Filter featured categories
+      // Lọc ra các danh mục nổi bật
       featuredCategories.assignAll(allCategories.where((category) => (category.isFeatured) && category.parentId.isEmpty).take(8).toList());
 
     } catch (e) {
@@ -43,9 +43,9 @@ class CategoryController extends GetxController {
   }
 
 
-  /// -- Load selected category data
+  /// -- Tải dữ liệu danh mục con đã chọn
   Future<List<CategoryModel>> getSubCategories(String categoryId) async {
-    // Fetch all categories where ParentId = categoryId;
+    // Lấy tất cả các danh mục con có ParentId = categoryId;
     try {
       final subCategories = await _categoryRepository.getSubCategories(categoryId);
       return subCategories;
@@ -55,10 +55,10 @@ class CategoryController extends GetxController {
     }
   }
 
-  /// Get Category or Sub-Category Products.
-  /// If you want to fetch all the products in this category SET [limit] to -1
+  /// Lấy Sản phẩm của Danh mục hoặc Danh mục con.
+  /// Nếu bạn muốn lấy tất cả các sản phẩm trong danh mục này, ĐẶT [limit] thành -1
   Future<List<ProductModel>> getCategoryProducts({required String categoryId, int limit = 4}) async {
-    // Fetch limited (4) products against each subCategory;
+    // Lấy các sản phẩm giới hạn (4) cho mỗi danh mục con;
     final products = await ProductRepository.instance.getProductsForCategory(categoryId: categoryId, limit: limit);
     return products;
   }

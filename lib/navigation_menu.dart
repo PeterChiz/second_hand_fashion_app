@@ -15,27 +15,26 @@ class NavigationMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(NavigationController());
-    final darkMode = SHFHelperFunctions.isDarkMode(context);
     return Scaffold(
+      extendBody: true,
       bottomNavigationBar: Obx(
-        () => NavigationBar(
+            () => NavigationBar(
           height: 80,
           elevation: 0,
           animationDuration: const Duration(seconds: 3),
           selectedIndex: controller.selectedMenu.value,
+          backgroundColor: SHFHelperFunctions.isDarkMode(context) ? SHFColors.black : Colors.white,
+          indicatorColor: SHFHelperFunctions.isDarkMode(context) ? SHFColors.white.withOpacity(0.1) : SHFColors.black.withOpacity(0.1),
           onDestinationSelected: (index) => controller.selectedMenu.value = index,
-          backgroundColor: darkMode ? SHFColors.black : SHFColors.white,
-          indicatorColor: darkMode ? SHFColors.white.withOpacity(0.1) : SHFColors.black.withOpacity(0.1),
-
           destinations: const [
-            NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
-            NavigationDestination(icon: Icon(Iconsax.shop), label: 'Store'),
-            NavigationDestination(icon: Icon(Iconsax.heart), label: 'Wishlist'),
-            NavigationDestination(icon: Icon(Iconsax.user), label: 'Profile'),
+            NavigationDestination(icon: Icon(Iconsax.home), label: 'Nhà'),
+            NavigationDestination(icon: Icon(Iconsax.shop), label: 'Cửa hàng'),
+            NavigationDestination(icon: Icon(Iconsax.heart), label: 'Yêu thích'),
+            NavigationDestination(icon: Icon(Iconsax.user), label: 'Trang cá nhân'),
           ],
         ),
       ),
-      body: Obx(() => controller.screens[controller.selectedMenu.value]),//lấy giá trị màu vào
+      body: Obx(() => controller.screens[controller.selectedMenu.value]),
     );
   }
 }

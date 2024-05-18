@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:second_hand_fashion_app/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:second_hand_fashion_app/common/widgets/shimmers/vertical_product_shimmer.dart';
-import 'package:second_hand_fashion_app/features/shop/controllers/product/poduct_controller.dart';
+import 'package:second_hand_fashion_app/features/shop/controllers/product/product_controller.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/all_products/all_products.dart';
 import 'package:second_hand_fashion_app/features/shop/screens/home/widgets/promo_slider.dart';
 import '../../../../common/widgets/custom_shapes/containers/primary_header_container.dart';
@@ -17,7 +17,9 @@ import 'widgets/home_appbar.dart';
 import 'widgets/header_categories.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,8 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(height: SHFSizes.spaceBtwSections),
 
                   /// -- Searchbar
-                  SHFSearchContainer(text: 'Tìm kiếm mặt hàng', showBorder: false),
+                  SHFSearchContainer(
+                      text: 'Tìm kiếm mặt hàng', showBorder: false),
                   SizedBox(height: SHFSizes.spaceBtwSections),
 
                   /// -- Categories
@@ -60,9 +63,10 @@ class HomeScreen extends StatelessWidget {
                   SHFSectionHeading(
                     title: SHFTexts.popularProducts,
                     onPressed: () => Get.to(
-                          () => AllProducts(
+                      () => AllProducts(
                         title: SHFTexts.popularProducts,
-                        futureMethod: ProductRepository.instance.getAllFeaturedProducts(),
+                        futureMethod:
+                            ProductRepository.instance.getAllFeaturedProducts(),
                       ),
                     ),
                   ),
@@ -70,25 +74,31 @@ class HomeScreen extends StatelessWidget {
 
                   /// Products Section
                   Obx(
-                        () {
-                      // Display loader while products are loading
-                      if (controller.isLoading.value) return const SHFVerticalProductShimmer();
+                    () {
+                      // Hiển thị loader trong khi sản phẩm đang tải
+                      if (controller.isLoading.value)
+                        return const SHFVerticalProductShimmer();
 
-                      // Check if no featured products are found
+                      // Kiểm tra nếu không tìm thấy sản phẩm nổi bật
                       if (controller.featuredProducts.isEmpty) {
-                        return Center(child: Text('Không tìm thấy dữ liệu!', style: Theme.of(context).textTheme.bodyMedium));
+                        return Center(
+                            child: Text('Không tìm thấy dữ liệu!',
+                                style: Theme.of(context).textTheme.bodyMedium));
                       } else {
-                        // Featured Products Found!
+                        // Có Sản phẩm Nổi bật!
                         return SHFGridLayout(
                           itemCount: controller.featuredProducts.length,
-                          itemBuilder: (_, index) =>
-                              SHFProductCardVertical(product: controller.featuredProducts[index], isNetworkImage: true),
+                          itemBuilder: (_, index) => SHFProductCardVertical(
+                              product: controller.featuredProducts[index],
+                              isNetworkImage: true),
                         );
                       }
                     },
                   ),
 
-                  SizedBox(height: SHFDeviceUtils.getBottomNavigationBarHeight() + SHFSizes.defaultSpace),
+                  SizedBox(
+                      height: SHFDeviceUtils.getBottomNavigationBarHeight() +
+                          SHFSizes.defaultSpace),
                 ],
               ),
             )

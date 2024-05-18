@@ -9,17 +9,17 @@ import 'package:second_hand_fashion_app/utils/local_storage/storage_utility.dart
 class FavoritesController extends GetxController {
   static FavoritesController get instance => Get.find();
 
-  /// Variables
+  /// Biến
   final favorites = <String, bool>{}.obs;
 
   @override
   void onInit() {
     super.onInit();
-    // Initialize by fetching the list of already added favorites
+    // Khởi tạo bằng cách lấy danh sách yêu thích đã được thêm trước đó
     initFavorites();
   }
 
-  // Method to initialize favorites by reading from storage
+  // Phương thức để khởi tạo danh sách yêu thích bằng cách đọc từ bộ nhớ
   Future<void> initFavorites() async {
     final json = SHFLocalStorage.instance().readData('favorites');
     if (json != null) {
@@ -29,14 +29,14 @@ class FavoritesController extends GetxController {
     }
   }
 
-  /// Method to check if a product is selected (favorite)
+  /// Phương thức để kiểm tra xem một sản phẩm có được chọn (yêu thích) hay không
   bool isFavourite(String productId) {
     return favorites[productId] ?? false;
   }
 
-  /// Add Product to Favourites
+  /// Thêm Sản phẩm vào danh sách Yêu thích
   void toggleFavoriteProduct(String productId) {
-    // If favorites do not have this product, Add. Else Toggle
+    // Nếu danh sách yêu thích không chứa sản phẩm này, thêm. Ngược lại, chuyển đổi
     if (!favorites.containsKey(productId)) {
       favorites[productId] = true;
       saveFavoritesToStorage();
@@ -50,13 +50,13 @@ class FavoritesController extends GetxController {
     }
   }
 
-  // Save the updated favorites to storage
+  // Lưu danh sách yêu thích đã cập nhật vào bộ nhớ
   void saveFavoritesToStorage() {
     final encodedFavorites = json.encode(favorites);
     SHFLocalStorage.instance().saveData('favorites', encodedFavorites);
   }
 
-  /// Method to get the list of favorite products
+  /// Phương thức để lấy danh sách sản phẩm yêu thích
   Future<List<ProductModel>> favoriteProducts() {
     return ProductRepository.instance.getFavouriteProducts(favorites.keys.toList());
   }

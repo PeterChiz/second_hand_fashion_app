@@ -11,14 +11,16 @@ import '../../../../common/widgets/shimmers/brands_shimmer.dart';
 import 'brand.dart';
 
 class AllBrandsScreen extends StatelessWidget {
-  const AllBrandsScreen({super.key});
+  const AllBrandsScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     final controller = BrandController.instance;
     return Scaffold(
       appBar: const SHFAppBar(
-        title: Text('Brand'),
+        title: Text('Thương hiệu'),
         showBackArrow: true,
       ),
       body: SingleChildScrollView(
@@ -26,26 +28,32 @@ class AllBrandsScreen extends StatelessWidget {
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
             children: [
-              /// Sub Categories
+              /// Danh mục con
               const SHFSectionHeading(
-                title: 'Brands',
+                title: 'Thương hiệu',
                 showActionButton: false,
               ),
               const SizedBox(
                 height: SHFSizes.spaceBtwItems,
               ),
 
-              ///Brands
+              /// Thương hiệu
               Obx(
-                    () {
-                  // Check if categories are still loading
-                  if (controller.isLoading.value) return const SHFBrandsShimmer();
+                () {
+                  // Kiểm tra nếu thương hiệu đang được tải
+                  if (controller.isLoading.value)
+                    return const SHFBrandsShimmer();
 
-                  // Check if there are no featured categories found
+                  // Kiểm tra nếu không có thương hiệu nào được tìm thấy
                   if (controller.allBrands.isEmpty) {
-                    return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white)));
+                    return Center(
+                        child: Text('Chưa có dữ liệu!',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .apply(color: Colors.white)));
                   } else {
-                    /// Data Found
+                    /// Dữ liệu được tìm thấy
                     return SHFGridLayout(
                       itemCount: controller.allBrands.length,
                       mainAxisExtent: 80,

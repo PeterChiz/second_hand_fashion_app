@@ -9,6 +9,7 @@ import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/helpers/cloud_helper_functions.dart';
 import '../../controllers/brand_controller.dart';
 import '../../models/brand_model.dart';
+
 class BrandScreen extends StatelessWidget {
   const BrandScreen({super.key, required this.brand});
 
@@ -18,31 +19,31 @@ class BrandScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = BrandController.instance;
     return Scaffold(
-      appBar: const SHFAppBar(showBackArrow: true, title: Text('Brand')),
+      appBar: const SHFAppBar(showBackArrow: true, title: Text('Thương hiệu')),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
             children: [
-              /// Banner
+              ///
               SHFBrandCard(brand: brand, showBorder: true),
               const SizedBox(height: SHFSizes.spaceBtwSections),
 
-              /// Sub Categories
-              const SHFSectionHeading(title: 'Products', showActionButton: false),
+              /// Danh mục con
+              const SHFSectionHeading(title: 'Sản phẩm', showActionButton: false),
               const SizedBox(height: SHFSizes.spaceBtwItems),
               FutureBuilder(
-                  future: controller.getBrandProducts(brand.id, -1),
-                  builder: (context, snapshot) {
-                    /// Handle Loader, No Record, OR Error Message
-                    const loader = SHFVerticalProductShimmer();
-                    final widget = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);
-                    if (widget != null) return widget;
+                future: controller.getBrandProducts(brand.id, -1),
+                builder: (context, snapshot) {
+                  /// Xử lý Loader, Không có Bản ghi, HOẶC Thông báo Lỗi
+                  const loader = SHFVerticalProductShimmer();
+                  final widget = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);
+                  if (widget != null) return widget;
 
-                    /// Record Found!
-                    final brandProducts = snapshot.data!;
-                    return SHFSortableProducts(products: brandProducts);
-                  }
+                  /// Bản ghi được tìm thấy!
+                  final brandProducts = snapshot.data!;
+                  return SHFSortableProducts(products: brandProducts);
+                },
               )
             ],
           ),

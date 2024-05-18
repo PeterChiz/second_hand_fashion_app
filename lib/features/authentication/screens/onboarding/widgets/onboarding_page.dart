@@ -20,15 +20,15 @@ class OnBoardingPage extends StatelessWidget {
       padding: const EdgeInsets.all(SHFSizes.defaultSpace),
       child: Column(
         children: [
-          // Display the onboarding image
+          // Hiển thị hình ảnh onboarding
           Image(
               width: SHFHelperFunctions.screenWidth() * 0.8,
               height: SHFHelperFunctions.screenHeight() * 0.6,
               image: AssetImage(image)),
-          // Display the onboarding title
+          // Hiển thị tiêu đề onboarding
           Text(title, style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center),
           const SizedBox(height: SHFSizes.spaceBtwItems),
-          // Display the onboarding subtitle
+          // Hiển thị phụ đề onboarding
           Text(subTitle, style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.center),
         ],
       ),

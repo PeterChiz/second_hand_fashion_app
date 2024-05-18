@@ -9,9 +9,9 @@ import '../../../utils/constants/sizes.dart';
 class SHFBrandTitleWithVerifiedIcon extends StatelessWidget {
   const SHFBrandTitleWithVerifiedIcon({
     super.key,
-    required this.title,
-    this.maxLines =1 ,
     this.textColor,
+    this.maxLines = 1,
+    required this.title,
     this.iconColor = SHFColors.primary,
     this.textAlign = TextAlign.center,
     this.brandTextSize = TextSizes.small,
@@ -29,13 +29,13 @@ class SHFBrandTitleWithVerifiedIcon extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Flexible(
-            child:SHFBrandTitleText(
-              title: title,
-              color: textColor,
-              maxLines: maxLines,
-              textAlign: textAlign,
-              brandTextSize: brandTextSize,
-            )
+          child: SHFBrandTitleText(
+            title: title,
+            color: textColor,
+            maxLines: maxLines,
+            textAlign: textAlign,
+            brandTextSize: brandTextSize,
+          ),
         ),
         const SizedBox(width: SHFSizes.xs),
         Icon(Iconsax.verify5, color: iconColor, size: SHFSizes.iconXs),

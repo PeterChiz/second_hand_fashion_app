@@ -9,6 +9,7 @@ import 'package:second_hand_fashion_app/utils/helpers/helper_functions.dart';
 
 import 'add_remove_cart_button.dart';
 
+/// Widget hiển thị phần chức năng thêm vào giỏ hàng ở phía dưới.
 class SHFBottomAddToCart extends StatelessWidget {
   const SHFBottomAddToCart({
     super.key,
@@ -36,14 +37,14 @@ class SHFBottomAddToCart extends StatelessWidget {
             () => Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Add OR Remove Cart Product Icon Buttons
+            // Các nút biểu tượng Thêm hoặc Xóa sản phẩm khỏi giỏ hàng
             SHFProductQuantityWithAddRemoveButton(
               quantity: controller.productQuantityInCart.value,
               add: () => controller.productQuantityInCart.value += 1,
-              // Disable remove when cart count is less then 1
+              // Vô hiệu hóa xóa khi số lượng trong giỏ hàng ít hơn 1
               remove: () => controller.productQuantityInCart.value < 1 ? null : controller.productQuantityInCart.value -= 1,
             ),
-            // Add to cart button
+            // Nút Thêm vào giỏ hàng
             ElevatedButton(
               onPressed: controller.productQuantityInCart.value < 1 ? null : () => controller.addToCart(product),
               style: ElevatedButton.styleFrom(
@@ -52,7 +53,7 @@ class SHFBottomAddToCart extends StatelessWidget {
                 side: const BorderSide(color: SHFColors.black),
               ),
               child: const Row(
-                children: [Icon(Iconsax.shopping_bag), SizedBox(width: SHFSizes.spaceBtwItems / 2), Text('Add to Bag')],
+                children: [Icon(Iconsax.shopping_bag), SizedBox(width: SHFSizes.spaceBtwItems / 2), Text('Thêm vào giỏ hàng')],
               ),
             ),
           ],

@@ -29,19 +29,19 @@ class SHFCategoryTab extends StatelessWidget {
           padding: const EdgeInsets.all(SHFSizes.defaultSpace),
           child: Column(
             children: [
-              /// -- Category Brands
+              /// -- Thương hiệu của Danh mục
               CategoryBrands(category: category),
               const SizedBox(height: SHFSizes.spaceBtwSections * 2),
 
-              /// -- Category Products You May Like
+              /// -- Sản phẩm Danh mục Bạn Có Thể Thích
               FutureBuilder(
                 future: controller.getCategoryProducts(categoryId: category.id),
                 builder: (context, snapshot) {
-                  /// Helper Function: Handle Loader, No Record, OR ERROR Message
+                  /// Hàm hỗ trợ: Xử lý Hiển thị Loader, Không có Bản ghi, HOẶC Thông báo LỖI
                   final response = SHFCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: const SHFVerticalProductShimmer());
                   if (response != null) return response;
 
-                  /// Record Found!
+                  /// Bản ghi được tìm thấy!
                   final products = snapshot.data!;
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
