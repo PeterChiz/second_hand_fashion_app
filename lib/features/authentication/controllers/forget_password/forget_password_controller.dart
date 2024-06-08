@@ -19,32 +19,25 @@ class ForgetPasswordController extends GetxController{
     try{
       //Start Loading
       SHFFullScreenLoader.openLoadingDialog('Đang xử lý yêu cầu của bạn', SHFImages.docerAnimation);
-
       //Check ket noi internet
       final isConnected = await NetworkManager.instance.isConnected();
       if(!isConnected){
         SHFFullScreenLoader.stopLoading();
         return;
       }
-
       //Form Validation
       if(!forgetPasswordFormKey.currentState!.validate()){
         SHFFullScreenLoader.stopLoading();
         return;
       }
-
       //Gửi email để đặt lại mật khẩu
       await AuthenticationRepository.instance.sendPasswordResetEmail(email.text.trim());
-
-      //Remove Loader
+      //Xóa Loader
       SHFFullScreenLoader.stopLoading();
-
-      //Show Success Screen
+      //Show man hinh xac nhan
       SHFLoaders.successSnackBar(title: 'Email đã gửi', message: 'Liên kết email được gửi để Đặt lại mật khẩu của bạn'.tr);
-
-      //Redirect
+      //Chuyen hunog nguoi dung
       Get.to(()=>ResetPasswordScreen(email: email.text.trim()));
-
     }catch(e){
       //Remove Loader
       SHFFullScreenLoader.stopLoading();
@@ -61,8 +54,6 @@ class ForgetPasswordController extends GetxController{
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {SHFFullScreenLoader.stopLoading(); return;}
 
-
-      //hien thi man hinh thanh cong
       await AuthenticationRepository.instance.sendPasswordResetEmail(email.trim());
 
       //Remove Loader
@@ -74,7 +65,7 @@ class ForgetPasswordController extends GetxController{
     }catch(e){
       //Remove Loader
       SHFFullScreenLoader.stopLoading();
-      SHFLoaders.errorSnackBar(title: 'Oh snap', message: e.toString());
+      SHFLoaders.errorSnackBar(title: 'Có lỗi', message: e.toString());
     }
   }
 }

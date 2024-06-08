@@ -4,7 +4,6 @@ class SHFValidator {
     if (value == null || value.isEmpty) {
       return 'Vui lòng nhập $fieldName';
     }
-
     return null;
   }
 
@@ -50,7 +49,6 @@ class SHFValidator {
     if (!emailRegExp.hasMatch(value)) {
       return 'Địa chỉ email không hợp lệ.';
     }
-
     return null;
   }
 
@@ -78,7 +76,6 @@ class SHFValidator {
     if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
       return 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt.';
     }
-
     return null;
   }
 
@@ -93,7 +90,6 @@ class SHFValidator {
     if (!phoneRegExp.hasMatch(value)) {
       return 'Định dạng số điện thoại không hợp lệ (yêu cầu 10 hoặc 11 chữ số).';
     }
-
     return null;
   }
 }

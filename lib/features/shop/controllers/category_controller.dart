@@ -26,7 +26,7 @@ class CategoryController extends GetxController {
       // Hiển thị loader trong khi tải danh mục
       isLoading.value = true;
 
-      // Lấy danh mục từ nguồn dữ liệu (Firestore, API, vv.)
+      // Lấy danh mục từ nguồn dữ liệu (Firestore)
       final fetchedCategories = await _categoryRepository.getAllCategories();
 
       // Cập nhật danh sách các danh mục
@@ -56,9 +56,8 @@ class CategoryController extends GetxController {
   }
 
   /// Lấy Sản phẩm của Danh mục hoặc Danh mục con.
-  /// Nếu bạn muốn lấy tất cả các sản phẩm trong danh mục này, ĐẶT [limit] thành -1
-  Future<List<ProductModel>> getCategoryProducts({required String categoryId, int limit = 4}) async {
-    // Lấy các sản phẩm giới hạn (4) cho mỗi danh mục con;
+  /// Nếu muốn lấy tất cả các sản phẩm trong danh mục này, ĐẶT [limit] thành -1
+  Future<List<ProductModel>> getCategoryProducts({required String categoryId, int limit = -1}) async {
     final products = await ProductRepository.instance.getProductsForCategory(categoryId: categoryId, limit: limit);
     return products;
   }

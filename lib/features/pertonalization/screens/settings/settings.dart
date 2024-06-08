@@ -25,7 +25,7 @@ class SettingsScreen extends StatelessWidget {
 
     return PopScope(
       canPop: false,
-      // Intercept the back button press and redirect to Home Screen
+      // Chặn việc nhấn nút quay lại và chuyển hướng đến Màn hình chính
       onPopInvoked: (value) async => Get.offAll(const NavigationMenu()),
       child: Scaffold(
         body: SingleChildScrollView(
@@ -96,7 +96,7 @@ class SettingsScreen extends StatelessWidget {
                       height: SHFSizes.spaceBtwSections,
                     ),
                     SizedBox(
-                        width: double.infinity, child: OutlinedButton(onPressed: () => controller.logout(), child: const Text('Logout'))),
+                        width: double.infinity, child: OutlinedButton(onPressed: () => controller.logout(), child: const Text('Đăng xuất'))),
                     const SizedBox(height: SHFSizes.spaceBtwSections * 2.5),
                   ],
                 ),

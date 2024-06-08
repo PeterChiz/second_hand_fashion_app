@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:second_hand_fashion_app/common/styles/spacing_styles.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/constants/text_strings.dart';
@@ -18,7 +19,7 @@ class SuccessScreen extends StatelessWidget {
           child: Column(
             children: [
               ///Image
-              Image(image:  AssetImage(image), width: SHFHelperFunctions.screenWidth() * 0.6,),
+              Lottie.asset(image, width: MediaQuery.of(context).size.width * 0.8), // Hiển thị animation Lottie
               const SizedBox(height: SHFSizes.spaceBtwSections),
 
               ///Title & SubTitle

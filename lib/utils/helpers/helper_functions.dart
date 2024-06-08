@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 
 class SHFHelperFunctions {
   static Color? getColor(String value) {
-    /// Xác định các màu cụ thể của sản phẩm của bạn ở đây và nó sẽ phù hợp với các màu thuộc tính và hiển thị cụ thể
-
+    /// Xác định các màu cụ thể của sản phẩm ở đây và nó sẽ phù hợp với các màu thuộc tính và hiển thị cụ thể
+    //vẫn lỗi không hiển thị?
     if (value == 'Green') {
       return Colors.green;
     } else if (value == 'Green') {

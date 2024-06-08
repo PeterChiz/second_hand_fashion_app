@@ -33,7 +33,7 @@ class SHFTermAndConditionCheckBox extends StatelessWidget {
                 TextSpan(text: '${SHFTexts.iAgreeTo} ', style: Theme.of(context).textTheme.bodySmall),
                 TextSpan(
                   text: SHFTexts.privacyPolicy,
-                  recognizer: TapGestureRecognizer()..onTap = () => SHFDeviceUtils.launchWebsiteUrl('https://hoasecondhandshop.com/'),
+                  recognizer: TapGestureRecognizer()..onTap = () => SHFDeviceUtils.launchWebsiteUrl('https://anotepad.com/notes/532eydhh'),
                   style: Theme.of(context).textTheme.bodyMedium!.apply(
                     color: SHFHelperFunctions.isDarkMode(context) ? SHFColors.white : SHFColors.primary,
                     decoration: TextDecoration.underline,
@@ -43,7 +43,7 @@ class SHFTermAndConditionCheckBox extends StatelessWidget {
                 TextSpan(text: ' ${SHFTexts.and} ', style: Theme.of(context).textTheme.bodySmall),
                 TextSpan(
                   text: SHFTexts.termsOfUse,
-                  recognizer: TapGestureRecognizer()..onTap = () => SHFDeviceUtils.launchWebsiteUrl('https://hoasecondhandshop.com/'),
+                  recognizer: TapGestureRecognizer()..onTap = () => SHFDeviceUtils.launchWebsiteUrl('https://anotepad.com/notes/5db8crcr'),
                   style: Theme.of(context).textTheme.bodyMedium!.apply(
                     color: SHFHelperFunctions.isDarkMode(context) ? SHFColors.white : SHFColors.primary,
                     decoration: TextDecoration.underline,

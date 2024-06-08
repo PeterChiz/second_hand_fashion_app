@@ -10,7 +10,7 @@ class SHFCloudHelperFunctions {
   /// Nếu không tìm thấy dữ liệu, nó sẽ trả về một thông báo "Không tìm thấy dữ liệu" hoặc một nothingFoundWidget tùy chỉnh nếu được cung cấp.
   /// Nếu xảy ra lỗi, nó sẽ trả về một thông báo lỗi chung.
   /// Nếu không có gì xảy ra, nó sẽ trả về null.
-  static Widget? checkMultiRecordState<T>({required AsyncSnapshot<List<T>> snapshot, Widget? loader, Widget? error, Widget? nothingFound}) {
+  static Widget? checkMultiRecordState<SHF>({required AsyncSnapshot<List<SHF>> snapshot, Widget? loader, Widget? error, Widget? nothingFound}) {
     if (snapshot.connectionState == ConnectionState.waiting) {
       if (loader != null) return loader;
       return const Center(child: CircularProgressIndicator());

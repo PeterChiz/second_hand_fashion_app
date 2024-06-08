@@ -71,7 +71,9 @@ class StoreScreen extends StatelessWidget {
                         Obx(
                           () {
                             // Kiểm tra xem danh mục đang được tải
-                            if (brandController.isLoading.value) return const SHFBrandsShimmer();
+                            if (brandController.isLoading.value) {
+                              return const SHFBrandsShimmer();
+                            }
 
                             // Kiểm tra xem có danh mục nổi bật nào không
                             if (brandController.featuredBrands.isEmpty) {

@@ -5,14 +5,12 @@ class BrandModel {
   String name;
   String image;
   bool? isFeatured;
-  int? productsCount;
 
   BrandModel({
     required this.id,
     required this.name,
     required this.image,
     this.isFeatured,
-    this.productsCount,
   });
 
   /// Hàm trợ giúp trả về một đối tượng BrandModel rỗng
@@ -24,7 +22,6 @@ class BrandModel {
       'Id': id,
       'Name': name,
       'Image': image,
-      'ProductsCount': productsCount,
       'IsFeatured': isFeatured,
     };
   }
@@ -38,7 +35,6 @@ class BrandModel {
       name: data['Name'] ?? '',
       image: data['Image'] ?? '',
       isFeatured: data['IsFeatured'] ?? false,
-      productsCount: int.parse((data['ProductsCount'] ?? 0).toString()),
     );
   }
 
@@ -53,7 +49,6 @@ class BrandModel {
         name: data['Name'] ?? '',
         image: data['Image'] ?? '',
         isFeatured: data['IsFeatured'] ?? false,
-        productsCount: data['ProductsCount'] ?? '',
       );
     } else {
       return BrandModel.empty();

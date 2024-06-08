@@ -24,8 +24,9 @@ class SHFPromoSlider extends StatelessWidget {
     return Obx(
       () {
         // Loader
-        if (controller.bannersLoading.value)
+        if (controller.bannersLoading.value) {
           return const SHFShimmerEffect(width: double.infinity, height: 190);
+        }
 
         // Không tìm thấy dữ liệu
         if (controller.banners.isEmpty) {

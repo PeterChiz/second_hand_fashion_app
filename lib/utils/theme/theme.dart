@@ -11,10 +11,8 @@ import 'custom_themes/text_theme.dart';
 
 class SHFAppTheme{
   SHFAppTheme._();
-
   static ThemeData lightTheme = ThemeData(
-    useMaterial3: true,
-    fontFamily: 'Poppins',
+    useMaterial3: true, fontFamily: 'Poppins',
     disabledColor: SHFColors.grey,
     brightness: Brightness.light,
     primaryColor: SHFColors.primary,
@@ -26,11 +24,9 @@ class SHFAppTheme{
     bottomSheetTheme: SHFBottomSheetTheme.lightBottomSheetTheme,
     elevatedButtonTheme: SHFElevatedButtonTheme.lightElevatedButtonTheme,
     outlinedButtonTheme: SHFOutlinedButtonTheme.lightOutlinedButtonTheme,
-    inputDecorationTheme: SHFTextFormFieldTheme.lightInputDecorationTheme,
-  );
+    inputDecorationTheme: SHFTextFormFieldTheme.lightInputDecorationTheme,);
   static ThemeData darkTheme = ThemeData(
-    useMaterial3: true,
-    fontFamily: 'Poppins',
+    useMaterial3: true, fontFamily: 'Poppins',
     disabledColor: SHFColors.grey,
     brightness: Brightness.dark,
     primaryColor: SHFColors.primary,

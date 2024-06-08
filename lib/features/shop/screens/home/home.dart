@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                     title: SHFTexts.popularProducts,
                     onPressed: () => Get.to(
                       () => AllProducts(
-                        title: SHFTexts.popularProducts,
+                        title: SHFTexts.allProducts,
                         futureMethod:
                             ProductRepository.instance.getAllFeaturedProducts(),
                       ),
@@ -76,8 +76,9 @@ class HomeScreen extends StatelessWidget {
                   Obx(
                     () {
                       // Hiển thị loader trong khi sản phẩm đang tải
-                      if (controller.isLoading.value)
+                      if (controller.isLoading.value) {
                         return const SHFVerticalProductShimmer();
+                      }
 
                       // Kiểm tra nếu không tìm thấy sản phẩm nổi bật
                       if (controller.featuredProducts.isEmpty) {

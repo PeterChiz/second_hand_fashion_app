@@ -24,7 +24,7 @@ class OrderController extends GetxController {
   final checkoutController = CheckoutController.instance;
   final orderRepository = Get.put(OrderRepository());
 
-  /// Fetch user's order history
+  /// Lấy lịch sử đặt hàng của người dùng
   Future<List<OrderModel>> fetchUserOrders() async {
     try {
       final userOrders = await orderRepository.fetchUserOrders();
@@ -40,11 +40,9 @@ class OrderController extends GetxController {
     try {
       // Start Loader
       SHFFullScreenLoader.openLoadingDialog('Đang xử lý đơn đặt hàng của bạn', SHFImages.pencilAnimation);
-
       // Nhận Id xác thực người dùng
       final userId = AuthenticationRepository.instance.getUserID;
       if (userId.isEmpty) return;
-
       // Thêm Details
       final order = OrderModel(
         // Tạo ID duy nhất cho đơn hàng
@@ -59,22 +57,17 @@ class OrderController extends GetxController {
         deliveryDate: DateTime.now(),
         items: cartController.cartItems.toList(),
       );
-
-
       // Cổng thanh toán kích hoạt
-      if(checkoutController.selectedPaymentMethod.value.name == PaymentMethods.paypal.name) {
-        await SHFPaypalService.getPayment();
+      if(checkoutController.selectedPaymentMethod.value.name == PaymentMethods.momo.name) {
+        await SHFMomoService.getPayment();
       }
-
       // Lưu đơn hàng vào Firestore
       await orderRepository.saveOrder(order, userId);
-
       // Cập nhật trạng thái giỏ hàng
       cartController.clearCart();
-
       // Hiển thị màn hình Thành công
       Get.off(() => SuccessScreen(
-        image: SHFImages.successful,
+        image: SHFImages.checkout,
         title: 'Thanh toán thành công!',
         subTitle: 'Mặt hàng của bạn sẽ được vận chuyển sớm!',
         onPressed: () => Get.offAll(() => const NavigationMenu()),

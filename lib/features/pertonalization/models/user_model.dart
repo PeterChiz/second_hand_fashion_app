@@ -46,8 +46,9 @@ class UserModel {
     String firstName = nameParts[0].toLowerCase();
 
     String camelCaseUsername = "$lastName$firstName"; // Kết hợp họ và tên
-    String usernameWithPrefix = "cwt_$camelCaseUsername"; // Thêm tiền tố "cwt_"
-    return usernameWithPrefix;
+    // String usernameWithPrefix = "KH_$camelCaseUsername"; // Thêm tiền tố "KH_"
+    // return usernameWithPrefix;
+    return camelCaseUsername;
   }
 
   /// Hàm tĩnh để tạo một mô hình người dùng trống.

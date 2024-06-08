@@ -7,4 +7,4 @@ enum ProductType { single, variable }
 
 enum OrderStatus { pending, processing, shipped, delivered, cancelled }
 
-enum PaymentMethods { paypal, googlePay, applePay, visa, masterCard, creditCard, paystack, razorPay, paytm, momo, PoD }
+enum PaymentMethods {momo}

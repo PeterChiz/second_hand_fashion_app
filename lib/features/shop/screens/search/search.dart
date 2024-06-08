@@ -75,16 +75,15 @@ class SearchScreen extends StatelessWidget {
     );
   }
 
-  /// Widget thương hiệu và danh mục
+  /// Widget danh mục
   Column brandsAndCategories(BuildContext context) {
-    final brandController = Get.put(BrandController());
     final categoryController = Get.put(CategoryController());
     final isDark = SHFHelperFunctions.isDarkMode(context);
     return Column(
       children: [
 
         /// Danh mục
-        const SHFSectionHeading(title: 'Danh mục', showActionButton: false),
+        const SHFSectionHeading(title: 'Danh mục sản phẩm', showActionButton: false),
         const SizedBox(height: SHFSizes.spaceBtwItems),
 
         /// Obx widget để cập nhật giao diện người dùng theo trạng thái của [categoryController].

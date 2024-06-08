@@ -17,16 +17,6 @@ class SHFDeviceUtils {
     return kToolbarHeight;
   }
 
-  static void vibrate(Duration duration) {
-    HapticFeedback.vibrate();
-    Future.delayed(duration, () => HapticFeedback.vibrate());
-  }
-
-  static Future<void> setPreferredOrientations(
-      List<DeviceOrientation> orientations) async {
-    await SystemChrome.setPreferredOrientations(orientations);
-  }
-
   static void launchWebsiteUrl(String address) async {
     final Uri url = Uri.parse(address);
     if (!await launchUrl(url)) {

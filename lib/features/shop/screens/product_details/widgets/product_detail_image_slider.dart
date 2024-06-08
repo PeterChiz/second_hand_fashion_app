@@ -28,7 +28,7 @@ class SHFProductImageSlider extends StatelessWidget {
         color: isDark ? SHFColors.darkerGrey : SHFColors.light,
         child: Stack(
           children: [
-            /// Main Large Image
+            /// Ảnh đầu
             SizedBox(
               height: 400,
               child: Padding(
@@ -55,7 +55,7 @@ class SHFProductImageSlider extends StatelessWidget {
               ),
             ),
 
-            /// Image Slider
+            /// Ảnh lướt
             Positioned(
               right: 0,
               bottom: 30,

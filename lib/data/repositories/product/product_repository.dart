@@ -15,7 +15,7 @@ class ProductRepository extends GetxController {
 
   /* ---------------------------- CÁC HÀM ---------------------------------*/
 
-  /// Nhận sản phẩm nổi bật có giới hạn.
+  /// Nhận sản phẩm phổ biến có giới hạn.
   Future<List<ProductModel>> getFeaturedProducts() async {
     try {
       final snapshot = await _db

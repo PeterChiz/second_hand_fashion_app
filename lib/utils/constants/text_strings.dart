@@ -48,7 +48,7 @@ class SHFTexts{
   // static const String resendEmailIn = "Gửi lại email trong";
   static const String termsOfUse = "Điều khoản sử dụng";
 
-  static const String loginTitle = "Hello bạn <3";
+  static const String loginTitle = "Chào mừng bạn đã đến!";
   // static const String loginTitle = "Welcome back";
   static const String loginSubTitle = "Cùng khám phá thế giới thời trang với đủ mọi thể loại";
   // static const String loginSubTitle = "Discover Limitless Choices and Unmatched Convenience";
@@ -88,4 +88,5 @@ class SHFTexts{
 
   // -- Product
   static const String popularProducts = "Sản phẩm phổ biến";
+  static const String allProducts = "Tất cả sản phẩm";
 }

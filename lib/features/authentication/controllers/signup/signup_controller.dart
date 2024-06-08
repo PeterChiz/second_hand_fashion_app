@@ -13,20 +13,28 @@ class SignupController extends GetxController {
   static SignupController get instance => Get.find();
 
   /// Variables
-  final hidePassword = true.obs; // Observable for hiding/showing password
-  final privacyPolicy = true.obs; // Observable for privacy policy acceptance
-  final email = TextEditingController(); // Controller for email input
-  final lastName = TextEditingController(); // Controller for last name input
-  final username = TextEditingController(); // Controller for username input
-  final password = TextEditingController(); // Controller for password input
-  final firstName = TextEditingController(); // Controller for first name input
-  final phoneNumber = TextEditingController(); // Controller for phone number input
+  final hidePassword = true.obs; // Observable để ẩn/hiện mật khẩu
+  final privacyPolicy = false.obs; // Observable cho việc chấp nhận chính sách bảo mật
+  final email = TextEditingController(); // Controller cho input email
+  final lastName = TextEditingController(); // Controller cho input họ
+  final username = TextEditingController(); // Controller cho input tên người dùng
+  final password = TextEditingController(); // Controller cho input mật khẩu
+  final firstName = TextEditingController(); // Controller cho input tên
+  final phoneNumber = TextEditingController(); // Controller cho input số điện thoại
 
-  GlobalKey<FormState> signupFormKey = GlobalKey<FormState>(); // Form key for form validation
+  GlobalKey<FormState> signupFormKey = GlobalKey<FormState>(); // Khóa form cho việc kiểm tra form
 
 
   ///SIGNUP
   void signup() async {
+    // Kiểm tra privacyPolicy.value trước
+    if (!privacyPolicy.value) {
+      SHFLoaders.warningSnackBar(
+        title: 'Chấp nhận Chính sách quyền riêng tư',
+        message: 'Để tạo tài khoản, bạn phải đọc và chấp nhận Chính sách quyền riêng tư & Điều khoản sử dụng',
+      );
+      return;
+    }
     try {
       //Start Loading
       SHFFullScreenLoader.openLoadingDialog(
@@ -47,14 +55,14 @@ class SignupController extends GetxController {
         return;
       }
 
-      //Privacy Policy Check
-      if (!privacyPolicy.value) {
-        SHFLoaders.warningSnackBar(
-            title: 'Chấp nhận Chính sách quyền riêng tư',
-            message:
-                'Để tạo tài khoản, bạn phải đọc và chấp nhận Chính sách quyền riêng tư & Điều khoản sử dụng');
-        return;
-      }
+      // //Privacy Policy Check
+      // if (!privacyPolicy.value) {
+      //   SHFLoaders.warningSnackBar(
+      //       title: 'Chấp nhận Chính sách quyền riêng tư',
+      //       message:
+      //           'Để tạo tài khoản, bạn phải đọc và chấp nhận Chính sách quyền riêng tư & Điều khoản sử dụng');
+      //   return;
+      // }
 
       //Đăng ký người dùng trong Xác thực Firebase & Lưu dữ liệu người dùng trong Firebase
       await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());

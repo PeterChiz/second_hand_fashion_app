@@ -65,13 +65,13 @@ class CartController extends GetxController {
     if (product.productType == ProductType.variable.toString()) {
       if (variationController.selectedVariation.value.stock < 1) {
         SHFLoaders.warningSnackBar(
-            message: 'Mặt hàng được chọn đã hết hàng.', title: 'Oh Snap!');
+            message: 'Sản phẩm được chọn đã hết hàng.', title: 'Rất tiết');
         return;
       }
     } else {
       if (product.stock < 1) {
         SHFLoaders.warningSnackBar(
-            message: 'Sản phẩm được chọn đã hết hàng.', title: 'Oh Snap!');
+            message: 'Sản phẩm được chọn đã hết hàng.', title: 'Rất tiết!');
         return;
       }
     }

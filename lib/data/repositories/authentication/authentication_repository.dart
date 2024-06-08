@@ -121,7 +121,7 @@ class AuthenticationRepository extends GetxController {
   }
 
 
-  ///[EmailAuthentication] - Forget Password
+  ///[EmailAuthentication] - Quen mat khau
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
